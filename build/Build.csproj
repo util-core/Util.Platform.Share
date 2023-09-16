@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>$(NetTargetFramework)</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="common.props" />
+		<None Remove="icon.jpg" />
+		<None Remove="version.props" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FlubuCore" Version="7.0.1" />
+	</ItemGroup>
+
+</Project>

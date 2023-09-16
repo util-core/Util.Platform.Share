@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>$(NetTargetFramework)</TargetFramework>
+		<Description>Util.Platform.Share.Identity.Data是Util平台的权限服务数据访问层共享类库</Description>
+		<AssemblyName>Util.Platform.Share.Identity.Data</AssemblyName>
+		<RootNamespace>Util.Platform.Share.Identity.Data</RootNamespace>
+		<PackageIcon>icon.jpg</PackageIcon>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>.\obj\Debug\$(NetTargetFramework)\Util.Platform.Share.Identity.Data.xml</DocumentationFile>
+		<OutputPath></OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath></OutputPath>
+		<DocumentationFile>.\obj\Release\$(NetTargetFramework)\Util.Platform.Share.Identity.Data.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\build\icon.jpg">
+			<Pack>True</Pack>
+			<Visible>False</Visible>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Util.Data.EntityFrameworkCore" Version="7.1.25" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Util.Platform.Share.Identity.Domain\02-Util.Platform.Share.Identity.Domain.csproj" />
+	</ItemGroup>
+
+</Project>
