@@ -3,6 +3,13 @@ namespace Util.Platform.Share.Identity.Domain.Repositories;
 /// <summary>
 /// 角色仓储
 /// </summary>
+public interface IRoleRepositoryBase<TRole> : IRoleRepositoryBase<TRole, Guid, Guid?, Guid, Guid>
+    where TRole : class, ITreeEntity<TRole, Guid, Guid?> {
+}
+
+/// <summary>
+/// 角色仓储
+/// </summary>
 /// <typeparam name="TRole">角色类型</typeparam>
 /// <typeparam name="TRoleId">角色标识类型</typeparam>
 /// <typeparam name="TRoleParentId">角色父标识类型</typeparam>

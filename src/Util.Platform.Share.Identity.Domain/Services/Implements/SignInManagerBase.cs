@@ -8,6 +8,23 @@ namespace Util.Platform.Share.Identity.Domain.Services.Implements;
 /// <summary>
 /// 登录服务
 /// </summary>
+public abstract class SignInManagerBase<TUser, TRole> : SignInManagerBase<TUser, Guid, TRole, Guid?>, ISignInManagerBase<TUser, TRole>
+    where TUser : UserBase<TUser, TRole>
+    where TRole : RoleBase<TRole, TUser> {
+    /// <summary>
+    /// 初始化登录服务
+    /// </summary>
+    /// <param name="signInManager">Identity登录服务</param>
+    /// <param name="userManager">用户服务</param>
+    /// <param name="localizer">本地化查找器</param>
+    protected SignInManagerBase( IdentitySignInManagerBase<TUser, TRole> signInManager, IUserManagerBase<TUser, TRole> userManager, IStringLocalizer localizer )
+        : base( signInManager, userManager, localizer ) {
+    }
+}
+
+/// <summary>
+/// 登录服务
+/// </summary>
 /// <typeparam name="TUser">用户类型</typeparam>
 /// <typeparam name="TUserId">用户标识类型</typeparam>
 /// <typeparam name="TRole">角色类型</typeparam>

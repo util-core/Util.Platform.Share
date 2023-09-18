@@ -1,10 +1,26 @@
-﻿namespace Util.Platform.Share.Identity.Data.Repositories; 
+﻿namespace Util.Platform.Share.Identity.Data.Repositories;
+
+/// <summary>
+/// 身份资源仓储
+/// </summary>
+public abstract class IdentityResourceRepositoryBase<TIdentityResource, TResource, TApplication> 
+    : IdentityResourceRepositoryBase<TIdentityResource, TResource, Guid, Guid?, TApplication, Guid?, Guid?>, IIdentityResourceRepositoryBase<TIdentityResource>
+    where TIdentityResource : IdentityResourceBase<TIdentityResource>
+    where TResource : ResourceBase<TResource, TApplication>
+    where TApplication : ApplicationBase<TApplication> {
+    /// <summary>
+    /// 初始化身份资源仓储
+    /// </summary>
+    /// <param name="resourceRepository">资源仓储</param>
+    protected IdentityResourceRepositoryBase( IResourceRepositoryBase<TResource> resourceRepository ) : base( resourceRepository ) {
+    }
+}
 
 /// <summary>
 /// 身份资源仓储
 /// </summary>
 public abstract class IdentityResourceRepositoryBase<TIdentityResource, TResource, TResourceId, TResourceParentId, TApplication, TApplicationId, TAuditUserId> 
-    : IIdentityResourceRepositoryBase<TIdentityResource>
+    : IIdentityResourceRepositoryBase<TIdentityResource, TResourceId, TAuditUserId>
     where TIdentityResource : IdentityResourceBase<TIdentityResource, TResourceId, TAuditUserId>
     where TResource : ResourceBase<TResource, TResourceId, TResourceParentId, TApplication, TApplicationId, TAuditUserId> {
     /// <summary>

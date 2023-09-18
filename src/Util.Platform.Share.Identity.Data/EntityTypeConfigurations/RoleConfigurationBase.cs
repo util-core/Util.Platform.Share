@@ -1,11 +1,19 @@
-namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations; 
+namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations;
+
+/// <summary>
+/// 角色类型配置
+/// </summary>
+public abstract class RoleConfigurationBase<TRole, TUser> : RoleConfigurationBase<TRole, Guid, Guid?, TUser, Guid?>
+    where TRole : RoleBase<TRole,TUser>
+    where TUser : UserBase<TUser, TRole> {
+}
 
 /// <summary>
 /// 角色类型配置
 /// </summary>
 public abstract class RoleConfigurationBase<TRole, TRoleId, TParentId, TUser, TAuditUserId> : IEntityTypeConfiguration<TRole> 
-    where TRole : RoleBase<TRole, TRoleId, TParentId, TUser, TAuditUserId>
-    where TUser : class {
+    where TRole : RoleBase<TRole, TRoleId, TParentId, TUser, TAuditUserId> 
+    where TUser: class {
     /// <summary>
     /// 配置
     /// </summary>

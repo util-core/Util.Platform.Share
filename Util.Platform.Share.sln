@@ -13,15 +13,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build", "build\Build.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ADA4B57D-C80F-4D51-8309-645A6585AA40}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7901223D-8DF3-4A18-9233-9D6D3492473A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Identity", "01-Identity", "{A387C12E-20A7-4A43-B160-A173157BD7FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02-Util.Platform.Share.Identity.Domain", "src\Util.Platform.Share.Identity.Domain\02-Util.Platform.Share.Identity.Domain.csproj", "{C40B81EB-659A-4409-9983-13CFDC30B410}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01-Util.Platform.Share.Identity.Common", "src\Util.Platform.Share.Identity.Common\01-Util.Platform.Share.Identity.Common.csproj", "{90889CA7-9D05-4BE1-BC6E-38CFD8CDB6BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03-Util.Platform.Share.Identity.Data", "src\Util.Platform.Share.Identity.Data\03-Util.Platform.Share.Identity.Data.csproj", "{E5D8D228-258B-4B49-A106-1601E2ED8596}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03-Util.Platform.Share.Identity.Data", "src\Util.Platform.Share.Identity.Data\03-Util.Platform.Share.Identity.Data.csproj", "{E5D8D228-258B-4B49-A106-1601E2ED8596}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04-Util.Platform.Share.Identity.Dtos", "src\Util.Platform.Share.Identity.Dtos\04-Util.Platform.Share.Identity.Dtos.csproj", "{94426B1B-1E7E-4BC9-9C22-21597BE5E3C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05-Util.Platform.Share.Identity.Queries", "src\Util.Platform.Share.Identity.Queries\05-Util.Platform.Share.Identity.Queries.csproj", "{762314D6-36C4-44F9-921B-B0DE123BAC02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06-Util.Platform.Share.Identity.Application", "src\Util.Platform.Share.Identity.Application\06-Util.Platform.Share.Identity.Application.csproj", "{8652894B-11BB-4A1D-8AF6-BF13E07027DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07-Util.Platform.Share.Identity.IdentityServer", "src\Util.Platform.Share.Identity.IdentityServer\07-Util.Platform.Share.Identity.IdentityServer.csproj", "{DA41411B-1DF0-4B02-B693-0DE4A5B16EF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,22 @@ Global
 		{E5D8D228-258B-4B49-A106-1601E2ED8596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5D8D228-258B-4B49-A106-1601E2ED8596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5D8D228-258B-4B49-A106-1601E2ED8596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94426B1B-1E7E-4BC9-9C22-21597BE5E3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94426B1B-1E7E-4BC9-9C22-21597BE5E3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94426B1B-1E7E-4BC9-9C22-21597BE5E3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94426B1B-1E7E-4BC9-9C22-21597BE5E3C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{762314D6-36C4-44F9-921B-B0DE123BAC02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{762314D6-36C4-44F9-921B-B0DE123BAC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{762314D6-36C4-44F9-921B-B0DE123BAC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{762314D6-36C4-44F9-921B-B0DE123BAC02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8652894B-11BB-4A1D-8AF6-BF13E07027DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8652894B-11BB-4A1D-8AF6-BF13E07027DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8652894B-11BB-4A1D-8AF6-BF13E07027DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8652894B-11BB-4A1D-8AF6-BF13E07027DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA41411B-1DF0-4B02-B693-0DE4A5B16EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA41411B-1DF0-4B02-B693-0DE4A5B16EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA41411B-1DF0-4B02-B693-0DE4A5B16EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA41411B-1DF0-4B02-B693-0DE4A5B16EF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +77,10 @@ Global
 		{C40B81EB-659A-4409-9983-13CFDC30B410} = {A387C12E-20A7-4A43-B160-A173157BD7FF}
 		{90889CA7-9D05-4BE1-BC6E-38CFD8CDB6BB} = {A387C12E-20A7-4A43-B160-A173157BD7FF}
 		{E5D8D228-258B-4B49-A106-1601E2ED8596} = {A387C12E-20A7-4A43-B160-A173157BD7FF}
+		{94426B1B-1E7E-4BC9-9C22-21597BE5E3C0} = {A387C12E-20A7-4A43-B160-A173157BD7FF}
+		{762314D6-36C4-44F9-921B-B0DE123BAC02} = {A387C12E-20A7-4A43-B160-A173157BD7FF}
+		{8652894B-11BB-4A1D-8AF6-BF13E07027DE} = {A387C12E-20A7-4A43-B160-A173157BD7FF}
+		{DA41411B-1DF0-4B02-B693-0DE4A5B16EF1} = {A387C12E-20A7-4A43-B160-A173157BD7FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {53CAB123-409D-4905-BE35-28DCB1C55DAF}

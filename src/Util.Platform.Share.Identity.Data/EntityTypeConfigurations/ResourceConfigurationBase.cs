@@ -1,4 +1,12 @@
-namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations; 
+namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations;
+
+/// <summary>
+/// 资源类型配置
+/// </summary>
+public abstract class ResourceConfigurationBase<TResource, TApplication> : ResourceConfigurationBase<TResource, Guid, Guid?, TApplication, Guid?, Guid?>
+    where TResource : ResourceBase<TResource, TApplication>
+    where TApplication : ApplicationBase<TApplication> {
+}
 
 /// <summary>
 /// 资源类型配置

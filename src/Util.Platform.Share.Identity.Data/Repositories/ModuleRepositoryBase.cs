@@ -3,6 +3,22 @@ namespace Util.Platform.Share.Identity.Data.Repositories;
 /// <summary>
 /// 模块仓储
 /// </summary>
+public abstract class ModuleRepositoryBase<TModule, TResource, TApplication> 
+    : ModuleRepositoryBase<TModule, TResource, Guid, Guid?, TApplication, Guid?, Guid?>, IModuleRepositoryBase<TModule>
+    where TModule : ModuleBase<TModule>
+    where TResource : ResourceBase<TResource, TApplication> 
+    where TApplication : ApplicationBase<TApplication> {
+    /// <summary>
+    /// 初始化模块仓储
+    /// </summary>
+    /// <param name="resourceRepository">资源仓储</param>
+    protected ModuleRepositoryBase( IResourceRepositoryBase<TResource> resourceRepository ) : base( resourceRepository ) {
+    }
+}
+
+/// <summary>
+/// 模块仓储
+/// </summary>
 public abstract class ModuleRepositoryBase<TModule, TResource, TResourceId, TResourceParentId, TApplication, TApplicationId, TAuditUserId>
     : IModuleRepositoryBase<TModule, TResourceId, TApplicationId, TResourceParentId>
     where TModule : ModuleBase<TModule, TResourceId, TResourceParentId, TApplicationId, TAuditUserId>

@@ -3,10 +3,24 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 声明
 /// </summary>
+public abstract class ClaimBase<TClaim> : ClaimBase<TClaim, Guid, Guid?> 
+    where TClaim : ClaimBase<TClaim, Guid, Guid?> {
+    /// <summary>
+    /// 初始化声明
+    /// </summary>
+    /// <param name="id">声明标识</param>
+    protected ClaimBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 声明
+/// </summary>
 /// <typeparam name="TClaim">声明类型</typeparam>
 /// <typeparam name="TClaimId">声明标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>
-public abstract class ClaimBase<TClaim, TClaimId, TAuditUserId> : AggregateRoot<TClaim, TClaimId>, IDelete, IAudited<TAuditUserId> where TClaim : ClaimBase<TClaim, TClaimId, TAuditUserId> {
+public abstract class ClaimBase<TClaim, TClaimId, TAuditUserId> : AggregateRoot<TClaim, TClaimId>, IDelete, IAudited<TAuditUserId> 
+    where TClaim : ClaimBase<TClaim, TClaimId, TAuditUserId> {
     /// <summary>
     /// 初始化声明
     /// </summary>

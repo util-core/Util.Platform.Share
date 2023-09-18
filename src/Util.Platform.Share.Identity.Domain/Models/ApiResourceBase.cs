@@ -3,6 +3,21 @@
 /// <summary>
 /// Api资源
 /// </summary>
+public abstract class ApiResourceBase<TApiResource> : ApiResourceBase<TApiResource, Guid, Guid?, Guid?, Guid?> 
+    where TApiResource : ApiResourceBase<TApiResource, Guid, Guid?, Guid?, Guid?> {
+    /// <summary>
+    /// 初始化Api资源
+    /// </summary>
+    /// <param name="id">模块标识</param>
+    /// <param name="path">路径</param>
+    /// <param name="level">层级</param>
+    protected ApiResourceBase( Guid id, string path, int level ) : base( id, path, level ) {
+    }
+}
+
+/// <summary>
+/// Api资源
+/// </summary>
 /// <typeparam name="TApiResource">Api资源类型</typeparam>
 /// <typeparam name="TResourceId">Api资源标识类型</typeparam>
 /// <typeparam name="TResourceParentId">Api资源父标识类型</typeparam>

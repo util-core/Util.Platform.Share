@@ -1,4 +1,13 @@
+using Util.Platform.Share.Identity.Domain.Models;
+
 namespace Util.Platform.Share.Identity.Domain.Repositories;
+
+/// <summary>
+/// 应用程序仓储
+/// </summary>
+public interface IApplicationRepositoryBase<TApplication> : IApplicationRepositoryBase<TApplication, Guid> 
+    where TApplication : ApplicationBase<TApplication> {
+}
 
 /// <summary>
 /// 应用程序仓储

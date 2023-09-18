@@ -1,4 +1,4 @@
-﻿namespace Util.Platform.Share.Identity.Domain.Identity; 
+﻿namespace Util.Platform.Share.Identity.Domain.Identity;
 
 /// <summary>
 /// Identity用户服务

@@ -1,9 +1,17 @@
-namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations; 
+namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations;
 
 /// <summary>
 /// 声明类型配置
 /// </summary>
-public abstract class ClaimConfigurationBase<TClaim, TClaimId, TAuditUserId> : IEntityTypeConfiguration<TClaim> where TClaim : ClaimBase<TClaim, TClaimId, TAuditUserId> {
+public abstract class ClaimConfigurationBase<TClaim> : ClaimConfigurationBase<TClaim, Guid, Guid?>
+    where TClaim : ClaimBase<TClaim> {
+}
+
+/// <summary>
+/// 声明类型配置
+/// </summary>
+public abstract class ClaimConfigurationBase<TClaim, TClaimId, TAuditUserId> : IEntityTypeConfiguration<TClaim> 
+    where TClaim : ClaimBase<TClaim, TClaimId, TAuditUserId> {
     /// <summary>
     /// 配置
     /// </summary>

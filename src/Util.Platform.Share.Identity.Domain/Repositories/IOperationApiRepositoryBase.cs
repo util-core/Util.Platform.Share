@@ -1,4 +1,13 @@
+using Util.Platform.Share.Identity.Domain.Models;
+
 namespace Util.Platform.Share.Identity.Domain.Repositories;
+
+/// <summary>
+/// 操作Api仓储
+/// </summary>
+public interface IOperationApiRepositoryBase<TOperationApi> : IOperationApiRepositoryBase<TOperationApi, Guid, Guid, Guid, Guid?>
+    where TOperationApi : OperationApiBase<TOperationApi> {
+}
 
 /// <summary>
 /// 操作Api仓储

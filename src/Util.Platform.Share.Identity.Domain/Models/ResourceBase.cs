@@ -3,13 +3,28 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 资源
 /// </summary>
+public abstract class ResourceBase<TResource, TApplication> : ResourceBase<TResource, Guid, Guid?, TApplication, Guid?, Guid?> 
+    where TResource : ResourceBase<TResource, Guid, Guid?, TApplication, Guid?, Guid?> 
+    where TApplication : ApplicationBase<TApplication> {
+    /// <summary>
+    /// 初始化资源
+    /// </summary>
+    /// <param name="id">资源标识</param>
+    /// <param name="path">路径</param>
+    /// <param name="level">层级</param>
+    protected ResourceBase( Guid id, string path, int level ) : base( id, path, level ) {
+    }
+}
+
+/// <summary>
+/// 资源
+/// </summary>
 /// <typeparam name="TResource">资源类型</typeparam>
 /// <typeparam name="TResourceId">资源标识类型</typeparam>
 /// <typeparam name="TResourceParentId">资源父标识类型</typeparam>
 /// <typeparam name="TApplication">应用程序类型</typeparam>
 /// <typeparam name="TApplicationId">应用程序标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>
-[Description( "资源" )]
 public abstract class ResourceBase<TResource, TResourceId, TResourceParentId, TApplication, TApplicationId, TAuditUserId> 
     : TreeEntityBase<TResource, TResourceId, TResourceParentId>, IDelete, IAudited<TAuditUserId>, IExtraProperties
     where TResource : ResourceBase<TResource, TResourceId, TResourceParentId, TApplication, TApplicationId, TAuditUserId> {

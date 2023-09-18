@@ -1,4 +1,11 @@
-namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations; 
+namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations;
+
+/// <summary>
+/// 常用操作资源类型配置
+/// </summary>
+public abstract class CommonOperationConfigurationBase<TCommonOperation> : CommonOperationConfigurationBase<TCommonOperation, Guid, Guid?>
+    where TCommonOperation : CommonOperationBase<TCommonOperation> {
+}
 
 /// <summary>
 /// 常用操作资源类型配置

@@ -3,6 +3,13 @@ namespace Util.Platform.Share.Identity.Domain.Repositories;
 /// <summary>
 /// 用户仓储
 /// </summary>
+public interface IUserRepositoryBase<TUser> : IUserRepositoryBase<TUser, Guid, Guid>
+    where TUser : class, IAggregateRoot<Guid> {
+}
+
+/// <summary>
+/// 用户仓储
+/// </summary>
 /// <typeparam name="TUser">用户类型</typeparam>
 /// <typeparam name="TUserId">用户标识类型</typeparam>
 /// <typeparam name="TRoleId">角色标识类型</typeparam>

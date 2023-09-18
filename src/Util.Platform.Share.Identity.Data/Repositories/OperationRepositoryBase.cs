@@ -3,6 +3,22 @@ namespace Util.Platform.Share.Identity.Data.Repositories;
 /// <summary>
 /// 操作仓储
 /// </summary>
+public abstract class OperationRepositoryBase<TOperation, TResource, TApplication> 
+    : OperationRepositoryBase<TOperation, TResource, Guid, Guid?, TApplication, Guid?, Guid?>, IOperationRepositoryBase<TOperation>
+    where TOperation : OperationBase<TOperation>
+    where TResource : ResourceBase<TResource, TApplication> 
+    where TApplication : ApplicationBase<TApplication> {
+    /// <summary>
+    /// 初始化操作仓储
+    /// </summary>
+    /// <param name="resourceRepository">资源仓储</param>
+    protected OperationRepositoryBase( IResourceRepositoryBase<TResource> resourceRepository ) : base( resourceRepository ) {
+    }
+}
+
+/// <summary>
+/// 操作仓储
+/// </summary>
 public abstract class OperationRepositoryBase<TOperation, TResource, TResourceId, TResourceParentId, TApplication, TApplicationId, TAuditUserId>
     : IOperationRepositoryBase<TOperation, TApplicationId, TResourceId>
     where TOperation : OperationBase<TOperation, TResourceId, TApplicationId, TAuditUserId>

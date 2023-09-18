@@ -3,6 +3,13 @@ namespace Util.Platform.Share.Identity.Domain.Repositories;
 /// <summary>
 /// 资源仓储
 /// </summary>
+public interface IResourceRepositoryBase<TResource> : IResourceRepositoryBase<TResource, Guid, Guid?, Guid?>
+    where TResource : class, ITreeEntity<TResource, Guid, Guid?> {
+}
+
+/// <summary>
+/// 资源仓储
+/// </summary>
 /// <typeparam name="TResource">资源类型</typeparam>
 /// <typeparam name="TResourceId">资源标识类型</typeparam>
 /// <typeparam name="TResourceParentId">资源父标识类型</typeparam>

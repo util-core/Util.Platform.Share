@@ -3,6 +3,19 @@
 /// <summary>
 /// 操作
 /// </summary>
+public abstract class OperationBase<TOperation> : OperationBase<TOperation, Guid, Guid?, Guid?> 
+    where TOperation : OperationBase<TOperation, Guid, Guid?, Guid?> {
+    /// <summary>
+    /// 初始化操作
+    /// </summary>
+    /// <param name="id">操作标识</param>
+    protected OperationBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 操作
+/// </summary>
 /// <typeparam name="TOperation">操作类型</typeparam>
 /// <typeparam name="TResourceId">资源标识类型</typeparam>
 /// <typeparam name="TApplicationId">应用程序标识类型</typeparam>

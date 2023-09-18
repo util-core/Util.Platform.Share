@@ -3,11 +3,25 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 用户
 /// </summary>
+[Description( "用户" )]
+public abstract class UserBase<TUser, TRole> : UserBase<TUser, Guid, TRole, Guid?> 
+    where TUser : UserBase<TUser, Guid, TRole, Guid?> 
+    where TRole : RoleBase<TRole, TUser> {
+    /// <summary>
+    /// 初始化用户
+    /// </summary>
+    /// <param name="id">用户标识</param>
+    protected UserBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 用户
+/// </summary>
 /// <typeparam name="TUser">用户类型</typeparam>
 /// <typeparam name="TUserId">用户标识类型</typeparam>
 /// <typeparam name="TRole">角色类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>
-[Description( "用户" )]
 public abstract class UserBase<TUser, TUserId, TRole, TAuditUserId>
     : AggregateRoot<TUser, TUserId>,IDelete,IAudited<TAuditUserId>,IExtraProperties, ITenant
     where TUser : UserBase<TUser, TUserId, TRole, TAuditUserId> 

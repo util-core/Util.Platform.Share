@@ -1,4 +1,19 @@
-namespace Util.Platform.Share.Identity.Data.Repositories; 
+namespace Util.Platform.Share.Identity.Data.Repositories;
+
+/// <summary>
+/// 常用操作资源仓储
+/// </summary>
+public abstract class CommonOperationRepositoryBase<TUnitOfWork, TCommonOperation> 
+    : CommonOperationRepositoryBase<TUnitOfWork, TCommonOperation, Guid, Guid?>, ICommonOperationRepositoryBase<TCommonOperation>
+    where TUnitOfWork : IUnitOfWork
+    where TCommonOperation : CommonOperationBase<TCommonOperation> {
+    /// <summary>
+    /// 初始化常用操作资源仓储
+    /// </summary>
+    /// <param name="unitOfWork">工作单元</param>
+    protected CommonOperationRepositoryBase( TUnitOfWork unitOfWork ) : base( unitOfWork ) {
+    }
+}
 
 /// <summary>
 /// 常用操作资源仓储

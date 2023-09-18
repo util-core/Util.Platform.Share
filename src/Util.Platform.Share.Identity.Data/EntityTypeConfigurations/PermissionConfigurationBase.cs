@@ -1,4 +1,12 @@
-namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations; 
+namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations;
+
+/// <summary>
+/// 权限类型配置
+/// </summary>
+public abstract class PermissionConfigurationBase<TPermission, TResource> : PermissionConfigurationBase<TPermission, Guid, Guid, TResource, Guid, Guid?>
+    where TPermission : PermissionBase<TPermission, TResource>
+    where TResource : class {
+}
 
 /// <summary>
 /// 权限类型配置

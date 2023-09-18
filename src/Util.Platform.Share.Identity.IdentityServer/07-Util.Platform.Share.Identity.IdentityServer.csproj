@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>$(NetTargetFramework)</TargetFramework>
+		<Description>Util.Platform.Share.Identity.IdentityServer是Util平台的权限服务认证中心共享类库</Description>
+		<AssemblyName>Util.Platform.Share.Identity.IdentityServer</AssemblyName>
+		<RootNamespace>Util.Platform.Share.Identity.IdentityServer</RootNamespace>
+		<PackageIcon>icon.jpg</PackageIcon>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>.\obj\Debug\$(NetTargetFramework)\Util.Platform.Share.Identity.IdentityServer.xml</DocumentationFile>
+		<OutputPath></OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath></OutputPath>
+		<DocumentationFile>.\obj\Release\$(NetTargetFramework)\Util.Platform.Share.Identity.IdentityServer.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\build\icon.jpg">
+			<Pack>True</Pack>
+			<Visible>False</Visible>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.11" />
+		<PackageReference Include="Util.Tenants" Version="7.1.27" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Util.Platform.Share.Identity.Application\06-Util.Platform.Share.Identity.Application.csproj" />
+	</ItemGroup>
+
+</Project>

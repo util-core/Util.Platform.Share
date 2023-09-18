@@ -3,6 +3,19 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 常用操作资源
 /// </summary>
+public abstract class CommonOperationBase<TCommonOperation> : CommonOperationBase<TCommonOperation, Guid, Guid?> 
+    where TCommonOperation : CommonOperationBase<TCommonOperation, Guid, Guid?> {
+    /// <summary>
+    /// 初始化常用操作资源
+    /// </summary>
+    /// <param name="id">常用操作资源标识</param>
+    protected CommonOperationBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 常用操作资源
+/// </summary>
 /// <typeparam name="TCommonOperation">常用操作资源类型</typeparam>
 /// <typeparam name="TCommonOperationId">常用操作资源标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>

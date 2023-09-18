@@ -3,6 +3,19 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 应用程序
 /// </summary>
+public abstract class ApplicationBase<TApplication> : ApplicationBase<TApplication, Guid, Guid?> 
+    where TApplication : ApplicationBase<TApplication, Guid, Guid?> {
+    /// <summary>
+    /// 初始化应用程序
+    /// </summary>
+    /// <param name="id">应用程序标识</param>
+    protected ApplicationBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 应用程序
+/// </summary>
 /// <typeparam name="TApplication">应用程序类型</typeparam>
 /// <typeparam name="TApplicationId">应用程序标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>

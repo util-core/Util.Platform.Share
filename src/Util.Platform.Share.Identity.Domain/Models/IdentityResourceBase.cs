@@ -3,6 +3,19 @@
 /// <summary>
 /// 身份资源
 /// </summary>
+public abstract class IdentityResourceBase<TIdentityResource> : IdentityResourceBase<TIdentityResource, Guid, Guid?> 
+    where TIdentityResource : IdentityResourceBase<TIdentityResource, Guid, Guid?> {
+    /// <summary>
+    /// 初始化身份资源
+    /// </summary>
+    /// <param name="id">身份资源标识</param>
+    protected IdentityResourceBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 身份资源
+/// </summary>
 /// <typeparam name="TIdentityResource">身份资源类型</typeparam>
 /// <typeparam name="TResourceId">身份资源标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>

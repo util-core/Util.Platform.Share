@@ -3,6 +3,23 @@ namespace Util.Platform.Share.Identity.Data.Repositories;
 /// <summary>
 /// 操作Api仓储
 /// </summary>
+public abstract class OperationApiRepositoryBase<TUnitOfWork, TOperationApi, TResource, TApplication> 
+    : OperationApiRepositoryBase<TUnitOfWork, TOperationApi, Guid, Guid, TResource, Guid, Guid?, TApplication, Guid?, Guid?>, IOperationApiRepositoryBase<TOperationApi>
+    where TUnitOfWork : IUnitOfWork
+    where TResource : ResourceBase<TResource, TApplication>
+    where TOperationApi : OperationApiBase<TOperationApi> 
+    where TApplication : ApplicationBase<TApplication> {
+    /// <summary>
+    /// 初始化操作Api仓储
+    /// </summary>
+    /// <param name="unitOfWork">工作单元</param>
+    protected OperationApiRepositoryBase( TUnitOfWork unitOfWork ) : base( unitOfWork ) {
+    }
+}
+
+/// <summary>
+/// 操作Api仓储
+/// </summary>
 public abstract class OperationApiRepositoryBase<TUnitOfWork, TOperationApi, TOperationApiId, TOperationId, TResource, TResourceId, TResourceParentId, TApplication, TApplicationId, TAuditUserId>
     : RepositoryBase<TOperationApi, TOperationApiId>, IOperationApiRepositoryBase<TOperationApi, TOperationApiId, TOperationId, TResourceId, TApplicationId>
     where TUnitOfWork : IUnitOfWork

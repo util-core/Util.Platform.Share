@@ -3,6 +3,23 @@ namespace Util.Platform.Share.Identity.Data.Repositories;
 /// <summary>
 /// 权限仓储
 /// </summary>
+public class PermissionRepositoryBase<TUnitOfWork, TPermission, TApplication, TResource> 
+    : PermissionRepositoryBase<TUnitOfWork, TPermission, Guid, TApplication, Guid?, Guid, TResource, Guid, Guid?, Guid?>, IPermissionRepositoryBase<TPermission>
+    where TUnitOfWork : IUnitOfWork
+    where TPermission : PermissionBase<TPermission, TResource>
+    where TResource : ResourceBase<TResource, TApplication> 
+    where TApplication : ApplicationBase<TApplication> {
+    /// <summary>
+    /// 初始化权限仓储
+    /// </summary>
+    /// <param name="unitOfWork">工作单元</param>
+    public PermissionRepositoryBase( TUnitOfWork unitOfWork ) : base( unitOfWork ) {
+    }
+}
+
+/// <summary>
+/// 权限仓储
+/// </summary>
 public abstract class PermissionRepositoryBase<TUnitOfWork, TPermission, TPermissionId, TApplication, TApplicationId, TRoleId, TResource, TResourceId, TResourceParentId, TAuditUserId>
     : RepositoryBase<TPermission, TPermissionId>, IPermissionRepositoryBase<TPermission, TPermissionId, TApplicationId, TRoleId, TResourceId>
     where TUnitOfWork : IUnitOfWork

@@ -5,6 +5,14 @@ namespace Util.Platform.Share.Identity.Domain.Services.Abstractions;
 /// <summary>
 /// 用户服务
 /// </summary>
+public interface IUserManagerBase<TUser, TRole> : IUserManagerBase<TUser, Guid, TRole, Guid?>
+    where TUser : UserBase<TUser, TRole>
+    where TRole : RoleBase<TRole, TUser> {
+}
+
+/// <summary>
+/// 用户服务
+/// </summary>
 /// <typeparam name="TUser">用户类型</typeparam>
 /// <typeparam name="TUserId">用户标识类型</typeparam>
 /// <typeparam name="TRole">角色类型</typeparam>

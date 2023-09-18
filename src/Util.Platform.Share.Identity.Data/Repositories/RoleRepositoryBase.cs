@@ -3,6 +3,22 @@ namespace Util.Platform.Share.Identity.Data.Repositories;
 /// <summary>
 /// 角色仓储
 /// </summary>
+public abstract class RoleRepositoryBase<TUnitOfWork,TRole,TUser> 
+    : RoleRepositoryBase<TUnitOfWork, TRole, Guid, Guid?, Guid?, TUser, Guid, Guid?>, IRoleRepositoryBase<TRole>
+    where TUnitOfWork : IUnitOfWork
+    where TRole : RoleBase<TRole, TUser>
+    where TUser : UserBase<TUser, TRole> {
+    /// <summary>
+    /// 初始化角色仓储
+    /// </summary>
+    /// <param name="unitOfWork">工作单元</param>
+    protected RoleRepositoryBase( TUnitOfWork unitOfWork ) : base( unitOfWork ) {
+    }
+}
+
+/// <summary>
+/// 角色仓储
+/// </summary>
 public abstract class RoleRepositoryBase<TUnitOfWork, TRole, TRoleId, TRoleParentId, TApplicationId, TUser, TUserId, TAuditUserId>
     : TreeRepositoryBase<TRole, TRoleId, TRoleParentId>, IRoleStore<TRole>, IRoleRepositoryBase<TRole, TRoleId, TRoleParentId, TApplicationId, TUserId>
     where TUnitOfWork : IUnitOfWork

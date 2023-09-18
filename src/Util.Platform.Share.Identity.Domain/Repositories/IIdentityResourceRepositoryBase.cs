@@ -1,9 +1,19 @@
-﻿namespace Util.Platform.Share.Identity.Domain.Repositories;
+﻿using Util.Platform.Share.Identity.Domain.Models;
+
+namespace Util.Platform.Share.Identity.Domain.Repositories;
 
 /// <summary>
 /// 身份资源仓储
 /// </summary>
-public interface IIdentityResourceRepositoryBase<TIdentityResource> : IScopeDependency where TIdentityResource : class {
+public interface IIdentityResourceRepositoryBase<TIdentityResource> : IIdentityResourceRepositoryBase<TIdentityResource, Guid, Guid?>
+    where TIdentityResource : IdentityResourceBase<TIdentityResource> {
+}
+
+/// <summary>
+/// 身份资源仓储
+/// </summary>
+public interface IIdentityResourceRepositoryBase<TIdentityResource, TResourceId, TAuditUserId> : IScopeDependency 
+    where TIdentityResource : IdentityResourceBase<TIdentityResource, TResourceId, TAuditUserId> {
     /// <summary>
     /// 通过标识查找身份资源
     /// </summary>

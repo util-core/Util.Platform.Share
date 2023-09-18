@@ -3,7 +3,15 @@ namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations;
 /// <summary>
 /// 应用程序类型配置
 /// </summary>
-public abstract class ApplicationConfigurationBase<TApplication, TApplicationId, TAuditUserId> : IEntityTypeConfiguration<TApplication> where TApplication : ApplicationBase<TApplication, TApplicationId, TAuditUserId> {
+public abstract class ApplicationConfigurationBase<TApplication> : ApplicationConfigurationBase<TApplication, Guid, Guid?>
+    where TApplication : ApplicationBase<TApplication> {
+}
+
+/// <summary>
+/// 应用程序类型配置
+/// </summary>
+public abstract class ApplicationConfigurationBase<TApplication, TApplicationId, TAuditUserId> : IEntityTypeConfiguration<TApplication> 
+    where TApplication : ApplicationBase<TApplication, TApplicationId, TAuditUserId> {
     /// <summary>
     /// 配置
     /// </summary>

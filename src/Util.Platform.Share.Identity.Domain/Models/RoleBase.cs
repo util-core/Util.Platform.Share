@@ -3,12 +3,27 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 角色
 /// </summary>
+public abstract class RoleBase<TRole, TUser> : RoleBase<TRole, Guid, Guid?, TUser, Guid?> 
+    where TRole : RoleBase<TRole, Guid, Guid?, TUser, Guid?>
+    where TUser : UserBase<TUser, Guid, TRole, Guid?> {
+    /// <summary>
+    /// 初始化角色
+    /// </summary>
+    /// <param name="id">角色标识</param>
+    /// <param name="path">路径</param>
+    /// <param name="level">层级</param>
+    protected RoleBase( Guid id, string path, int level ) : base( id, path, level ) {
+    }
+}
+
+/// <summary>
+/// 角色
+/// </summary>
 /// <typeparam name="TRole">角色类型</typeparam>
 /// <typeparam name="TRoleId">角色标识类型</typeparam>
 /// <typeparam name="TRoleParentId">角色父标识类型</typeparam>
 /// <typeparam name="TUser">用户类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>
-[Description( "角色" )]
 public abstract class RoleBase<TRole, TRoleId, TRoleParentId, TUser, TAuditUserId> 
     : TreeEntityBase<TRole, TRoleId, TRoleParentId>, IDelete, IAudited<TAuditUserId>, IExtraProperties,ITenant
     where TRole : RoleBase<TRole, TRoleId, TRoleParentId, TUser, TAuditUserId> 

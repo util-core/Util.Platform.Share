@@ -1,12 +1,21 @@
-﻿namespace Util.Platform.Share.Identity.Domain.Repositories;
+﻿using Util.Platform.Share.Identity.Domain.Models;
+
+namespace Util.Platform.Share.Identity.Domain.Repositories;
+
+/// <summary>
+/// Api资源仓储
+/// </summary>
+public interface IApiResourceRepositoryBase<TApiResource> : IApiResourceRepositoryBase<TApiResource, Guid, Guid?> 
+    where TApiResource : ApiResourceBase<TApiResource> {
+}
 
 /// <summary>
 /// Api资源仓储
 /// </summary>
 /// <typeparam name="TApiResource">Api资源类型</typeparam>
 /// <typeparam name="TApplicationId">应用程序标识类型</typeparam>
-/// <typeparam name="TApiResourceParentId">Api资源父标识类型</typeparam>
-public interface IApiResourceRepositoryBase<TApiResource, in TApplicationId, in TApiResourceParentId> : IScopeDependency where TApiResource : class {
+/// <typeparam name="TResourceParentId">Api资源父标识类型</typeparam>
+public interface IApiResourceRepositoryBase<TApiResource, in TApplicationId, in TResourceParentId> : IScopeDependency where TApiResource : class {
     /// <summary>
     /// 通过标识查找Api资源
     /// </summary>
@@ -21,7 +30,7 @@ public interface IApiResourceRepositoryBase<TApiResource, in TApplicationId, in 
     /// </summary>
     /// <param name="applicationId">应用程序标识</param>
     /// <param name="parentId">父标识</param>
-    Task<int> GenerateSortIdAsync( TApplicationId applicationId, TApiResourceParentId parentId );
+    Task<int> GenerateSortIdAsync( TApplicationId applicationId, TResourceParentId parentId );
     /// <summary>
     /// 添加Api资源
     /// </summary>

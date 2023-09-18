@@ -3,12 +3,24 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 操作Api
 /// </summary>
+public abstract class OperationApiBase<TOperationApi> : OperationApiBase<TOperationApi, Guid, Guid, Guid, Guid?> 
+    where TOperationApi : OperationApiBase<TOperationApi, Guid, Guid, Guid, Guid?> {
+    /// <summary>
+    /// 初始化操作Api
+    /// </summary>
+    /// <param name="id">操作Api标识</param>
+    protected OperationApiBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 操作Api
+/// </summary>
 /// <typeparam name="TOperationApi">操作Api类型</typeparam>
 /// <typeparam name="TOperationApiId">操作Api标识类型</typeparam>
 /// <typeparam name="TOperationId">操作标识类型</typeparam>
 /// <typeparam name="TResourceId">Api资源标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>
-[Description( "操作Api" )]
 public abstract class OperationApiBase<TOperationApi, TOperationApiId, TOperationId, TResourceId, TAuditUserId> : AggregateRoot<TOperationApi, TOperationApiId>,IDelete,IAudited<TAuditUserId> 
     where TOperationApi : OperationApiBase<TOperationApi, TOperationApiId, TOperationId, TResourceId, TAuditUserId> {
     /// <summary>

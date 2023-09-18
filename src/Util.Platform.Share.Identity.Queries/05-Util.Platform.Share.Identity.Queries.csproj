@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>$(NetTargetFramework)</TargetFramework>
+		<Description>Util.Platform.Share.Identity.Queries是Util平台的权限服务查询参数共享类库</Description>
+		<AssemblyName>Util.Platform.Share.Identity.Queries</AssemblyName>
+		<RootNamespace>Util.Platform.Share.Identity.Queries</RootNamespace>
+		<PackageIcon>icon.jpg</PackageIcon>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>.\obj\Debug\$(NetTargetFramework)\Util.Platform.Share.Identity.Queries.xml</DocumentationFile>
+		<OutputPath></OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath></OutputPath>
+		<DocumentationFile>.\obj\Release\$(NetTargetFramework)\Util.Platform.Share.Identity.Queries.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\build\icon.jpg">
+			<Pack>True</Pack>
+			<Visible>False</Visible>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Util.Data.Core" Version="7.1.27" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Util.Platform.Share.Identity.Common\01-Util.Platform.Share.Identity.Common.csproj" />
+	</ItemGroup>
+
+</Project>

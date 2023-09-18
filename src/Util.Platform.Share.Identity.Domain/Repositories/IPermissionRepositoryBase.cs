@@ -3,6 +3,13 @@ namespace Util.Platform.Share.Identity.Domain.Repositories;
 /// <summary>
 /// 权限仓储
 /// </summary>
+public interface IPermissionRepositoryBase<TPermission> : IPermissionRepositoryBase<TPermission, Guid, Guid?, Guid, Guid> 
+    where TPermission : class, IAggregateRoot<Guid> {
+}
+
+/// <summary>
+/// 权限仓储
+/// </summary>
 /// <typeparam name="TPermission">权限类型</typeparam>
 /// <typeparam name="TPermissionId">权限标识类型</typeparam>
 /// <typeparam name="TApplicationId">应用程序标识类型</typeparam>

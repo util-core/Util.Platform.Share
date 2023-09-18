@@ -1,4 +1,11 @@
-﻿namespace Util.Platform.Share.Identity.Domain.Services.Abstractions; 
+﻿namespace Util.Platform.Share.Identity.Domain.Services.Abstractions;
+
+/// <summary>
+/// 角色服务
+/// </summary>
+public interface IRoleManagerBase<in TRole> : IRoleManagerBase<TRole, Guid, Guid> 
+    where TRole : class {
+}
 
 /// <summary>
 /// 角色服务

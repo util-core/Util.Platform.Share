@@ -1,4 +1,13 @@
-namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations; 
+namespace Util.Platform.Share.Identity.Data.EntityTypeConfigurations;
+
+/// <summary>
+/// 用户类型配置
+/// </summary>
+public abstract class UserConfigurationBase<TUser, TRole, TUserRole> : UserConfigurationBase<TUser, Guid, TRole, Guid, Guid?, TUserRole, Guid?>
+    where TUser : UserBase<TUser, TRole>
+    where TRole : RoleBase<TRole, TUser>
+    where TUserRole : UserRoleBase {
+}
 
 /// <summary>
 /// 用户类型配置

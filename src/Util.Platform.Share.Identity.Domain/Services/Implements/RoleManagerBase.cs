@@ -2,7 +2,25 @@
 using Util.Platform.Share.Identity.Domain.Repositories;
 using Util.Platform.Share.Identity.Domain.Services.Abstractions;
 
-namespace Util.Platform.Share.Identity.Domain.Services.Implements; 
+namespace Util.Platform.Share.Identity.Domain.Services.Implements;
+
+/// <summary>
+/// 角色服务
+/// </summary>
+public abstract class RoleManagerBase<TRole, TUser> : RoleManagerBase<TRole, Guid, Guid?, TUser, Guid, Guid, Guid?>, IRoleManagerBase<TRole>
+    where TRole : RoleBase<TRole, TUser>
+    where TUser : UserBase<TUser, TRole> {
+    /// <summary>
+    /// 初始化角色服务
+    /// </summary>
+    /// <param name="roleManager">Identity角色服务</param>
+    /// <param name="roleRepository">角色仓储</param>
+    /// <param name="userRepository">用户仓储</param>
+    /// <param name="localizer">本地化查找器</param>
+    protected RoleManagerBase( RoleManager<TRole> roleManager, IRoleRepositoryBase<TRole> roleRepository, IUserRepositoryBase<TUser> userRepository, IStringLocalizer localizer )
+        : base( roleManager, roleRepository, userRepository, localizer ) {
+    }
+}
 
 /// <summary>
 /// 角色服务

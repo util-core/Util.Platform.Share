@@ -1,4 +1,13 @@
+using Util.Platform.Share.Identity.Domain.Models;
+
 namespace Util.Platform.Share.Identity.Domain.Repositories;
+
+/// <summary>
+/// 模块仓储
+/// </summary>
+public interface IModuleRepositoryBase<TModule> : IModuleRepositoryBase<TModule, Guid, Guid?, Guid?>
+    where TModule:ModuleBase<TModule> {
+}
 
 /// <summary>
 /// 模块仓储

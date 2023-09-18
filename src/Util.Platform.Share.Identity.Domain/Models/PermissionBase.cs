@@ -3,13 +3,26 @@ namespace Util.Platform.Share.Identity.Domain.Models;
 /// <summary>
 /// 权限
 /// </summary>
+public abstract class PermissionBase<TPermission, TResource> : PermissionBase<TPermission, Guid, Guid, TResource, Guid, Guid?> 
+    where TPermission : PermissionBase<TPermission, Guid, Guid, TResource, Guid, Guid?> 
+    where TResource : class {
+    /// <summary>
+    /// 初始化权限
+    /// </summary>
+    /// <param name="id">权限标识</param>
+    protected PermissionBase( Guid id ) : base( id ) {
+    }
+}
+
+/// <summary>
+/// 权限
+/// </summary>
 /// <typeparam name="TPermission">权限类型</typeparam>
 /// <typeparam name="TPermissionId">权限标识类型</typeparam>
 /// <typeparam name="TRoleId">角色标识类型</typeparam>
 /// <typeparam name="TResource">资源类型</typeparam>
 /// <typeparam name="TResourceId">资源标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>
-[Description( "权限" )]
 public abstract class PermissionBase<TPermission, TPermissionId, TRoleId, TResource, TResourceId, TAuditUserId> : AggregateRoot<TPermission, TPermissionId>,IDelete,IAudited<TAuditUserId>, ITenant
     where TPermission : PermissionBase<TPermission, TPermissionId, TRoleId, TResource, TResourceId, TAuditUserId> {
     /// <summary>

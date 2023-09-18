@@ -3,12 +3,26 @@
 /// <summary>
 /// 模块
 /// </summary>
+public abstract class ModuleBase<TModule> : ModuleBase<TModule, Guid, Guid?, Guid?, Guid?>
+    where TModule : ModuleBase<TModule, Guid, Guid?, Guid?, Guid?> {
+    /// <summary>
+    /// 初始化模块
+    /// </summary>
+    /// <param name="id">模块标识</param>
+    /// <param name="path">路径</param>
+    /// <param name="level">层级</param>
+    protected ModuleBase( Guid id, string path, int level ) : base( id, path, level ) {
+    }
+}
+
+/// <summary>
+/// 模块
+/// </summary>
 /// <typeparam name="TModule">模块类型</typeparam>
 /// <typeparam name="TResourceId">模块标识类型</typeparam>
 /// <typeparam name="TResourceParentId">模块父标识类型</typeparam>
 /// <typeparam name="TApplicationId">应用程序标识类型</typeparam>
 /// <typeparam name="TAuditUserId">审计用户标识类型</typeparam>
-[Description( "模块" )]
 public abstract class ModuleBase<TModule, TResourceId, TResourceParentId, TApplicationId, TAuditUserId> : TreeEntityBase<TModule, TResourceId, TResourceParentId> 
     where TModule : ModuleBase<TModule, TResourceId, TResourceParentId, TApplicationId, TAuditUserId> {
     /// <summary>
