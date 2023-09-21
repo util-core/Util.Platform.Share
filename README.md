@@ -8,4 +8,4 @@
 
 Util Platform是Util应用框架配套的公共模块服务,提供权限管理等业务开发必备基础功能.
 
-Util平台提供单体和微服务两种架构版本,Util.Platform.Share抽取共享代码并发布到nuget,以供两种架构版本使用.
+Util平台提供单体和微服务两种架构版本,Util.Platform.Share抽取共享代码并发布到nuget,以供两种架构版本使用

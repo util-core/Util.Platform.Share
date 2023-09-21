@@ -37,6 +37,7 @@
 	  <ProjectReference Include="..\Util.Platform.Share.Identity.Data\03-Util.Platform.Share.Identity.Data.csproj" />
 	  <ProjectReference Include="..\Util.Platform.Share.Identity.Dtos\04-Util.Platform.Share.Identity.Dtos.csproj" />
 	  <ProjectReference Include="..\Util.Platform.Share.Identity.Queries\05-Util.Platform.Share.Identity.Queries.csproj" />
+	  <ProjectReference Include="..\Util.Platform.Share.Infrastructure\Util.Platform.Share.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

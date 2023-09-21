@@ -1,4 +1,4 @@
-﻿namespace Util.Platform.Share.Identity.Applications.CacheKeys; 
+﻿namespace Util.Platform.Share; 
 
 /// <summary>
 /// 缓存键常量
