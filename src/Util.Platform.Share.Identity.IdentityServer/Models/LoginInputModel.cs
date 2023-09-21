@@ -1,11 +1,9 @@
-using Util.Platform.Share.Identity.Dtos;
-
 namespace Util.Platform.Share.Identity.IdentityServer.Models; 
 
 /// <summary>
 /// 登录输入参数
 /// </summary>
-public class LoginInputModel<TLoginRequest> where TLoginRequest: LoginRequestBase,new() {
+public class LoginInputModel {
     /// <summary>
     /// 用户名
     /// </summary>
@@ -24,15 +22,4 @@ public class LoginInputModel<TLoginRequest> where TLoginRequest: LoginRequestBas
     /// 返回地址
     /// </summary>
     public string ReturnUrl { get; set; }
-
-    /// <summary>
-    /// 转换为登录参数
-    /// </summary>
-    public TLoginRequest ToLoginRequest() {
-        return new TLoginRequest {
-            UserName = UserName,
-            Password = Password,
-            Remember = Remember
-        };
-    }
 }

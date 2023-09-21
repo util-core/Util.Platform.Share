@@ -1,11 +1,9 @@
-using Util.Platform.Share.Identity.Dtos;
-
 namespace Util.Platform.Share.Identity.IdentityServer.Models; 
 
 /// <summary>
 /// 登录参数
 /// </summary>
-public class LoginViewModel<TLoginRequest> : LoginInputModel<TLoginRequest> where TLoginRequest : LoginRequestBase, new()  {
+public class LoginViewModel : LoginInputModel  {
     /// <summary>
     /// 外部认证提供器列表
     /// </summary>

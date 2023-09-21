@@ -15,7 +15,8 @@ public interface IPermissionRepositoryBase<TPermission> : IPermissionRepositoryB
 /// <typeparam name="TApplicationId">应用程序标识类型</typeparam>
 /// <typeparam name="TRoleId">角色标识类型</typeparam>
 /// <typeparam name="TResourceId">资源标识类型</typeparam>
-public interface IPermissionRepositoryBase<TPermission, TPermissionId, in TApplicationId, in TRoleId, TResourceId> : IRepository<TPermission, TPermissionId> where TPermission : class, IAggregateRoot<TPermissionId> {
+public interface IPermissionRepositoryBase<TPermission, TPermissionId, in TApplicationId, in TRoleId, TResourceId> 
+    : IRepository<TPermission, TPermissionId> where TPermission : class, IAggregateRoot<TPermissionId> {
     /// <summary>
     /// 清除指定角色全部操作权限
     /// </summary>

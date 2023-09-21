@@ -5,7 +5,7 @@ namespace Util.Platform.Share.Identity.Domain.Repositories;
 /// <summary>
 /// Api资源仓储
 /// </summary>
-public interface IApiResourceRepositoryBase<TApiResource> : IApiResourceRepositoryBase<TApiResource, Guid, Guid?> 
+public interface IApiResourceRepositoryBase<TApiResource> : IApiResourceRepositoryBase<TApiResource, Guid?, Guid?> 
     where TApiResource : ApiResourceBase<TApiResource> {
 }
 

@@ -7,7 +7,7 @@ namespace Util.Platform.Share.Identity.IdentityServer.Controllers;
 /// <summary>
 /// 用户认证控制器
 /// </summary>
-public abstract class AccountControllerBase<TSystemService, TLoginRequest> : AccountControllerBase<TSystemService, TLoginRequest,Guid>
+public abstract class AccountControllerBase<TSystemService, TLoginRequest> : AccountControllerBase<TSystemService, TLoginRequest, Guid>
     where TSystemService : ISystemServiceBase<TLoginRequest>
     where TLoginRequest : LoginRequestBase, new() {
     /// <summary>
@@ -17,8 +17,8 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest> : Acc
     /// <param name="schemeProvider">认证方案提供器</param>
     /// <param name="events">事件服务</param>
     /// <param name="systemService">系统服务</param>
-    protected AccountControllerBase( IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IEventService events, TSystemService systemService ) 
-        : base( interaction, schemeProvider, events , systemService ) {
+    protected AccountControllerBase( IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IEventService events, TSystemService systemService )
+        : base( interaction, schemeProvider, events, systemService ) {
     }
 }
 
@@ -72,11 +72,11 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
     /// <summary>
     /// 创建登录视图模型
     /// </summary>
-    protected virtual async Task<LoginViewModel<TLoginRequest>> CreateLoginViewModel( string returnUrl ) {
+    protected virtual async Task<LoginViewModel> CreateLoginViewModel( string returnUrl ) {
         var context = await InteractionService.GetAuthorizationContextAsync( returnUrl );
         if ( context?.IdP != null && await AuthenticationSchemeProvider.GetSchemeAsync( context.IdP ) != null ) {
             var local = context.IdP == IdentityServerConstants.LocalIdentityProvider;
-            var result = new LoginViewModel<TLoginRequest> {
+            var result = new LoginViewModel {
                 ReturnUrl = returnUrl,
                 UserName = context.LoginHint,
             };
@@ -89,7 +89,7 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
             .Where( t => t.DisplayName != null )
             .Select( t => new ExternalProvider { DisplayName = t.DisplayName ?? t.Name, AuthenticationScheme = t.Name } )
             .ToList();
-        return new LoginViewModel<TLoginRequest> {
+        return new LoginViewModel {
             ReturnUrl = returnUrl,
             UserName = context?.LoginHint,
             ExternalProviders = providers.ToArray()
@@ -101,7 +101,7 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
     /// </summary>
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public virtual async Task<IActionResult> Login( LoginInputModel<TLoginRequest> model ) {
+    public virtual async Task<IActionResult> Login( LoginInputModel model ) {
         var context = await InteractionService.GetAuthorizationContextAsync( model.ReturnUrl );
         if ( context == null )
             return Redirect( "~/" );
@@ -109,7 +109,7 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
             var viewModel = await CreateLoginViewModel( model );
             return View( viewModel );
         }
-        var result = await SystemService.SignInAsync( model.ToLoginRequest() );
+        var result = await SystemService.SignInAsync( ToLoginRequest( model ) );
         if ( result.State == SignInState.Failed ) {
             var viewModel = await CreateLoginViewModel( model );
             viewModel.Message = result.Message;
@@ -119,9 +119,20 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
     }
 
     /// <summary>
+    /// 转换为登录参数
+    /// </summary>
+    protected virtual TLoginRequest ToLoginRequest( LoginInputModel model ) {
+        return new TLoginRequest {
+            UserName = model.UserName,
+            Password = model.Password,
+            Remember = model.Remember
+        };
+    }
+
+    /// <summary>
     /// 创建登录视图模型
     /// </summary>
-    protected virtual async Task<LoginViewModel<TLoginRequest>> CreateLoginViewModel( LoginInputModel<TLoginRequest> model ) {
+    protected virtual async Task<LoginViewModel> CreateLoginViewModel( LoginInputModel model ) {
         var result = await CreateLoginViewModel( model.ReturnUrl );
         result.UserName = model.UserName;
         result.Remember = model.Remember;

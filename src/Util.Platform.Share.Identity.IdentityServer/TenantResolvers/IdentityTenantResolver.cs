@@ -11,11 +11,11 @@ public class IdentityTenantResolver : TenantResolverBase {
         var key = GetTenantKey( context );
         var returnUrl = context.Request.Query["ReturnUrl"].FirstOrDefault();
         if ( returnUrl.IsEmpty() )
-            return null;
+            return Task.FromResult( string.Empty );
         var items = Util.Helpers.Web.ParseQueryString( returnUrl );
         var values = items.GetValues( key );
         if ( values == null )
-            return null;
+            return Task.FromResult( string.Empty );
         var tenantId = values.FirstOrDefault();
         GetLog( context ).LogTrace( $"执行身份认证租户解析器,{key}={tenantId}" );
         return Task.FromResult( tenantId );

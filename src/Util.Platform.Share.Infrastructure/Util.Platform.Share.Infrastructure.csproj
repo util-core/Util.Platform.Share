@@ -2,20 +2,20 @@
 
 	<PropertyGroup>
 		<TargetFramework>$(NetTargetFramework)</TargetFramework>
-		<Description>Util.Platform.Share.Identity.Common是Util平台的权限服务公共共享类库</Description>
-		<AssemblyName>Util.Platform.Share.Identity.Common</AssemblyName>
-		<RootNamespace>Util.Platform.Share.Identity</RootNamespace>
+		<Description>Util.Platform.Share.Infrastructure是Util平台的基础设施共享类库</Description>
+		<AssemblyName>Util.Platform.Share.Infrastructure</AssemblyName>
+		<RootNamespace>Util.Platform.Share</RootNamespace>
 		<PackageIcon>icon.jpg</PackageIcon>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DocumentationFile>.\obj\Debug\$(NetTargetFramework)\Util.Platform.Share.Identity.Common.xml</DocumentationFile>
+		<DocumentationFile>.\obj\Debug\$(NetTargetFramework)\Util.Platform.Share.Infrastructure.xml</DocumentationFile>
 		<OutputPath></OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<OutputPath></OutputPath>
-		<DocumentationFile>.\obj\Release\$(NetTargetFramework)\Util.Platform.Share.Identity.Common.xml</DocumentationFile>
+		<DocumentationFile>.\obj\Release\$(NetTargetFramework)\Util.Platform.Share.Infrastructure.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Util.Events.Abstractions" Version="7.1.29" />
+	  <PackageReference Include="Util.AspNetCore" Version="7.1.29" />
 	</ItemGroup>
 
 </Project>

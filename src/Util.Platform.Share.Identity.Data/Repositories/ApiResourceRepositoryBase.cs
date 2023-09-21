@@ -3,7 +3,8 @@ namespace Util.Platform.Share.Identity.Data.Repositories;
 /// <summary>
 /// Api资源仓储
 /// </summary>
-public abstract class ApiResourceRepositoryBase<TApiResource, TResource, TApplication> : ApiResourceRepositoryBase<TApiResource, TResource, Guid, Guid?, TApplication, Guid?, Guid?>
+public abstract class ApiResourceRepositoryBase<TApiResource, TResource, TApplication> 
+    : ApiResourceRepositoryBase<TApiResource, TResource, Guid, Guid?, TApplication, Guid?, Guid?>, IApiResourceRepositoryBase<TApiResource>
     where TApiResource : ApiResourceBase<TApiResource>
     where TResource : ResourceBase<TResource, TApplication>
     where TApplication : ApplicationBase<TApplication> {
