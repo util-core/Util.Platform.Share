@@ -17,8 +17,10 @@ public abstract class SignInManagerBase<TUser, TRole> : SignInManagerBase<TUser,
     /// <param name="signInManager">Identity登录服务</param>
     /// <param name="userManager">用户服务</param>
     /// <param name="localizer">本地化查找器</param>
-    protected SignInManagerBase( IdentitySignInManagerBase<TUser, TRole> signInManager, IUserManagerBase<TUser, TRole> userManager, IStringLocalizer localizer )
-        : base( signInManager, userManager, localizer ) {
+    /// <param name="ipAccessor">Ip访问器</param>
+    protected SignInManagerBase( IdentitySignInManagerBase<TUser, TRole> signInManager, IUserManagerBase<TUser, TRole> userManager, 
+        IStringLocalizer localizer, IIpAccessor ipAccessor )
+        : base( signInManager, userManager, localizer, ipAccessor ) {
     }
 }
 
@@ -38,10 +40,13 @@ public abstract class SignInManagerBase<TUser, TUserId, TRole, TAuditUserId> : I
     /// <param name="signInManager">Identity登录服务</param>
     /// <param name="userManager">用户服务</param>
     /// <param name="localizer">本地化查找器</param>
-    protected SignInManagerBase( IdentitySignInManagerBase<TUser, TUserId, TRole, TAuditUserId> signInManager, IUserManagerBase<TUser, TUserId, TRole, TAuditUserId> userManager, IStringLocalizer localizer ) {
+    /// <param name="ipAccessor">Ip访问器</param>
+    protected SignInManagerBase( IdentitySignInManagerBase<TUser, TUserId, TRole, TAuditUserId> signInManager, 
+        IUserManagerBase<TUser, TUserId, TRole, TAuditUserId> userManager, IStringLocalizer localizer, IIpAccessor ipAccessor ) {
         IdentitySignInManager = signInManager ?? throw new ArgumentNullException( nameof( signInManager ) );
         UserManager = userManager ?? throw new ArgumentNullException( nameof( userManager ) );
         Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
+        IpAccessor = ipAccessor ?? throw new ArgumentNullException( nameof( ipAccessor ) );
     }
 
     /// <summary>
@@ -56,19 +61,26 @@ public abstract class SignInManagerBase<TUser, TUserId, TRole, TAuditUserId> : I
     /// 本地化查找器
     /// </summary>
     protected IStringLocalizer Localizer { get; }
+    /// <summary>
+    /// Ip访问器
+    /// </summary>
+    protected IIpAccessor IpAccessor { get; }
 
     /// <inheritdoc />
-    public async Task<SignInResult> SignInAsync( TUser user, string password, bool isPersistent, bool lockoutOnFailure ) {
+    public virtual async Task<SignInResult> SignInAsync( TUser user, string password, bool isPersistent, bool lockoutOnFailure ) {
         if ( user == null )
             return new SignInResult( SignInState.Failed, null, Localizer["InvalidAccountOrPassword"] );
         var signInResult = await IdentitySignInManager.PasswordSignInAsync( user, password, isPersistent, lockoutOnFailure );
-        return GetSignInResult( user, signInResult );
+        var result = GetSignInResult( user, signInResult );
+        if ( result.State == SignInState.Succeeded )
+            user.SignInSuccess( IpAccessor.GetIp() );
+        return result;
     }
 
     /// <summary>
     /// 获取登录结果
     /// </summary>
-    private SignInResult GetSignInResult( TUser user, Microsoft.AspNetCore.Identity.SignInResult signInResult ) {
+    protected virtual SignInResult GetSignInResult( TUser user, Microsoft.AspNetCore.Identity.SignInResult signInResult ) {
         if ( signInResult.IsNotAllowed )
             return new SignInResult( SignInState.Failed, null, Localizer["UserIsDisabled"] );
         if ( signInResult.IsLockedOut )
@@ -81,7 +93,7 @@ public abstract class SignInManagerBase<TUser, TUserId, TRole, TAuditUserId> : I
     }
 
     /// <inheritdoc />
-    public async Task SignOutAsync() {
+    public virtual async Task SignOutAsync() {
         await IdentitySignInManager.SignOutAsync();
     }
 }

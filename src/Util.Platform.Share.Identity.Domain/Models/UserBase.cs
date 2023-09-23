@@ -250,4 +250,16 @@ public abstract class UserBase<TUser, TUserId, TRole, TAuditUserId>
     protected virtual void InitEnabled() {
         Enabled ??= true;
     }
+
+    /// <summary>
+    /// 登录成功
+    /// </summary>
+    /// <param name="ip">IP地址</param>
+    public virtual void SignInSuccess( string ip ) {
+        LastLoginTime = CurrentLoginTime;
+        CurrentLoginTime = Util.Helpers.Time.Now;
+        LastLoginIp = CurrentLoginIp;
+        CurrentLoginIp = ip;
+        LoginCount = LoginCount.SafeValue() + 1;
+    }
 }

@@ -36,7 +36,7 @@ public abstract class CommonOperationDtoBase<TAuditUserId> : DtoBase {
     /// <summary>
     /// 创建时间
     ///</summary>
-    [Display( Name = "identity.commonOperation.creationTime" )]
+    [Display( Name = "util.creationTime" )]
     public DateTime? CreationTime { get; set; }
     /// <summary>
     /// 创建人标识
@@ -45,7 +45,7 @@ public abstract class CommonOperationDtoBase<TAuditUserId> : DtoBase {
     /// <summary>
     /// 最后修改时间
     ///</summary>
-    [Display( Name = "identity.commonOperation.lastModificationTime" )]
+    [Display( Name = "util.lastModificationTime" )]
     public DateTime? LastModificationTime { get; set; }
     /// <summary>
     /// 最后修改人标识

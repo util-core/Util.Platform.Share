@@ -44,7 +44,7 @@ public abstract class ModuleDtoBase<TModuleDto,TApplicationId, TAuditUserId> : T
     /// <summary>
     /// 创建时间
     ///</summary>
-    [Display( Name = "identity.module.creationTime" )]
+    [Display( Name = "util.creationTime" )]
     public DateTime? CreationTime { get; set; }
     /// <summary>
     /// 创建人标识
@@ -53,7 +53,7 @@ public abstract class ModuleDtoBase<TModuleDto,TApplicationId, TAuditUserId> : T
     /// <summary>
     /// 最后修改时间
     ///</summary>
-    [Display( Name = "identity.module.lastModificationTime" )]
+    [Display( Name = "util.lastModificationTime" )]
     public DateTime? LastModificationTime { get; set; }
     /// <summary>
     /// 最后修改人标识

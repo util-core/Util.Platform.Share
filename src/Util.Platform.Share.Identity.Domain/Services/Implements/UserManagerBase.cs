@@ -17,17 +17,18 @@ public abstract class UserManagerBase<TUser, TRole> : UserManagerBase<TUser, Gui
     /// </summary>
     /// <param name="userManager">Identity用户服务</param>
     /// <param name="userRepository">用户仓储</param>
-    protected UserManagerBase( IdentityUserManagerBase<TUser> userManager, IUserRepositoryBase<TUser> userRepository )
-        : base( userManager, userRepository ) {
+    /// <param name="ipAccessor">Ip访问器</param>
+    protected UserManagerBase( IdentityUserManagerBase<TUser> userManager, IUserRepositoryBase<TUser> userRepository, IIpAccessor ipAccessor )
+        : base( userManager, userRepository, ipAccessor ) {
     }
 }
 
 /// <summary>
 /// 用户服务
 /// </summary>
-public abstract class UserManagerBase<TUser,TUserId, TRole, TRoleId, TAuditUserId> : IUserManagerBase<TUser, TUserId, TRole, TAuditUserId> 
-    where TUser : UserBase<TUser, TUserId, TRole, TAuditUserId>,new()
-    where TRole: class {
+public abstract class UserManagerBase<TUser, TUserId, TRole, TRoleId, TAuditUserId> : IUserManagerBase<TUser, TUserId, TRole, TAuditUserId>
+    where TUser : UserBase<TUser, TUserId, TRole, TAuditUserId>, new()
+    where TRole : class {
 
     #region 构造方法
 
@@ -36,9 +37,11 @@ public abstract class UserManagerBase<TUser,TUserId, TRole, TRoleId, TAuditUserI
     /// </summary>
     /// <param name="userManager">Identity用户服务</param>
     /// <param name="userRepository">用户仓储</param>
-    protected UserManagerBase( IdentityUserManagerBase<TUser> userManager, IUserRepositoryBase<TUser, TUserId, TRoleId> userRepository ) {
-        Manager = userManager;
-        UserRepository = userRepository;
+    /// <param name="ipAccessor">Ip访问器</param>
+    protected UserManagerBase( IdentityUserManagerBase<TUser> userManager, IUserRepositoryBase<TUser, TUserId, TRoleId> userRepository, IIpAccessor ipAccessor ) {
+        Manager = userManager ?? throw new ArgumentNullException( nameof( userManager ) );
+        UserRepository = userRepository ?? throw new ArgumentNullException( nameof( userRepository ) );
+        IpAccessor = ipAccessor ?? throw new ArgumentNullException( nameof( ipAccessor ) );
     }
 
     #endregion
@@ -53,6 +56,10 @@ public abstract class UserManagerBase<TUser,TUserId, TRole, TRoleId, TAuditUserI
     /// 用户仓储
     /// </summary>
     protected IUserRepositoryBase<TUser, TUserId, TRoleId> UserRepository { get; }
+    /// <summary>
+    /// Ip访问器
+    /// </summary>
+    protected IIpAccessor IpAccessor { get; }
 
     #endregion
 
@@ -66,6 +73,7 @@ public abstract class UserManagerBase<TUser,TUserId, TRole, TRoleId, TAuditUserI
     public async Task CreateAsync( TUser user, string password ) {
         user.Init();
         user.Validate();
+        user.RegisterIp = IpAccessor.GetIp();
         var result = await Manager.CreateAsync( user, password );
         result.ThrowIfError();
     }

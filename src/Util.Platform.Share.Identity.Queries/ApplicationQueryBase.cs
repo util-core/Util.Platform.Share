@@ -27,11 +27,11 @@ public abstract class ApplicationQueryBase : QueryParameter {
     /// <summary>
     /// 起始创建时间
     /// </summary>
-    [Display( Name = "identity.application.beginCreationTime" )]
+    [Display( Name = "util.beginCreationTime" )]
     public DateTime? BeginCreationTime { get; set; }
     /// <summary>
     /// 结束创建时间
     /// </summary>
-    [Display( Name = "identity.application.endCreationTime" )]
+    [Display( Name = "util.endCreationTime" )]
     public DateTime? EndCreationTime { get; set; }
 }

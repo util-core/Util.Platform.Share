@@ -69,7 +69,7 @@ public abstract class ApiResourceDtoBase<TApiResourceDto, TApplicationId, TAudit
     /// <summary>
     /// 创建时间
     ///</summary>
-    [Display( Name = "identity.apiResource.creationTime" )]
+    [Display( Name = "util.creationTime" )]
     public DateTime? CreationTime { get; set; }
     /// <summary>
     /// 创建人标识
@@ -78,7 +78,7 @@ public abstract class ApiResourceDtoBase<TApiResourceDto, TApplicationId, TAudit
     /// <summary>
     /// 最后修改时间
     ///</summary>
-    [Display( Name = "identity.apiResource.lastModificationTime" )]
+    [Display( Name = "util.lastModificationTime" )]
     public DateTime? LastModificationTime { get; set; }
     /// <summary>
     /// 最后修改人标识

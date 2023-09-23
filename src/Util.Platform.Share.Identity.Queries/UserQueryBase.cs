@@ -106,11 +106,11 @@ public abstract class UserQueryBase<TRoleId> : QueryParameter {
     /// <summary>
     /// 起始创建时间
     /// </summary>
-    [Display( Name = "identity.user.beginCreationTime" )]
+    [Display( Name = "util.beginCreationTime" )]
     public DateTime? BeginCreationTime { get; set; }
     /// <summary>
     /// 结束创建时间
     /// </summary>
-    [Display( Name = "identity.user.endCreationTime" )]
+    [Display( Name = "util.endCreationTime" )]
     public DateTime? EndCreationTime { get; set; }
 }

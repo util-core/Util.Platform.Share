@@ -47,13 +47,13 @@ public abstract class RoleDtoBase<TRoleDto, TAuditUserId> : TreeDtoBase<TRoleDto
     /// <summary>
     /// 拼音简码
     ///</summary>
-    [Display( Name = "identity.role.pinYin" )]
+    [Display( Name = "util.pinYin" )]
     [MaxLength( 200 )]
     public string PinYin { get; set; }
     /// <summary>
     /// 创建时间
     ///</summary>
-    [Display( Name = "identity.role.creationTime" )]
+    [Display( Name = "util.creationTime" )]
     public DateTime? CreationTime { get; set; }
     /// <summary>
     /// 创建人标识
@@ -62,7 +62,7 @@ public abstract class RoleDtoBase<TRoleDto, TAuditUserId> : TreeDtoBase<TRoleDto
     /// <summary>
     /// 最后修改时间
     ///</summary>
-    [Display( Name = "identity.role.lastModificationTime" )]
+    [Display( Name = "util.lastModificationTime" )]
     public DateTime? LastModificationTime { get; set; }
     /// <summary>
     /// 最后修改人标识

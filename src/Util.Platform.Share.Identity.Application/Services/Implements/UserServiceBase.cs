@@ -79,7 +79,7 @@ public abstract class UserServiceBase<TUnitOfWork, TUser, TRole, TUserDto, TCrea
     /// </summary>
     protected virtual void WriteCreateLog( TUser entity ) {
         Log.Append( "用户{UserName}创建成功,", entity.UserName )
-            .Append( "业务标识: {Id}", entity.Id )
+            .Append( "用户标识: {Id}", entity.Id )
             .LogInformation();
     }
 

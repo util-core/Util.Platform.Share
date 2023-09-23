@@ -48,21 +48,21 @@ public abstract class PermissionQueryBase<TApplicationId, TRoleId, TResourceId> 
     /// <summary>
     /// 起始创建时间
     /// </summary>
-    [Display( Name = "identity.permission.beginCreationTime" )]
+    [Display( Name = "util.beginCreationTime" )]
     public DateTime? BeginCreationTime { get; set; }
     /// <summary>
     /// 结束创建时间
     /// </summary>
-    [Display( Name = "identity.permission.endCreationTime" )]
+    [Display( Name = "util.endCreationTime" )]
     public DateTime? EndCreationTime { get; set; }
     /// <summary>
     /// 起始最后修改时间
     /// </summary>
-    [Display( Name = "identity.permission.beginLastModificationTime" )]
+    [Display( Name = "util.beginLastModificationTime" )]
     public DateTime? BeginLastModificationTime { get; set; }
     /// <summary>
     /// 结束最后修改时间
     /// </summary>
-    [Display( Name = "identity.permission.endLastModificationTime" )]
+    [Display( Name = "util.endLastModificationTime" )]
     public DateTime? EndLastModificationTime { get; set; }
 }
