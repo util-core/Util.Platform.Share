@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Util.Events.Abstractions" Version="7.1.31" />
+	  <PackageReference Include="Util.Events.Abstractions" Version="7.1.33" />
 	</ItemGroup>
 
 </Project>

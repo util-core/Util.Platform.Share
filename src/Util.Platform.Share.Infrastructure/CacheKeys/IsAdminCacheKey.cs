@@ -1,4 +1,4 @@
-﻿namespace Util.Platform.Share.Identity.Applications.CacheKeys; 
+﻿namespace Util.Platform.Share.CacheKeys;
 
 /// <summary>
 /// 是否管理员缓存键
@@ -8,7 +8,7 @@ public class IsAdminCacheKey : CacheKey {
     /// 初始化是否管理员缓存键
     /// </summary>
     /// <param name="userId">用户标识</param>
-    public IsAdminCacheKey( Guid userId ) {
+    public IsAdminCacheKey( string userId ) {
         Prefix = string.Format( CacheKeyConst.UserPrefix, userId );
         Key = "IsAdmin";
     }

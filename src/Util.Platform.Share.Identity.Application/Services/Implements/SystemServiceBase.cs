@@ -1,16 +1,13 @@
-using Util.Platform.Share.Identity.Applications.CacheKeys;
 using Util.Platform.Share.Identity.Applications.Services.Abstractions;
 using Util.Platform.Share.Identity.Domain.Models;
-using Util.Platform.Share.Identity.Domain.Repositories;
 using Util.Platform.Share.Identity.Domain.Services.Abstractions;
-using Util.Platform.Share.Identity.Queries;
 
-namespace Util.Platform.Share.Identity.Applications.Services.Implements; 
+namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 
 /// <summary>
 /// 系统服务
 /// </summary>
-public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TApplication, TUser, TRole, TAppResources, TModuleDto, TApplicationDto, TApplicationQuery, TLoginRequest> 
+public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TApplication, TUser, TRole, TAppResources, TModuleDto,TLoginRequest>
     : ServiceBase, ISystemServiceBase<TLoginRequest>
     where TUnitOfWork : IUnitOfWork
     where TPermission : PermissionBase<TPermission, TResource>, new()
@@ -19,9 +16,7 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
     where TUser : UserBase<TUser, TRole>
     where TRole : RoleBase<TRole, TUser>
     where TAppResources : AppResourcesBase<TModuleDto>, new()
-    where TModuleDto : ModuleDtoBase<TModuleDto> 
-    where TApplicationDto : ApplicationDtoBase,new()
-    where TApplicationQuery : ApplicationQueryBase
+    where TModuleDto : ModuleDtoBase<TModuleDto>
     where TLoginRequest : LoginRequestBase {
 
     #region 构造方法
@@ -34,21 +29,14 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
     /// <param name="cache">缓存服务</param>
     /// <param name="unitOfWork">工作单元</param>
     /// <param name="permissionService">权限服务</param>
-    /// <param name="applicationService">应用程序服务</param>
-    /// <param name="userRepository">用户仓储</param>
-    /// <param name="permissionRepository">权限仓储</param>
     /// <param name="signInManager">登录服务</param>
     /// <param name="userManager">用户服务</param>
-    protected SystemServiceBase( IServiceProvider serviceProvider, IEventBus eventBus, ICache cache, TUnitOfWork unitOfWork, IPermissionServiceBase<TAppResources> permissionService,
-        IApplicationServiceBase<TApplicationDto, TApplicationQuery> applicationService, IUserRepositoryBase<TUser> userRepository, IPermissionRepositoryBase<TPermission> permissionRepository,
-        ISignInManagerBase<TUser, TRole> signInManager, IUserManagerBase<TUser, TRole> userManager ) : base( serviceProvider ) {
+    protected SystemServiceBase( IServiceProvider serviceProvider, IEventBus eventBus, ICache cache, TUnitOfWork unitOfWork,
+        IPermissionServiceBase<TAppResources> permissionService, ISignInManagerBase<TUser, TRole> signInManager, IUserManagerBase<TUser, TRole> userManager ) : base( serviceProvider ) {
         EventBus = eventBus ?? throw new ArgumentNullException( nameof( eventBus ) );
         CacheService = cache ?? throw new ArgumentNullException( nameof( cache ) );
         UnitOfWork = unitOfWork ?? throw new ArgumentNullException( nameof( unitOfWork ) );
         PermissionService = permissionService ?? throw new ArgumentNullException( nameof( permissionService ) );
-        ApplicationService = applicationService ?? throw new ArgumentNullException( nameof( applicationService ) );
-        UserRepository = userRepository ?? throw new ArgumentNullException( nameof( userRepository ) );
-        PermissionRepository = permissionRepository ?? throw new ArgumentNullException( nameof( permissionRepository ) );
         SignInManager = signInManager ?? throw new ArgumentNullException( nameof( signInManager ) );
         UserManager = userManager ?? throw new ArgumentNullException( nameof( userManager ) );
     }
@@ -70,25 +58,13 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
     /// </summary>
     protected TUnitOfWork UnitOfWork { get; }
     /// <summary>
-    /// 用户仓储
-    /// </summary>
-    public IUserRepositoryBase<TUser> UserRepository { get; set; }
-    /// <summary>
-    /// 权限仓储
-    /// </summary>
-    protected IPermissionRepositoryBase<TPermission> PermissionRepository { get; }
-    /// <summary>
     /// 权限服务
     /// </summary>
     protected IPermissionServiceBase<TAppResources> PermissionService { get; }
     /// <summary>
-    /// 应用程序服务
-    /// </summary>
-    protected IApplicationServiceBase<TApplicationDto, TApplicationQuery> ApplicationService { get; }
-    /// <summary>
     /// 登录服务
     /// </summary>
-    protected ISignInManagerBase<TUser,TRole> SignInManager { get; set; }
+    protected ISignInManagerBase<TUser, TRole> SignInManager { get; set; }
     /// <summary>
     /// 用户服务
     /// </summary>
@@ -139,66 +115,22 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
 
     #endregion
 
-    #region IsAdmin
-
-    /// <inheritdoc />
-    public virtual bool IsAdmin( Guid userId ) {
-        if ( userId.IsEmpty() )
-            return false;
-        return PermissionService.IsAdmin( userId );
-    }
-
-    #endregion
-
-    #region IsAdminAsync
-
-    /// <inheritdoc />
-    public virtual async Task<bool> IsAdminAsync( Guid userId, CancellationToken cancellationToken = default ) {
-        if ( userId.IsEmpty() )
-            return false;
-        return await PermissionService.IsAdminAsync( userId, cancellationToken );
-    }
-
-    #endregion
-
-    #region IsAdminByCacheAsync
-
-    /// <inheritdoc />
-    public virtual async Task<bool> IsAdminByCacheAsync( Guid userId, CancellationToken cancellationToken = default ) {
-        if ( userId.IsEmpty() )
-            return false;
-        var cacheKey = new IsAdminCacheKey( userId );
-        return await CacheService.GetAsync( cacheKey, async () => await IsAdminAsync( userId, cancellationToken ),cancellationToken: cancellationToken );
-    }
-
-    #endregion
-
     #region SetAclCacheAsync
 
     /// <inheritdoc />
     public virtual async Task SetAclCacheAsync( Guid userId, CancellationToken cancellationToken = default ) {
         if ( userId.IsEmpty() )
             return;
-        var isAdmin = await IsAdminAsync( userId, cancellationToken );
-        if ( isAdmin )
+        var isAdmin = await PermissionService.IsAdminAsync( userId, cancellationToken );
+        if ( isAdmin ) {
+            await CacheService.SetAsync( new IsAdminCacheKey( userId.ToString() ), 1, cancellationToken: cancellationToken );
             return;
+        }
         var acl = await PermissionService.GetAclAsync( userId, cancellationToken );
         if ( acl == null || acl.Count == 0 )
             return;
-        var items = acl.Select( resourceUri => new KeyValuePair<CacheKey,int>( new AclCacheKey( userId, resourceUri ),1 ) ).ToDictionary(t => t.Key,t => t.Value);
-        await CacheService.SetAsync( items, cancellationToken:cancellationToken );
-    }
-
-    #endregion
-
-    #region HasPermissionByCacheAsync
-
-    /// <inheritdoc />
-    public virtual async Task<bool> HasPermissionByCacheAsync( Guid userId, string resourceUri, CancellationToken cancellationToken = default ) {
-        if ( userId.IsEmpty() || resourceUri.IsEmpty() )
-            return false;
-        var cacheKey = new AclCacheKey( userId, resourceUri );
-        return await CacheService.ExistsAsync( cacheKey, cancellationToken );
+        var items = acl.Select( resourceUri => new KeyValuePair<CacheKey, int>( new AclCacheKey( userId.ToString(), resourceUri ), 1 ) ).ToDictionary( t => t.Key, t => t.Value );
+        await CacheService.SetAsync( items, cancellationToken: cancellationToken );
     }
 
     #endregion
