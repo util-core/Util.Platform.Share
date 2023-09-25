@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Util.Platform.Share.Apps.Dtos;
+﻿namespace Util.Platform.Share.Apps.Dtos;
 
 /// <summary>
 /// 菜单图标信息
@@ -23,7 +21,7 @@ public class MenuIconInfo {
     /// <summary>
     /// 图标类型
     /// </summary>
-    [JsonPropertyName("type")]
+    [JsonPropertyName( "type" )]
     public string TypeText => Type.Description();
 
     /// <summary>
@@ -40,7 +38,7 @@ public class MenuIconInfo {
     /// <summary>
     /// 图标主题风格
     /// </summary>
-    [JsonPropertyName("theme")]
+    [JsonPropertyName( "theme" )]
     public string ThemeText => Theme.Description();
 
     /// <summary>

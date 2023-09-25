@@ -5,5 +5,6 @@ global using System.Linq;
 global using System.Collections.Generic;
 global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
+global using System.Text.Json.Serialization;
 global using Util.Applications.Trees;
 global using Util.Platform.Share.Identity.Dtos;

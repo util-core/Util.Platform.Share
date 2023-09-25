@@ -40,8 +40,7 @@ public abstract class MenuResultBase<TModuleDto, TApplicationId, TAuditUserId> :
             Text = dto.GetText(),
             I18n = dto.GetText(),
             Link = dto.Uri,
-            Icon = new MenuIconInfo()
-            {
+            Icon = new MenuIconInfo {
                 Type = MenuIconType.Icon,
                 Value = dto.Icon
             },
