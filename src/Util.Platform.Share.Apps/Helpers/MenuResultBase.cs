@@ -40,6 +40,11 @@ public abstract class MenuResultBase<TModuleDto, TApplicationId, TAuditUserId> :
             Text = dto.GetText(),
             I18n = dto.GetText(),
             Link = dto.Uri,
+            Icon = new MenuIconInfo()
+            {
+                Type = MenuIconType.Icon,
+                Value = dto.Icon
+            },
             Disabled = !dto.Enabled.SafeValue(),
             Children = dto.Children.Select( ToDestinationNode ).ToList(),
             Reuse = true
