@@ -53,6 +53,11 @@ public abstract class ModuleBase<TModule, TResourceId, TResourceParentId, TAppli
     [MaxLength( 200 )]
     public string Name { get; set; }
     /// <summary>
+    /// 多语言键
+    ///</summary>
+    [DisplayName( "多语言键" )]
+    public string I18n { get; set; }
+    /// <summary>
     /// 图标
     /// </summary>
     [DisplayName( "图标" )]

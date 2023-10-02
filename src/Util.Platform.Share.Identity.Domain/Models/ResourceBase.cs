@@ -158,8 +158,17 @@ public abstract class ResourceBase<TResource, TResourceId, TResourceParentId, TA
     /// Http方法
     /// </summary>
     [NotMapped]
-    public string HttpMethod {
-        get => ExtraProperties.GetProperty<string>( nameof( HttpMethod ) );
+    public HttpMethod? HttpMethod {
+        get => ExtraProperties.GetProperty<HttpMethod?>( nameof( HttpMethod ) );
         set => ExtraProperties.SetProperty( nameof( HttpMethod ), value );
+    }
+
+    /// <summary>
+    /// 多语言键
+    ///</summary>
+    [NotMapped]
+    public string I18n {
+        get => ExtraProperties.GetProperty<string>( nameof( I18n ) );
+        set => ExtraProperties.SetProperty( nameof( I18n ), value );
     }
 }

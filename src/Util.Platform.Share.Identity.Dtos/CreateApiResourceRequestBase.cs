@@ -42,7 +42,7 @@ public abstract class CreateApiResourceRequestBase<TApplicationId, TResourcePare
     /// Http方法
     /// </summary>
     [Display( Name = "identity.apiResource.httpMethod" )]
-    public string HttpMethod { get; set; }
+    public HttpMethod? HttpMethod { get; set; }
     /// <summary>
     /// 用户声明
     /// </summary>

@@ -10,7 +10,7 @@ public abstract class ModuleDtoBase<TModuleDto> : ModuleDtoBase<TModuleDto, Guid
 /// <summary>
 /// 模块参数
 /// </summary>
-public abstract class ModuleDtoBase<TModuleDto,TApplicationId, TAuditUserId> : TreeDtoBase<TModuleDto> 
+public abstract class ModuleDtoBase<TModuleDto, TApplicationId, TAuditUserId> : TreeDtoBase<TModuleDto>
     where TModuleDto : ModuleDtoBase<TModuleDto, TApplicationId, TAuditUserId> {
     /// <summary>
     /// 应用程序标识
@@ -35,6 +35,11 @@ public abstract class ModuleDtoBase<TModuleDto,TApplicationId, TAuditUserId> : T
     [Required]
     [MaxLength( 200 )]
     public string Name { get; set; }
+    /// <summary>
+    /// 多语言键
+    /// </summary>
+    [Display( Name = "util.i18n" )]
+    public string I18n { get; set; }
     /// <summary>
     /// 备注
     ///</summary>

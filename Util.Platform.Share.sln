@@ -33,9 +33,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Infrastructure", "01-Inf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Util.Platform.Share.Infrastructure", "src\Util.Platform.Share.Infrastructure\Util.Platform.Share.Infrastructure.csproj", "{F34007B1-9527-4C99-952E-FDBBA1EA98A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util.Platform.Share.Apps", "src\Util.Platform.Share.Apps\Util.Platform.Share.Apps.csproj", "{9C4D6CA2-CBAC-44C3-9582-0608BF3B6C1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Util.Platform.Share.Apps", "src\Util.Platform.Share.Apps\Util.Platform.Share.Apps.csproj", "{9C4D6CA2-CBAC-44C3-9582-0608BF3B6C1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util.Platform.Share.Tools", "src\Util.Platform.Share.Tools\Util.Platform.Share.Tools.csproj", "{B5005591-AAFD-4C8C-8F40-A2A594868EB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Util.Platform.Share.Tools", "src\Util.Platform.Share.Tools\Util.Platform.Share.Tools.csproj", "{B5005591-AAFD-4C8C-8F40-A2A594868EB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

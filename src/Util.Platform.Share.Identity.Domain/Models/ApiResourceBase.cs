@@ -89,7 +89,7 @@ public abstract class ApiResourceBase<TApiResource, TResourceId, TResourceParent
     /// Http方法
     /// </summary>
     [DisplayName( "Http方法" )]
-    public string HttpMethod { get; set; }
+    public HttpMethod? HttpMethod { get; set; }
     /// <summary>
     /// 用户声明
     /// </summary>
@@ -140,7 +140,7 @@ public abstract class ApiResourceBase<TApiResource, TResourceId, TResourceParent
     /// <summary>
     /// 获取资源标识
     /// </summary>
-    protected virtual string GetResourceUri( string path, string httpMethod ) {
+    protected virtual string GetResourceUri( string path, HttpMethod? httpMethod ) {
         if ( path.IsEmpty() )
             return null;
         var result = $"{path}#{httpMethod}";

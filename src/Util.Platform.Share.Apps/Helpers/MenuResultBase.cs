@@ -38,8 +38,7 @@ public abstract class MenuResultBase<TModuleDto, TApplicationId, TAuditUserId> :
         var result = new MenuInfo {
             Key = dto.Id,
             Text = dto.GetText(),
-            I18n = dto.GetText(),
-            Link = dto.Uri,
+            I18n = dto.I18n,
             Icon = new MenuIconInfo {
                 Type = MenuIconType.Icon,
                 Value = dto.Icon
@@ -48,7 +47,22 @@ public abstract class MenuResultBase<TModuleDto, TApplicationId, TAuditUserId> :
             Children = dto.Children.Select( ToDestinationNode ).ToList(),
             Reuse = true
         };
+        SetLink( result, dto );
         return result;
+    }
+
+    /// <summary>
+    /// 设置链接
+    /// </summary>
+    protected virtual MenuInfo SetLink( MenuInfo menu, TModuleDto dto ) {
+        if ( dto.Uri.IsEmpty() )
+            return menu;
+        if ( dto.Uri.StartsWith( "http" ) ) {
+            menu.ExternalLink = dto.Uri;
+            return menu;
+        }
+        menu.Link = dto.Uri;
+        return menu;
     }
 
     /// <summary>
