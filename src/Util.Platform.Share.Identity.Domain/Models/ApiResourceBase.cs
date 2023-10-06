@@ -143,8 +143,9 @@ public abstract class ApiResourceBase<TApiResource, TResourceId, TResourceParent
     protected virtual string GetResourceUri( string path, HttpMethod? httpMethod ) {
         if ( path.IsEmpty() )
             return null;
-        var result = $"{path}#{httpMethod}";
-        return result.ToLower( CultureInfo.InvariantCulture );
+        if( httpMethod == null )
+            return path.ToLower( CultureInfo.InvariantCulture );
+        return $"{path}#{httpMethod}".ToLower( CultureInfo.InvariantCulture );
     }
 
     /// <summary>

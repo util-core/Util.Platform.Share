@@ -123,7 +123,7 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
         var modules = await ModuleRepository.GetEnabledModulesAsync( applicationId, cancellationToken );
         return new TAppResources {
             IsAdmin = true,
-            Modules = modules.Select( t => t.MapTo<TModuleDto>() ).ToList()
+            Modules = modules.Where( t => t.IsHide.SafeValue() == false ).Select( t => t.MapTo<TModuleDto>() ).ToList()
         };
     }
 
@@ -165,7 +165,7 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
                       permission.IsDeny
                 select new { resource.Uri, resource.ParentId, resource.Type }
             ;
-        var result = await grantQuery.Except( denyQuery ).ToListAsync( cancellationToken );
+        var result = await grantQuery.Except( denyQuery ).AsNoTracking().ToListAsync( cancellationToken );
         return result.Select( t => t.MapTo<TResource>() ).ToList();
     }
 
@@ -174,9 +174,9 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     /// </summary>
     protected virtual async Task<List<TModuleDto>> GetModulesByOperations( List<TResource> resources ) {
         var moduleIds = resources.Where( t => t.Type == ResourceType.Operation ).Select( t => t.ParentId.SafeValue() ).Distinct().ToList();
-        var modules = await ModuleRepository.FindByIdsAsync( moduleIds );
+        var modules = await ModuleRepository.FindByIdsNoTrackingAsync( moduleIds );
         await AddMissingParents( modules );
-        return modules.Where( t => t.Enabled ).DistinctBy( t => t.Id ).Select( t => t.MapTo<TModuleDto>() ).ToList();
+        return modules.Where( t => t.Enabled && t.IsHide.SafeValue() == false ).DistinctBy( t => t.Id ).Select( t => t.MapTo<TModuleDto>() ).ToList();
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     /// </summary>
     protected virtual async Task AddMissingParents( List<TModule> modules ) {
         var parentIds = modules.GetMissingParentIds();
-        var parents = await ModuleRepository.FindByIdsAsync( parentIds.Select( t => t.ToGuid() ) );
+        var parents = await ModuleRepository.FindByIdsNoTrackingAsync( parentIds.Select( t => t.ToGuid() ) );
         modules.AddRange( parents );
     }
 

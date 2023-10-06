@@ -49,6 +49,12 @@ public abstract class ModuleRepositoryBase<TModule, TResource, TResourceId, TRes
     }
 
     /// <inheritdoc />
+    public async Task<List<TModule>> FindByIdsNoTrackingAsync( IEnumerable<TResourceId> ids, CancellationToken cancellationToken = default ) {
+        var resources = await _resourceRepository.NoTracking().FindByIdsAsync( ids, cancellationToken );
+        return resources.Select( t => t.MapTo<TModule>() ).ToList();
+    }
+
+    /// <inheritdoc />
     public async Task<int> GenerateSortIdAsync( TApplicationId applicationId, TResourceParentId parentId, CancellationToken cancellationToken = default ) {
         var maxSortId = await _resourceRepository.Find( t => t.ApplicationId.Equals( applicationId ) && t.ParentId.Equals( parentId ) ).MaxAsync( t => t.SortId, cancellationToken );
         return maxSortId.SafeValue() + 1;

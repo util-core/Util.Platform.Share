@@ -30,6 +30,12 @@ public interface IModuleRepositoryBase<TModule, in TModuleId, in TApplicationId,
     /// <param name="cancellationToken">取消令牌</param>
     Task<List<TModule>> FindByIdsAsync( IEnumerable<TModuleId> ids, CancellationToken cancellationToken = default );
     /// <summary>
+    /// 通过标识列表查找模块列表
+    /// </summary>
+    /// <param name="ids">标识列表</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    Task<List<TModule>> FindByIdsNoTrackingAsync( IEnumerable<TModuleId> ids, CancellationToken cancellationToken = default );
+    /// <summary>
     /// 生成排序号
     /// </summary>
     /// <param name="applicationId">应用程序标识</param>

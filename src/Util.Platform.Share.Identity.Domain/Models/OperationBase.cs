@@ -94,7 +94,12 @@ public abstract class OperationBase<TOperation, TResourceId, TApplicationId, TAu
     /// 是否绑定Api资源
     /// </summary>
     [Display( Name = "是否绑定Api资源" )]
-    public bool IsBindApi { get; set; }
+    public bool? IsBindApi { get; set; }
+    /// <summary>
+    /// 是否基础资源
+    /// </summary>
+    [Display( Name = "是否基础资源" )]
+    public bool? IsBase { get; set; }
 
     /// <summary>
     /// 添加变更列表
@@ -111,5 +116,6 @@ public abstract class OperationBase<TOperation, TResourceId, TApplicationId, TAu
         AddChange( t => t.LastModificationTime, other.LastModificationTime );
         AddChange( t => t.LastModifierId, other.LastModifierId );
         AddChange( t => t.IsBindApi, other.IsBindApi );
+        AddChange( t => t.IsBase, other.IsBase );
     }
 }

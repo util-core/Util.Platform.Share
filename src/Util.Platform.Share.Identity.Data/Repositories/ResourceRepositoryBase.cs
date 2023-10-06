@@ -32,6 +32,6 @@ public abstract class ResourceRepositoryBase<TUnitOfWork, TResource, TResourceId
 
     /// <inheritdoc />
     public virtual async Task<List<TResource>> GetEnabledResourcesAsync( TApplicationId applicationId, ResourceType type, CancellationToken cancellationToken = default ) {
-        return await Find( t => t.ApplicationId.Equals( applicationId ) && t.Type == type && t.Enabled ).ToListAsync( cancellationToken );
+        return await Find().AsNoTracking().Where( t => t.ApplicationId.Equals( applicationId ) && t.Type == type && t.Enabled ).ToListAsync( cancellationToken );
     }
 }

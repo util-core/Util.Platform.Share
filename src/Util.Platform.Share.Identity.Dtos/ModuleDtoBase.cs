@@ -23,12 +23,6 @@ public abstract class ModuleDtoBase<TModuleDto, TApplicationId, TAuditUserId> : 
     [Display( Name = "identity.module.applicationName" )]
     public string ApplicationName { get; set; }
     /// <summary>
-    /// 模块地址
-    ///</summary>
-    [Display( Name = "identity.module.uri" )]
-    [MaxLength( 300 )]
-    public string Uri { get; set; }
-    /// <summary>
     /// 模块名称
     ///</summary>
     [Display( Name = "identity.module.name" )]
@@ -36,10 +30,21 @@ public abstract class ModuleDtoBase<TModuleDto, TApplicationId, TAuditUserId> : 
     [MaxLength( 200 )]
     public string Name { get; set; }
     /// <summary>
+    /// 模块地址
+    ///</summary>
+    [Display( Name = "identity.module.uri" )]
+    [MaxLength( 300 )]
+    public string Uri { get; set; }
+    /// <summary>
     /// 多语言键
     /// </summary>
     [Display( Name = "util.i18n" )]
     public string I18n { get; set; }
+    /// <summary>
+    /// 是否隐藏
+    /// </summary>
+    [Display( Name = "util.isHide" )]
+    public bool? IsHide { get; set; }
     /// <summary>
     /// 备注
     ///</summary>

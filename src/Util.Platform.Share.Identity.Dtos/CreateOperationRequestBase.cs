@@ -41,6 +41,11 @@ public abstract class CreateOperationRequestBase<TApplicationId, TResourceParent
     [Display( Name = "identity.operation.uri" )]
     public string Uri { get; set; }
     /// <summary>
+    /// 是否基础资源
+    /// </summary>
+    [Display( Name = "identity.operation.isBase" )]
+    public bool? IsBase { get; set; }
+    /// <summary>
     /// 启用
     /// </summary>
     [Display( Name = "identity.operation.enabled" )]

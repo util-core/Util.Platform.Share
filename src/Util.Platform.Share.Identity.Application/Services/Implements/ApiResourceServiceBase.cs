@@ -178,6 +178,7 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
         var entity = request.MapTo( oldEntity.Clone() );
         entity.CheckNull( nameof( entity ) );
         await Validate( entity );
+        entity.InitUri();
         entity.InitPinYin();
         var changes = oldEntity.GetChanges( entity );
         await ApiResourceRepository.UpdateAsync( entity );

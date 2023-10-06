@@ -39,6 +39,16 @@ public abstract class CreateModuleRequestBase<TApplicationId, TResourceParentId>
     [Display( Name = "identity.module.icon" )]
     public string Icon { get; set; }
     /// <summary>
+    /// 多语言键
+    /// </summary>
+    [Display( Name = "util.i18n" )]
+    public string I18n { get; set; }
+    /// <summary>
+    /// 是否隐藏
+    /// </summary>
+    [Display( Name = "util.isHide" )]
+    public bool? IsHide { get; set; }
+    /// <summary>
     /// 展开
     /// </summary>
     [Display( Name = "identity.module.expanded" )]

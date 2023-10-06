@@ -140,8 +140,8 @@ public abstract class ResourceBase<TResource, TResourceId, TResourceParentId, TA
     /// 是否绑定Api资源
     /// </summary>
     [NotMapped]
-    public bool IsBindApi {
-        get => ExtraProperties.GetProperty<bool>( nameof( IsBindApi ) );
+    public bool? IsBindApi {
+        get => ExtraProperties.GetProperty<bool?>( nameof( IsBindApi ) );
         set => ExtraProperties.SetProperty( nameof( IsBindApi ), value );
     }
 
@@ -170,5 +170,23 @@ public abstract class ResourceBase<TResource, TResourceId, TResourceParentId, TA
     public string I18n {
         get => ExtraProperties.GetProperty<string>( nameof( I18n ) );
         set => ExtraProperties.SetProperty( nameof( I18n ), value );
+    }
+
+    /// <summary>
+    /// 是否基础资源
+    /// </summary>
+    [NotMapped]
+    public bool? IsBase {
+        get => ExtraProperties.GetProperty<bool?>( nameof( IsBase ) );
+        set => ExtraProperties.SetProperty( nameof( IsBase ), value );
+    }
+
+    /// <summary>
+    /// 是否隐藏
+    /// </summary>
+    [NotMapped]
+    public bool? IsHide {
+        get => ExtraProperties.GetProperty<bool?>( nameof( IsHide ) );
+        set => ExtraProperties.SetProperty( nameof( IsHide ), value );
     }
 }

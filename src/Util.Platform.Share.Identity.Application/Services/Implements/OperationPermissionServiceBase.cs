@@ -70,11 +70,12 @@ public abstract class OperationPermissionServiceBase<TUnitOfWork, TPermission, T
     /// <inheritdoc />
     public virtual async Task<List<TOperationPermissionDto>> GetOperationsAsync( Guid applicationId, Guid roleId, bool isDeny ) {
         var checkedResourceIds = await PermissionRepository.GetOperationPermissionResourceIdsAsync( applicationId, roleId, isDeny );
-        var resources = await ResourceRepository.Find().Where( t => t.ApplicationId == applicationId
-                                                                   && t.Enabled
-                                                                   && ( t.Type == ResourceType.Module || t.Type == ResourceType.Operation )
+        var resources = await ResourceRepository.NoTracking().Find()
+            .Where( t => t.ApplicationId == applicationId
+               && t.Enabled
+               && ( t.Type == ResourceType.Module || t.Type == ResourceType.Operation )
             )
-            .Select( resource => new { resource.Id, resource.Name, resource.Level, resource.Type, resource.ParentId, resource.SortId } )
+            .Select( resource => new { resource.Id, resource.Name, resource.Level, resource.Type, resource.ParentId, resource.SortId,resource.IsBase,resource.IsHide } )
             .ToListAsync();
         return resources.Select( resource => {
             var dto = new TOperationPermissionDto();
@@ -82,6 +83,7 @@ public abstract class OperationPermissionServiceBase<TUnitOfWork, TPermission, T
             if ( resource.Type == ResourceType.Operation ) {
                 dto.IsOperation = true;
                 dto.Hide = true;
+                dto.IsBase = resource.IsBase;
             }
             dto.Checked = checkedResourceIds.Contains( dto.Id.ToGuid() );
             return dto;

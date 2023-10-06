@@ -23,7 +23,6 @@ public abstract class OperationDtoBase<TApplicationId, TResourceParentId, TAudit
     /// <summary>
     /// Api资源应用程序标识
     /// </summary>
-    [Required]
     public TApplicationId ApiApplicationId { get; set; }
     /// <summary>
     /// 模块标识
@@ -49,6 +48,11 @@ public abstract class OperationDtoBase<TApplicationId, TResourceParentId, TAudit
     [Required]
     [Display( Name = "identity.operation.name" )]
     public string Name { get; set; }
+    /// <summary>
+    /// 是否基础资源
+    /// </summary>
+    [Display( Name = "identity.operation.isBase" )]
+    public bool? IsBase { get; set; }
     /// <summary>
     /// 描述
     /// </summary>

@@ -27,8 +27,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Util.AspNetCore" Version="7.1.43" />
-	  <PackageReference Include="Util.Caching" Version="7.1.43" />
+	  <PackageReference Include="Util.AspNetCore" Version="7.1.46" />
+	  <PackageReference Include="Util.Caching" Version="7.1.46" />
 	</ItemGroup>
 
 </Project>

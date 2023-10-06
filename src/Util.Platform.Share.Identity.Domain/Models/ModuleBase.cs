@@ -68,6 +68,11 @@ public abstract class ModuleBase<TModule, TResourceId, TResourceParentId, TAppli
     [DisplayName( "是否展开" )]
     public bool? Expanded { get; set; }
     /// <summary>
+    /// 是否隐藏
+    /// </summary>
+    [DisplayName( "是否隐藏" )]
+    public bool? IsHide { get; set; }
+    /// <summary>
     /// 备注
     ///</summary>
     [DisplayName( "备注" )]
