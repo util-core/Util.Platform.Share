@@ -1,0 +1,30 @@
+{
+  "name": "util-platform",
+  "version": "0.0.1",
+  "author": "何镇汐 <xiadao521@qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/util-core/Util.Platform.Share"
+  },
+  "homepage": "https://github.com/util-core/Util.Platform.Share",
+  "license": "MIT",
+  "keywords": [
+    "util",
+    "util-platform",
+    "antd",
+    "ng-zorro-antd",
+    "angular"
+  ],
+  "peerDependencies": {
+    "@angular/core": "^16.2.0",
+    "@angular/common": "^16.2.0",
+    "@angular/forms": "^16.2.0",
+    "ng-zorro-antd": "^16.1.0",
+    "util-angular": "16.0.6"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+  }
+}

@@ -26,21 +26,21 @@ public abstract class UserRoleConfigurationBase<TUserRole, TUserId, TRoleId> : I
     /// <summary>
     /// 配置表
     /// </summary>
-    private void ConfigTable( EntityTypeBuilder<TUserRole> builder ) {
+    protected virtual void ConfigTable( EntityTypeBuilder<TUserRole> builder ) {
         builder.ToTable( "UserRole", "Permissions", t => t.HasComment( "用户角色" ) );
     }
 
     /// <summary>
     /// 配置标识
     /// </summary>
-    private void ConfigId( EntityTypeBuilder<TUserRole> builder ) {
+    protected virtual void ConfigId( EntityTypeBuilder<TUserRole> builder ) {
         builder.HasKey( t => new { t.UserId, t.RoleId } );
     }
 
     /// <summary>
     /// 配置属性
     /// </summary>
-    private void ConfigProperties( EntityTypeBuilder<TUserRole> builder ) {
+    protected virtual void ConfigProperties( EntityTypeBuilder<TUserRole> builder ) {
         builder.Property( t => t.UserId )
             .HasColumnName( "UserId" )
             .HasComment( "用户标识" );

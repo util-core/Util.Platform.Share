@@ -28,14 +28,14 @@ public abstract class PermissionConfigurationBase<TPermission, TPermissionId, TR
     /// <summary>
     /// 配置表
     /// </summary>
-    private void ConfigTable( EntityTypeBuilder<TPermission> builder ) {
+    protected virtual void ConfigTable( EntityTypeBuilder<TPermission> builder ) {
         builder.ToTable( "Permission", "Permissions", t => t.HasComment( "权限" ) );
     }
 
     /// <summary>
     /// 配置标识
     /// </summary>
-    private void ConfigId( EntityTypeBuilder<TPermission> builder ) {
+    protected virtual void ConfigId( EntityTypeBuilder<TPermission> builder ) {
         builder.Property( t => t.Id )
             .HasColumnName( "PermissionId" )
             .HasComment( "权限标识" );
@@ -44,7 +44,7 @@ public abstract class PermissionConfigurationBase<TPermission, TPermissionId, TR
     /// <summary>
     /// 配置属性
     /// </summary>
-    private void ConfigProperties( EntityTypeBuilder<TPermission> builder ) {
+    protected virtual void ConfigProperties( EntityTypeBuilder<TPermission> builder ) {
         builder.Property( t => t.RoleId )
             .HasColumnName( "RoleId" )
             .HasComment( "角色标识" );
