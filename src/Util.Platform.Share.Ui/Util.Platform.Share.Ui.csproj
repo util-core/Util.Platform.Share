@@ -8,9 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Util.Logging.Serilog" Version="7.1.38" />
-		<PackageReference Include="Util.Ui.NgAlain" Version="7.1.38" />
-		<PackageReference Include="Util.Ui.NgZorro" Version="7.1.38" />
+		<PackageReference Include="Util.Logging.Serilog" Version="7.1.47" />
+		<PackageReference Include="Util.Ui.NgAlain" Version="7.1.47" />
+		<PackageReference Include="Util.Ui.NgZorro" Version="7.1.47" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -32,6 +32,10 @@
 		<None Remove="ClientApp\clear-node-modules.ps1" />
 		<None Remove="ClientApp\start.ps1" />
 		<None Remove="$(SpaRoot)dist\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Util.Platform.Share.Ui.TagHelper\Util.Platform.Share.Ui.TagHelper.csproj" />
 	</ItemGroup>
 
 </Project>

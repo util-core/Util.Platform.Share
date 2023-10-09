@@ -8,8 +8,10 @@ var builder = WebApplication.CreateBuilder( args );
 //ÅäÖÃUtil·þÎñ
 builder.AsBuild()
     .AddNgZorro( t => {
-        t.RootPath = "ClientApp/dist/util-platform";
+        t.EnableI18n = true;
         t.EnableDefaultOptionText = true;
+        t.GenerateHtmlBasePath = "/ClientApp";
+        t.GenerateHtmlSuffix = "html";
     } )
     .AddSerilog()
     .AddUtil();

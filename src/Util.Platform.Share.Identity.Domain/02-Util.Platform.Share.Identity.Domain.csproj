@@ -28,8 +28,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.11" />
-		<PackageReference Include="Util.Domain" Version="7.1.46" />
-		<PackageReference Include="Util.Tenants.Abstractions" Version="7.1.46" />
+		<PackageReference Include="Util.Domain" Version="7.1.47" />
+		<PackageReference Include="Util.Tenants.Abstractions" Version="7.1.47" />
 	</ItemGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />

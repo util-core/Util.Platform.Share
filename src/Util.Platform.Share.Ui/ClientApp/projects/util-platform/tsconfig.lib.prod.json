@@ -4,6 +4,13 @@
     "declarationMap": false
   },
   "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "fullTemplateTypeCheck": true,
+    "enableResourceInlining": true,
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
     "compilationMode": "partial"
   }
 }

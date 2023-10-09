@@ -11,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareModule } from "./share.module";
 import { AlainThemeModule } from '@delon/theme';
-import { Util } from 'util-angular';
 
 registerLocaleData(zh);
 
@@ -47,6 +46,8 @@ const antDesignIcons = AllIcons as {
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 // #endregion
 
+import { Util, AppConfig } from 'util-angular';
+import { appConfig } from './app-config';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     ],
     providers: [
         ...LANG_PROVIDES,
-        { provide: NZ_I18N, useValue: zh_CN }
+        { provide: NZ_I18N, useValue: zh_CN },
+        { provide: AppConfig, useValue: appConfig }
     ],
     bootstrap: [AppComponent]
 })

@@ -28,6 +28,9 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -102,7 +105,7 @@
     "util-platform": {
       "projectType": "library",
       "root": "projects/util-platform",
-      "sourceRoot": "projects/util-platform/src",
+      "sourceRoot": "projects/util-platform",
       "prefix": "lib",
       "architect": {
         "build": {

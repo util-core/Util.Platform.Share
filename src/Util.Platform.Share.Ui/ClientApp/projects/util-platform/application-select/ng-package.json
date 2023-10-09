@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "application-select",
+    "entryFile": "./index.ts"
+  }
+}
