@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Util.Platform.Share.Identity.Data.Repositories;
 
 /// <summary>

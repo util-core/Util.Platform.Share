@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Localization;
 using Util.Platform.Share.Identity.Dtos;
 using Util.Platform.Share.Identity.IdentityServer.Models;
 using Util.Platform.Share.Identity.IdentityServer.Options;
@@ -17,8 +18,9 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest> : Acc
     /// <param name="schemeProvider">认证方案提供器</param>
     /// <param name="events">事件服务</param>
     /// <param name="systemService">系统服务</param>
-    protected AccountControllerBase( IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IEventService events, TSystemService systemService )
-        : base( interaction, schemeProvider, events, systemService ) {
+    /// <param name="localizer">字符串本地化</param>
+    protected AccountControllerBase( IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IEventService events, TSystemService systemService, IStringLocalizer localizer )
+        : base( interaction, schemeProvider, events, systemService, localizer ) {
     }
 }
 
@@ -35,11 +37,14 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
     /// <param name="schemeProvider">认证方案提供器</param>
     /// <param name="events">事件服务</param>
     /// <param name="systemService">系统服务</param>
-    protected AccountControllerBase( IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IEventService events, TSystemService systemService ) {
+    /// <param name="localizer">字符串本地化</param>
+    protected AccountControllerBase( IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IEventService events, 
+        TSystemService systemService, IStringLocalizer localizer ) {
         InteractionService = interaction ?? throw new ArgumentNullException( nameof( interaction ) );
         AuthenticationSchemeProvider = schemeProvider ?? throw new ArgumentNullException( nameof( schemeProvider ) );
         EventService = events ?? throw new ArgumentNullException( nameof( events ) );
         SystemService = systemService ?? throw new ArgumentNullException( nameof( systemService ) );
+        Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
     /// <summary>
@@ -58,6 +63,10 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
     /// 系统服务
     /// </summary>
     protected TSystemService SystemService { get; }
+    /// <summary>
+    /// 字符串本地化
+    /// </summary>
+    protected IStringLocalizer Localizer { get; }
 
     /// <summary>
     /// 打开登录页面
@@ -102,6 +111,18 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUser
     [HttpPost]
     [ValidateAntiForgeryToken]
     public virtual async Task<IActionResult> Login( LoginInputModel model ) {
+        if ( model == null || model.UserName.IsEmpty() ) {
+            var viewModel = new LoginViewModel {
+                Message = Localizer["UserNamePrompt"]
+            };
+            return View( viewModel );
+        }
+        if ( model.Password.IsEmpty() ) {
+            var viewModel = new LoginViewModel {
+                Message = Localizer["PasswordPrompt"]
+            };
+            return View( viewModel );
+        }
         var context = await InteractionService.GetAuthorizationContextAsync( model.ReturnUrl );
         if ( context == null )
             return Redirect( "~/" );

@@ -62,7 +62,7 @@ public abstract class UserDtoBase<TAuditUserId> : DtoBase {
     /// 锁定截止
     ///</summary>
     [Display( Name = "identity.user.lockoutEnd" )]
-    public DateTime? LockoutEnd { get; set; }
+    public DateTimeOffset? LockoutEnd { get; set; }
     /// <summary>
     /// 登录失败次数
     ///</summary>

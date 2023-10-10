@@ -67,7 +67,7 @@ public abstract class SignInManagerBase<TUser, TUserId, TRole, TAuditUserId> : I
     protected IIpAccessor IpAccessor { get; }
 
     /// <inheritdoc />
-    public virtual async Task<SignInResult> SignInAsync( TUser user, string password, bool isPersistent, bool lockoutOnFailure ) {
+    public virtual async Task<SignInResult> SignInAsync( TUser user, string password, bool isPersistent, bool lockoutOnFailure = true ) {
         if ( user == null )
             return new SignInResult( SignInState.Failed, null, Localizer["InvalidAccountOrPassword"] );
         var signInResult = await IdentitySignInManager.PasswordSignInAsync( user, password, isPersistent, lockoutOnFailure );

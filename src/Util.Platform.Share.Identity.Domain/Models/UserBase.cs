@@ -228,6 +228,7 @@ public abstract class UserBase<TUser, TUserId, TRole, TAuditUserId>
         base.Init();
         InitUserName();
         InitEnabled();
+        InitLockoutEnabled();
     }
 
     /// <summary>
@@ -249,6 +250,13 @@ public abstract class UserBase<TUser, TUserId, TRole, TAuditUserId>
     /// </summary>
     protected virtual void InitEnabled() {
         Enabled ??= true;
+    }
+
+    /// <summary>
+    /// 初始化启用锁定
+    /// </summary>
+    protected virtual void InitLockoutEnabled() {
+        LockoutEnabled = true;
     }
 
     /// <summary>
