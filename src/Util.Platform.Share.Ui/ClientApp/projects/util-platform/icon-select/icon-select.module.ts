@@ -14,13 +14,14 @@ import { NzEmptyModule } from "ng-zorro-antd/empty";
 import { NzPaginationModule } from "ng-zorro-antd/pagination";
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { IconSelectComponent } from "./icon-select.component";
+import { FormsModule } from "@angular/forms";
 
 /**
  * 图标选择模块
  */
 @NgModule({
     imports: [NzIconModule, NzButtonModule, NzPopoverModule, NzInputModule, NzCardModule, NgIf, NgFor, NgStyle,
-        NzEmptyModule, NzPaginationModule, NzToolTipModule],
+        NzEmptyModule, NzPaginationModule, NzToolTipModule, FormsModule],
     declarations: [IconSelectComponent],
     exports: [IconSelectComponent]
 })

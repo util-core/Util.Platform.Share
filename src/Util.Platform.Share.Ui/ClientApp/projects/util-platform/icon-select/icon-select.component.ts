@@ -28,6 +28,7 @@ export class IconSelectComponent implements OnInit, AfterViewInit {
     cardWidth = 350;
     cardHeight = 270;
     iconSpan = 20;
+    searchValue: any;
     private searchText$ = new Subject<string>();
     @Input() selectedIcon = '';
     @Output() readonly onSelectIcon = new EventEmitter<string>();
@@ -72,7 +73,6 @@ export class IconSelectComponent implements OnInit, AfterViewInit {
     }
 
     selectIcon(item: IconItem): void {
-        debugger
         this.selectedIcon = item.icon;
         this.sourceIconsArray.forEach(icon => (icon.isChecked = false));
         this.iconsStrShowArray.forEach(icon => (icon.isChecked = false));
