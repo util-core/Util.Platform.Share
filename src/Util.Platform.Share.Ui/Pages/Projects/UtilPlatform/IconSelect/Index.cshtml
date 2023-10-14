@@ -2,12 +2,12 @@
 
 @*图标*@
 <util-icon bind-type="selectedIcon || 'appstore'" theme="Outline" style="cursor: pointer"
-    popover-trigger="Click" bind-popover-content="contentTemplate" bind-popover-title="searchTitle" bind-popover-visible="visible">
+    popover-trigger="Click" bind-popover-content="contentTemplate" bind-popover-title="searchTitle" bindon-popover-visible ="visible">
 </util-icon>
 
 @*搜索框*@
 <util-template id="searchTitle">
-    <util-input on-input="searchIcon($event)" />
+    <util-input on-input="searchIcon($event)" ng-model="searchValue" />
 </util-template>
 
 @*图标选择弹出框*@
