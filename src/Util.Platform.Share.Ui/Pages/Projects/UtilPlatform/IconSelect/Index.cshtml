@@ -1,0 +1,35 @@
+﻿@page
+
+@*图标*@
+<util-icon bind-type="selectedIcon || 'appstore'" theme="Outline" style="cursor: pointer"
+    popover-trigger="Click" bind-popover-content="contentTemplate" bind-popover-title="searchTitle" bind-popover-visible="visible">
+</util-icon>
+
+@*搜索框*@
+<util-template id="searchTitle">
+    <util-input on-input="searchIcon($event)" />
+</util-template>
+
+@*图标选择弹出框*@
+<util-template id="contentTemplate">
+    <util-card style="width:{{cardWidth}}px; height: {{cardHeight}}px; overflow: auto" body-style="{ padding: '0' }" borderless="true">
+        <util-card ng-if="iconsStrShowArray && iconsStrShowArray.length > 0; else noResult">
+            <util-container ng-for="let item of iconsStrShowArray">
+                <util-card-grid class="center" ng-style="{ width: this.iconSpan+'%'}" on-click="selectIcon(item)">
+                    <util-icon theme="Outline" bind-type="item.icon" bind-tooltip-title="item.icon" style="font-size: 20px" ng-style="{ color: item.isChecked ? '#409eff' : '' }"></util-icon>
+                </util-card-grid>
+            </util-container>
+        </util-card>
+        <util-template id="noResult">
+            <util-empty></util-empty>
+        </util-template>
+    </util-card>
+    
+    <util-pagination class="m-t-10" style="max-width: 300px" show-size-changer="true"
+         bind-page-size="pageObj.pageSize" page-size-options="[50,100,200,500]"
+         size="Small" bind-total="iconsStrAllArray.length"
+         bindon-page-index="pageObj.pageNum" on-page-index-change="getData($event)"
+         on-page-size-change="pageSizeChange($event)">
+    </util-pagination>
+
+</util-template>

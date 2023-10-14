@@ -67,6 +67,7 @@ import { NgxTinymceModule } from 'ngx-tinymce';
 import { AlainThemeModule } from '@delon/theme';
 import { UtilModule } from "util-angular";
 import { ApplicationSelectModule } from 'util-platform/application-select';
+import { IconSelectModule } from 'util-platform/icon-select';
 
 @NgModule({
     exports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NzButtonModule, NzCardModule, NzIconModule, NzTypographyModule, NzDividerModule,
@@ -79,7 +80,7 @@ import { ApplicationSelectModule } from 'util-platform/application-select';
         NzAlertModule, NzDrawerModule, NzModalModule, NzPopconfirmModule, NzProgressModule, NzResultModule, NzSkeletonModule, NzSpinModule, NzAnchorModule,
         NzMessageModule, NzTreeModule,
         AlainThemeModule, NgxTinymceModule, UtilModule,
-        ApplicationSelectModule]
+        ApplicationSelectModule, IconSelectModule]
 })
 export class ShareModule {
 }

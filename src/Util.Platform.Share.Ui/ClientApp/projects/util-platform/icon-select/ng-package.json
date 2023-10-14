@@ -1,0 +1,6 @@
+{
+  "lib": {
+    "flatModuleFile": "icon-select",
+    "entryFile": "./index.ts"
+  }
+}

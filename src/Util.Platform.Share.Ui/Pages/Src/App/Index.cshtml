@@ -1,4 +1,11 @@
 ﻿@page
 
+<util-card>
+<util-row >
+    <util-input name="icon" bind-add-on-after="selectIcon" />
+    <util-template id="selectIcon">
+        <platform-icon-select columns="8" pageSize="100" [selectedIcon]="model.icon" [visible]="selectIconVisible" (selectIcon)="selectedIcon($event)"></platform-icon-select>
+    </util-template>
+</util-row>
 
-<biz-application-select on-click="click($event)"></biz-application-select>
+</util-card>

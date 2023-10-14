@@ -26,7 +26,8 @@
     ],
     "paths": {
       "environment": [ "src/environments/environment" ],
-      "util-platform/application-select": [ "dist/util-platform/application-select" ]
+      "util-platform/application-select": [ "dist/util-platform/application-select" ],
+      "util-platform/icon-select": [ "dist/util-platform/icon-select" ]
     }
   },
   "angularCompilerOptions": {
