@@ -64,8 +64,4 @@ export class AppComponent extends ComponentBase{
         super(injector);
         this.model = new ModuleViewModel();
     }
-
-    click(application) {
-        this.util.message.success(application.name);
-    }
 }

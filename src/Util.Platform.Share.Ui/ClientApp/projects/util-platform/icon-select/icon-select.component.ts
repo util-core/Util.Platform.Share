@@ -21,12 +21,12 @@ interface IconItem {
     templateUrl: './html/index.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IconSelectComponent implements OnInit, AfterViewInit {
-    @Input() visible = false;
-    @Input() columns = 5;
-    @Input() rows = 5;
+export class IconSelectComponent implements OnInit, AfterViewInit {    
+    @Input() columns = 10;
+    @Input() rows = 10;
     @Input() pageSize = 100;
-    @Input() pageSizeOptions = [50,100,200,300,500];
+    @Input() pageSizeOptions = [100, 200, 500];
+    visible = false;
     pageIndex = 1;
     cardWidth = 350;
     cardHeight = 270;

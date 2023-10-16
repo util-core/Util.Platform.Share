@@ -4,7 +4,7 @@
 <util-row >
     <util-input name="icon" bind-add-on-after="selectIcon" />
     <util-template id="selectIcon">
-        <platform-icon-select columns="6" rows="5" pageSize="50" [pageSizeOptions]="[10,20,30,40,50]" p [selectedIcon]="model.icon" [visible]="selectIconVisible" (selectIcon)="selectedIcon($event)"></platform-icon-select>
+            <biz-icon-select selected-icon="model.icon" on-select-icon="selectedIcon($event)" rows="3" columns="3" page-size="9" page-size-options="[8,20]"></biz-icon-select>
     </util-template>
 </util-row>
 
