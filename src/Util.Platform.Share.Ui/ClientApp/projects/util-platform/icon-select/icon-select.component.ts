@@ -24,7 +24,10 @@ interface IconItem {
 export class IconSelectComponent implements OnInit, AfterViewInit {
     @Input() visible = false;
     @Input() columns = 5;
+    @Input() rows = 5;
     @Input() pageSize = 100;
+    @Input() pageSizeOptions = [50,100,200,300,500];
+    pageIndex = 1;
     cardWidth = 350;
     cardHeight = 270;
     iconSpan = 20;
@@ -32,10 +35,6 @@ export class IconSelectComponent implements OnInit, AfterViewInit {
     private searchText$ = new Subject<string>();
     @Input() selectedIcon = '';
     @Output() readonly onSelectIcon = new EventEmitter<string>();
-    pageObj = {
-        pageSize: 100,
-        pageNum: 1
-    };
     iconsStrAllArray: IconItem[] = [];
     sourceIconsArray: IconItem[] = [];
     iconsStrShowArray: IconItem[] = [];
@@ -83,21 +82,20 @@ export class IconSelectComponent implements OnInit, AfterViewInit {
     }
 
     pageSizeChange(event: number): void {
-        this.pageObj = { ...this.pageObj, pageSize: event };
+        this.pageSize = event ;
         this.getData(1);
     }
 
-    getData(event: number = this.pageObj.pageNum): void {
-        this.pageObj = { ...this.pageObj, pageNum: event };
-        this.iconsStrShowArray = [...this.iconsStrAllArray.slice((this.pageObj.pageNum - 1) * this.pageObj.pageSize, this.pageObj.pageNum * this.pageObj.pageSize)];
+    getData(event: number = this.pageIndex): void {
+        this.pageIndex = event;
+        this.iconsStrShowArray = [...this.iconsStrAllArray.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize)];
         this.cdr.markForCheck();
     }
 
     ngOnInit(): void {
         this.cardWidth = 66.8 * this.columns;
-        this.cardHeight = (71.5 * (this.pageSize / this.columns)) * 0.4;
+        this.cardHeight = 72 * this.rows;
         this.iconSpan = (100 / this.columns);
-        this.pageObj.pageSize = this.pageSize;
         this.getData();
     }
 

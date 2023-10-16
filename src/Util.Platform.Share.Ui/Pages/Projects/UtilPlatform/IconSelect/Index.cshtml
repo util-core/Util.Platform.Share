@@ -25,10 +25,10 @@
         </util-template>
     </util-card>
     
-    <util-pagination class="m-t-10" style="max-width: 300px" show-size-changer="true"
-         bind-page-size="pageObj.pageSize" page-size-options="[50,100,200,500]"
+    <util-pagination class="m-t-10" style="max-width: {{cardWidth}}px" show-size-changer="true"
+         bind-page-size="pageSize" page-size-options="pageSizeOptions"
          size="Small" bind-total="iconsStrAllArray.length"
-         bindon-page-index="pageObj.pageNum" on-page-index-change="getData($event)"
+         bindon-page-index="pageIndex" on-page-index-change="getData($event)"
          on-page-size-change="pageSizeChange($event)">
     </util-pagination>
 
