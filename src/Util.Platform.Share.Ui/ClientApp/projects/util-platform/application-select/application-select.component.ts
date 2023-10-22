@@ -19,14 +19,6 @@ export class ApplicationSelectComponent extends ComponentBase implements OnInit 
      */
     selected: ApplicationModel;
     /**
-     * 是否仅加载Api应用程序
-     */
-    @Input() loadApiOnly: boolean;
-    /**
-     * 是否仅加载非Api应用程序
-     */
-    @Input() loadNonApiOnly: boolean;
-    /**
      * 单击事件
      */
     @Output() onClick = new EventEmitter<ApplicationModel>();
@@ -53,11 +45,7 @@ export class ApplicationSelectComponent extends ComponentBase implements OnInit 
      * 加载应用程序列表
      */
     loadApplications() {
-        let url = "application/all";
-        if (this.loadApiOnly )
-            url = "application/apis";
-        if (this.loadNonApiOnly)
-            url = "application/non-apis";
+        let url = "application/enabled";
         this.util.webapi.get<ApplicationModel[]>(url).loading().handle({
             ok: result => {
                 this.list = result;

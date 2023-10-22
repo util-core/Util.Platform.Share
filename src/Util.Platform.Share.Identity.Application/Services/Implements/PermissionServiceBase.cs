@@ -7,7 +7,7 @@ namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 /// <summary>
 /// 权限服务
 /// </summary>
-public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource, TApplication, TUser, TRole, TModule, TOperationApi, TAppResources, TModuleDto> 
+public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource, TApplication, TUser, TRole, TModule, TAppResources, TModuleDto> 
     : ServiceBase, IPermissionServiceBase<TAppResources>
     where TUnitOfWork : IUnitOfWork
     where TPermission : PermissionBase<TPermission, TResource>, new()
@@ -16,7 +16,6 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     where TUser : UserBase<TUser, TRole>
     where TRole : RoleBase<TRole, TUser>
     where TModule : ModuleBase<TModule>
-    where TOperationApi : OperationApiBase<TOperationApi>, new() 
     where TAppResources : AppResourcesBase<TModuleDto>,new()
     where TModuleDto : ModuleDtoBase<TModuleDto> {
 
@@ -33,10 +32,9 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     /// <param name="roleRepository">角色仓储</param>
     /// <param name="resourceRepository">资源仓储</param>
     /// <param name="moduleRepository">模块仓储</param>
-    /// <param name="operationApiRepository">操作Api仓储</param>
     protected PermissionServiceBase( IServiceProvider serviceProvider, ICache cache, TUnitOfWork unitOfWork,
         IPermissionRepositoryBase<TPermission> permissionRepository, IUserRepositoryBase<TUser> userRepository, IRoleRepositoryBase<TRole> roleRepository,
-        IResourceRepositoryBase<TResource> resourceRepository, IModuleRepositoryBase<TModule> moduleRepository, IOperationApiRepositoryBase<TOperationApi> operationApiRepository ) : base( serviceProvider ) {
+        IResourceRepositoryBase<TResource> resourceRepository, IModuleRepositoryBase<TModule> moduleRepository ) : base( serviceProvider ) {
         CacheService = cache ?? throw new ArgumentNullException( nameof( cache ) );
         UnitOfWork = unitOfWork ?? throw new ArgumentNullException( nameof( unitOfWork ) );
         PermissionRepository = permissionRepository ?? throw new ArgumentNullException( nameof( permissionRepository ) );
@@ -44,7 +42,6 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
         RoleRepository = roleRepository ?? throw new ArgumentNullException( nameof( roleRepository ) );
         ResourceRepository = resourceRepository ?? throw new ArgumentNullException( nameof( resourceRepository ) );
         ModuleRepository = moduleRepository ?? throw new ArgumentNullException( nameof( moduleRepository ) );
-        OperationApiRepository = operationApiRepository ?? throw new ArgumentNullException( nameof( operationApiRepository ) );
     }
 
     #endregion
@@ -79,10 +76,6 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     /// 模块仓储
     /// </summary>
     protected IModuleRepositoryBase<TModule> ModuleRepository { get; }
-    /// <summary>
-    /// 操作Api仓储
-    /// </summary>
-    protected IOperationApiRepositoryBase<TOperationApi> OperationApiRepository { get; }
 
     #endregion
 
@@ -193,24 +186,23 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     #region GetAclAsync
 
     /// <inheritdoc />
-    public virtual async Task<List<string>> GetAclAsync( Guid userId, CancellationToken cancellationToken = default ) {
+    public virtual async Task<List<string>> GetAclAsync( Guid applicationId, Guid userId, CancellationToken cancellationToken = default ) {
         if ( userId.IsEmpty() )
             return new List<string>();
         var roleIds = await RoleRepository.GetRoleIdsByUserIdAsync( userId );
-        var result = await GetAcl( roleIds, cancellationToken );
-        var operationApis = await GetOperationApis( roleIds, cancellationToken );
-        result.AddRange( operationApis );
+        var result = await GetAcl( applicationId, roleIds, cancellationToken );
         return result.Where( uri => uri.IsEmpty() == false ).Distinct().ToList();
     }
 
     /// <summary>
     /// 获取访问控制列表
     /// </summary>
-    protected virtual async Task<List<string>> GetAcl( List<Guid> roleIds, CancellationToken cancellationToken ) {
+    protected virtual async Task<List<string>> GetAcl( Guid applicationId, List<Guid> roleIds, CancellationToken cancellationToken ) {
         var grantQuery =
                 from resource in ResourceRepository.Find()
                 join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
                 where resource.Enabled &&
+                      resource.ApplicationId == applicationId &&
                       resource.Uri != null &&
                       roleIds.Contains( permission.RoleId ) &&
                       permission.IsDeny == false
@@ -220,53 +212,13 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
                 from resource in ResourceRepository.Find()
                 join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
                 where resource.Enabled &&
+                      resource.ApplicationId == applicationId &&
                       resource.Uri != null &&
                       roleIds.Contains( permission.RoleId ) &&
                       permission.IsDeny
                 select resource.Uri
             ;
-        return await grantQuery.Except( denyQuery ).ToListAsync( cancellationToken );
-    }
-
-    /// <summary>
-    /// 获取操作绑定的Api资源标识列表
-    /// </summary>
-    protected virtual async Task<List<string>> GetOperationApis( List<Guid> roleIds, CancellationToken cancellationToken ) {
-        var OperationIdsQuery = GetOperationIdsQueryable( roleIds );
-        var queryable = from apiResource in ResourceRepository.Find()
-                        join operationApi in OperationApiRepository.Find() on apiResource.Id equals operationApi.ApiId
-                        join operationId in OperationIdsQuery on operationApi.OperationId equals operationId
-                        where apiResource.Enabled &&
-                              apiResource.Uri != null
-                        select apiResource.Uri;
-        return await queryable.ToListAsync( cancellationToken );
-    }
-
-    /// <summary>
-    /// 获取授予访问的操作资源标识查询对象
-    /// </summary>
-    protected virtual IQueryable<Guid> GetOperationIdsQueryable( List<Guid> roleIds ) {
-        var grantQuery =
-                from resource in ResourceRepository.Find()
-                join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
-                where resource.Enabled &&
-                      resource.Uri != null &&
-                      resource.Type == ResourceType.Operation &&
-                      roleIds.Contains( permission.RoleId ) &&
-                      permission.IsDeny == false
-                select resource.Id
-            ;
-        var denyQuery =
-                from resource in ResourceRepository.Find()
-                join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
-                where resource.Enabled &&
-                      resource.Uri != null &&
-                      resource.Type == ResourceType.Operation &&
-                      roleIds.Contains( permission.RoleId ) &&
-                      permission.IsDeny
-                select resource.Id
-            ;
-        return grantQuery.Except( denyQuery );
+        return await grantQuery.Except( denyQuery ).AsNoTracking().ToListAsync( cancellationToken );
     }
 
     #endregion

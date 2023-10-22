@@ -89,26 +89,6 @@ public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentity
 
     #endregion
 
-    #region GetEnabledApiApplicationsAsync
-
-    /// <inheritdoc />
-    public virtual async Task<List<TApplicationDto>> GetEnabledApiApplicationsAsync() {
-        var entities = await ApplicationRepository.NoTracking().FindAllAsync( t => t.Enabled && t.IsApi );
-        return entities.Select( ToDto ).ToList();
-    }
-
-    #endregion
-
-    #region GetEnabledNonApiApplicationsAsync
-
-    /// <inheritdoc />
-    public virtual async Task<List<TApplicationDto>> GetEnabledNonApiApplicationsAsync() {
-        var entities = await ApplicationRepository.NoTracking().FindAllAsync( t => t.Enabled && !t.IsApi );
-        return entities.Select( ToDto ).ToList();
-    }
-
-    #endregion
-
     #region GetByCodeAsync
 
     /// <inheritdoc />

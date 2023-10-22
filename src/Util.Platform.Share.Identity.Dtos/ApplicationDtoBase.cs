@@ -30,11 +30,6 @@ public abstract class ApplicationDtoBase<TAuditUserId> : DtoBase {
     [Display( Name = "identity.application.enabled" )]
     public bool Enabled { get; set; }
     /// <summary>
-    /// 是否Api
-    ///</summary>
-    [Display( Name = "identity.application.isApi" )]
-    public bool IsApi { get; set; }
-    /// <summary>
     /// 是否客户端
     ///</summary>
     [Display( Name = "identity.application.isClient" )]

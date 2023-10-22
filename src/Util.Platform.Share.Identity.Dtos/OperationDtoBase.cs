@@ -21,10 +21,6 @@ public abstract class OperationDtoBase<TApplicationId, TResourceParentId, TAudit
     [Display( Name = "identity.application.name" )]
     public string ApplicationName { get; set; }
     /// <summary>
-    /// Api资源应用程序标识
-    /// </summary>
-    public TApplicationId ApiApplicationId { get; set; }
-    /// <summary>
     /// 模块标识
     /// </summary>
     [Display( Name = "identity.module.name" )]
@@ -59,15 +55,6 @@ public abstract class OperationDtoBase<TApplicationId, TResourceParentId, TAudit
     [StringLength( 500 )]
     [Display( Name = "identity.operation.remark" )]
     public string Remark { get; set; }
-    /// <summary>
-    /// 是否绑定Api资源
-    /// </summary>
-    [Display( Name = "identity.operation.isBindApi" )]
-    public bool? IsBindApi { get; set; }
-    /// <summary>
-    /// 选中的Api资源标识列表
-    /// </summary>
-    public List<string> ApiRourceIds { get; set; }
     /// <summary>
     /// 启用
     /// </summary>

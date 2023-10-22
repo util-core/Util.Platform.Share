@@ -19,6 +19,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Swagger\index.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Swagger\index.html" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="..\..\build\icon.jpg">
 			<Pack>True</Pack>
 			<Visible>False</Visible>

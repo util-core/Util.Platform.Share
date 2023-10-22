@@ -17,10 +17,6 @@ public abstract class CreateOperationRequestBase<TApplicationId, TResourceParent
     [Required]
     public TApplicationId ApplicationId { get; set; }
     /// <summary>
-    /// Api资源应用程序标识
-    /// </summary>
-    public TApplicationId ApiApplicationId { get; set; }
-    /// <summary>
     /// 模块标识
     /// </summary>
     [Required]
@@ -50,15 +46,6 @@ public abstract class CreateOperationRequestBase<TApplicationId, TResourceParent
     /// </summary>
     [Display( Name = "identity.operation.enabled" )]
     public bool? Enabled { get; set; }
-    /// <summary>
-    /// 是否绑定Api资源
-    /// </summary>
-    [Display( Name = "identity.operation.isBindApi" )]
-    public bool? IsBindApi { get; set; }
-    /// <summary>
-    /// 选中的Api资源标识列表
-    /// </summary>
-    public List<string> ApiRourceIds { get; set; }
     /// <summary>
     /// 备注
     /// </summary>

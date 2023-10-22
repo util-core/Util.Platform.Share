@@ -33,7 +33,8 @@ public interface IPermissionServiceBase<TAppResources, in TUserId, in TApplicati
     /// <summary>
     /// 获取用户的访问控制列表
     /// </summary>
+    /// <param name="applicationId">应用程序标识</param>
     /// <param name="userId">用户标识</param>
     /// <param name="cancellationToken">取消令牌</param>
-    Task<List<string>> GetAclAsync( TUserId userId, CancellationToken cancellationToken = default );
+    Task<List<string>> GetAclAsync( TApplicationId applicationId, TUserId userId, CancellationToken cancellationToken = default );
 }

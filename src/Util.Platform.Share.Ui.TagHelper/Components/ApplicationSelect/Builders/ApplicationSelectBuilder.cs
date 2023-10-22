@@ -20,22 +20,6 @@ public class ApplicationSelectBuilder : AngularTagBuilder {
     }
 
     /// <summary>
-    /// 配置仅加载Api应用程序
-    /// </summary>
-    public ApplicationSelectBuilder LoadApiOnly() {
-        AttributeIfNotEmpty( "[loadApiOnly]", _config.GetBoolValue( "load-api-only" ) );
-        return this;
-    }
-
-    /// <summary>
-    /// 配置仅加载非Api应用程序
-    /// </summary>
-    public ApplicationSelectBuilder LoadNonApiOnly() {
-        AttributeIfNotEmpty( "[loadNonApiOnly]", _config.GetBoolValue( "load-non-api-only" ) );
-        return this;
-    }
-
-    /// <summary>
     /// 配置单击事件
     /// </summary>
     public ApplicationSelectBuilder OnClick() {
@@ -48,6 +32,6 @@ public class ApplicationSelectBuilder : AngularTagBuilder {
     /// </summary>
     public override void Config() {
         base.Config();
-        LoadApiOnly().LoadNonApiOnly().OnClick();
+        OnClick();
     }
 }

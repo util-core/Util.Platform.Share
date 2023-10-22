@@ -8,7 +8,7 @@ namespace Util.Platform.Share.Identity.IdentityServer.Controllers;
 /// <summary>
 /// 用户认证控制器
 /// </summary>
-public abstract class AccountControllerBase<TSystemService, TLoginRequest> : AccountControllerBase<TSystemService, TLoginRequest, Guid>
+public abstract class AccountControllerBase<TSystemService, TLoginRequest> : AccountControllerBase<TSystemService, TLoginRequest, Guid, Guid>
     where TSystemService : ISystemServiceBase<TLoginRequest>
     where TLoginRequest : LoginRequestBase, new() {
     /// <summary>
@@ -27,8 +27,8 @@ public abstract class AccountControllerBase<TSystemService, TLoginRequest> : Acc
 /// <summary>
 /// 用户认证控制器
 /// </summary>
-public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUserId> : Controller
-    where TSystemService : ISystemServiceBase<TLoginRequest, TUserId>
+public abstract class AccountControllerBase<TSystemService, TLoginRequest, TUserId, TApplicationId> : Controller
+    where TSystemService : ISystemServiceBase<TLoginRequest, TUserId, TApplicationId>
     where TLoginRequest : LoginRequestBase, new() {
     /// <summary>
     /// 初始化用户认证控制器

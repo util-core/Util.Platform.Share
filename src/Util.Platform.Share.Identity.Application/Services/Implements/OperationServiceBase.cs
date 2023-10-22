@@ -8,17 +8,15 @@ namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 /// <summary>
 /// 操作资源服务
 /// </summary>
-public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication, TOperation, TOperationApi, TOperationDto, TResourceQuery, TCreateOperationRequest, TApiResourceDto>
-    : QueryServiceBase<TResource, TOperationDto, TResourceQuery>, IOperationServiceBase<TOperationDto, TResourceQuery, TCreateOperationRequest, TApiResourceDto>
+public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication, TOperation, TOperationDto, TResourceQuery, TCreateOperationRequest>
+    : QueryServiceBase<TResource, TOperationDto, TResourceQuery>, IOperationServiceBase<TOperationDto, TResourceQuery, TCreateOperationRequest>
     where TUnitOfWork : IUnitOfWork
     where TResource : ResourceBase<TResource, TApplication>
     where TApplication : ApplicationBase<TApplication> 
     where TOperation : OperationBase<TOperation>
-    where TOperationApi : OperationApiBase<TOperationApi>,new()
     where TOperationDto : OperationDtoBase,new()
     where TResourceQuery : ResourceQueryBase
-    where TCreateOperationRequest : CreateOperationRequestBase 
-    where TApiResourceDto : ApiResourceDtoBase<TApiResourceDto> {
+    where TCreateOperationRequest : CreateOperationRequestBase {
 
     #region 构造方法
 
@@ -29,14 +27,12 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     /// <param name="unitOfWork">工作单元</param>
     /// <param name="resourceRepository">资源仓储</param>
     /// <param name="operationRepository">操作资源仓储</param>
-    /// <param name="operationApiRepository">操作Api仓储</param>
     /// <param name="localizer">本地化查找器</param>
     protected OperationServiceBase( IServiceProvider serviceProvider, TUnitOfWork unitOfWork, IResourceRepositoryBase<TResource> resourceRepository,
-        IOperationRepositoryBase<TOperation> operationRepository, IOperationApiRepositoryBase<TOperationApi> operationApiRepository, IStringLocalizer localizer ) : base( serviceProvider, resourceRepository ) {
+        IOperationRepositoryBase<TOperation> operationRepository, IStringLocalizer localizer ) : base( serviceProvider, resourceRepository ) {
         UnitOfWork = unitOfWork ?? throw new ArgumentNullException( nameof( unitOfWork ) );
         ResourceRepository = resourceRepository ?? throw new ArgumentNullException( nameof( resourceRepository ) );
         OperationRepository = operationRepository ?? throw new ArgumentNullException( nameof( operationRepository ) );
-        OperationApiRepository = operationApiRepository ?? throw new ArgumentNullException( nameof( operationApiRepository ) );
         Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
@@ -56,10 +52,6 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     /// 操作资源仓储
     /// </summary>
     protected IOperationRepositoryBase<TOperation> OperationRepository { get; }
-    /// <summary>
-    /// 操作Api仓储
-    /// </summary>
-    protected IOperationApiRepositoryBase<TOperationApi> OperationApiRepository { get; }
     /// <summary>
     /// 本地化查找器
     /// </summary>
@@ -107,7 +99,6 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
         entity.Init();
         await Validate( entity );
         await OperationRepository.AddAsync( entity );
-        await SetApiResources( request.ApiApplicationId.SafeValue(), entity.Id, request.ApiRourceIds );
         await UnitOfWork.CommitAsync();
         WriteCreationLog( entity );
         return entity.Id.ToString();
@@ -138,34 +129,6 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     }
 
     /// <summary>
-    /// 设置绑定的Api资源
-    /// </summary>
-    protected virtual async Task SetApiResources( Guid apiApplicationId, Guid operationId, List<string> apiRourceIds ) {
-        if ( apiRourceIds.IsEmpty() )
-            return;
-        if ( apiApplicationId.IsEmpty() )
-            throw new ArgumentNullException( nameof( apiApplicationId ) );
-        var originalApiResourceIds = await OperationApiRepository.GetApiIdsByOperationIdAsync( operationId, apiApplicationId );
-        var result = apiRourceIds.ToGuidList().Compare( originalApiResourceIds );
-        await OperationApiRepository.AddAsync( CreateOperationApis( operationId, result.CreateList ) );
-        await OperationApiRepository.RemoveAsync( operationId, result.DeleteList );
-    }
-
-    /// <summary>
-    /// 创建操作API列表
-    /// </summary>
-    protected virtual List<TOperationApi> CreateOperationApis( Guid operationId, List<Guid> apiResourceIds ) {
-        return apiResourceIds.Select( resourceId => {
-            var entity = new TOperationApi {
-                OperationId = operationId,
-                ApiId = resourceId
-            };
-            entity.Init();
-            return entity;
-        } ).ToList();
-    }
-
-    /// <summary>
     /// 写创建日志
     /// </summary>
     protected virtual void WriteCreationLog( TOperation entity ) {
@@ -189,7 +152,6 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
         await Validate( entity );
         var changes = oldEntity.GetChanges( entity );
         await OperationRepository.UpdateAsync( entity );
-        await SetApiResources( request.ApiApplicationId.SafeValue(), entity.Id, request.ApiRourceIds );
         await UnitOfWork.CommitAsync();
         WriteUpdateLog( entity, changes );
     }
@@ -217,32 +179,11 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
             return;
         foreach ( var entity in entities ) {
             await ResourceRepository.RemoveAsync( entity );
-            await OperationApiRepository.RemoveAsync( entity.Id );
         }
         await UnitOfWork.CommitAsync();
         Log.Append( "操作资源{OperationName}删除成功,", entities.Select( t => t.Name ).Join() )
             .Append( "业务标识: {Id}", entities.Select( t => t.Id ).Join() )
             .LogInformation();
-    }
-
-    #endregion
-
-    #region GetApiResourceIdsAsync
-
-    /// <inheritdoc />
-    public virtual async Task<List<Guid>> GetApiResourceIdsAsync( Guid operationId ) {
-        return await OperationApiRepository.GetApiIdsByOperationIdAsync( operationId );
-    }
-
-    #endregion
-
-    #region GetApiResourcesAsync
-
-    /// <inheritdoc />
-    public virtual async Task<List<TApiResourceDto>> GetApiResourcesAsync( Guid operationId ) {
-        var apiIds = await GetApiResourceIdsAsync( operationId );
-        var apis = await ResourceRepository.FindByIdsAsync( apiIds );
-        return apis.Where( t => t.Uri.IsEmpty() == false ).Select( t => t.MapTo<TApiResourceDto>() ).ToList();
     }
 
     #endregion

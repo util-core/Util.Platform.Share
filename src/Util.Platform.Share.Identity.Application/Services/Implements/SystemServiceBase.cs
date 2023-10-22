@@ -7,7 +7,7 @@ namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 /// <summary>
 /// 系统服务
 /// </summary>
-public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TApplication, TUser, TRole, TAppResources, TModuleDto,TLoginRequest>
+public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TApplication, TUser, TRole, TAppResources, TModuleDto, TLoginRequest>
     : ServiceBase, ISystemServiceBase<TLoginRequest>
     where TUnitOfWork : IUnitOfWork
     where TPermission : PermissionBase<TPermission, TResource>, new()
@@ -87,18 +87,18 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
     /// 获取用户
     /// </summary>
     protected virtual async Task<TUser> GetUser( TLoginRequest request ) {
-        if ( request.UserName.IsEmpty() == false )
+        if( request.UserName.IsEmpty() == false )
             return await UserManager.FindByNameAsync( request.UserName );
-        if ( request.PhoneNumber.IsEmpty() == false )
+        if( request.PhoneNumber.IsEmpty() == false )
             return await UserManager.FindByPhoneAsync( request.PhoneNumber );
-        if ( request.Email.IsEmpty() == false )
+        if( request.Email.IsEmpty() == false )
             return await UserManager.FindByEmailAsync( request.Email );
-        if ( request.Account.IsEmpty() )
+        if( request.Account.IsEmpty() )
             return null;
         var user = await UserManager.FindByNameAsync( request.Account );
-        if ( user == null )
+        if( user == null )
             user = await UserManager.FindByPhoneAsync( request.Account );
-        if ( user == null )
+        if( user == null )
             user = await UserManager.FindByEmailAsync( request.Account );
         return user;
     }
@@ -110,7 +110,7 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
     /// <inheritdoc />
     public virtual async Task SignOutAsync( CancellationToken cancellationToken = default ) {
         await SignInManager.SignOutAsync();
-        await EventBus.PublishAsync( new SignOutEvent(), cancellationToken );
+        await EventBus.PublishAsync( new SignOutEvent( Session.UserId ), cancellationToken );
     }
 
     #endregion
@@ -118,16 +118,16 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
     #region SetAclCacheAsync
 
     /// <inheritdoc />
-    public virtual async Task SetAclCacheAsync( Guid userId, CancellationToken cancellationToken = default ) {
-        if ( userId.IsEmpty() )
+    public virtual async Task SetAclCacheAsync( Guid applicationId, Guid userId, CancellationToken cancellationToken = default ) {
+        if( userId.IsEmpty() )
             return;
         var isAdmin = await PermissionService.IsAdminAsync( userId, cancellationToken );
-        if ( isAdmin ) {
+        if( isAdmin ) {
             await CacheService.SetAsync( new IsAdminCacheKey( userId.ToString() ), 1, cancellationToken: cancellationToken );
             return;
         }
-        var acl = await PermissionService.GetAclAsync( userId, cancellationToken );
-        if ( acl == null || acl.Count == 0 )
+        var acl = await PermissionService.GetAclAsync( applicationId, userId, cancellationToken );
+        if( acl == null || acl.Count == 0 )
             return;
         var items = acl.Select( resourceUri => new KeyValuePair<CacheKey, int>( new AclCacheKey( userId.ToString(), resourceUri ), 1 ) ).ToDictionary( t => t.Key, t => t.Value );
         await CacheService.SetAsync( items, cancellationToken: cancellationToken );

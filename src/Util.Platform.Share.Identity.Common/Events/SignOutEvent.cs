@@ -3,5 +3,7 @@
 /// <summary>
 /// 退出登录事件
 /// </summary>
-public record SignOutEvent : IntegrationEvent {
-}
+/// <param name="UserId">用户标识</param>
+public record SignOutEvent(
+    string UserId
+) : IntegrationEvent;

@@ -12,14 +12,6 @@ namespace Util.Platform.Share.Ui.Components.ApplicationSelect;
 [HtmlTargetElement( "biz-application-select" )]
 public class ApplicationSelectTagHelper : AngularTagHelperBase {
     /// <summary>
-    /// [loadApiOnly],是否仅加载Api应用程序,默认值: false
-    /// </summary>
-    public bool LoadApiOnly { get; set; }
-    /// <summary>
-    /// [loadNonApiOnly],是否仅加载非Api应用程序,默认值: false
-    /// </summary>
-    public bool LoadNonApiOnly { get; set; }
-    /// <summary>
     /// (onClick),单击事件
     /// </summary>
     public string OnClick { get; set; }

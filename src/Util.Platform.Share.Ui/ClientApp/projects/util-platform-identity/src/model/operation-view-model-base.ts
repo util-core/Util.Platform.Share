@@ -13,10 +13,6 @@ export class OperationViewModelBase extends ViewModel {
      */
     applicationName;
     /**
-     * Api应用程序标识
-     */
-    apiApplicationId;
-    /**
      * 模块标识
      */
     moduleId;
@@ -40,14 +36,6 @@ export class OperationViewModelBase extends ViewModel {
      * 备注
      */
     remark;
-    /**
-     * 是否绑定Api资源
-     */
-    isBindApi;
-    /** 
-     * 选中的Api资源标识列表
-     */
-    apiRourceIds:string[];
     /**
      * 启用
      */

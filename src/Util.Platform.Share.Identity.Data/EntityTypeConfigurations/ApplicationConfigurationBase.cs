@@ -50,9 +50,6 @@ public abstract class ApplicationConfigurationBase<TApplication, TApplicationId,
         builder.Property( t => t.Name )
             .HasColumnName( "Name" )
             .HasComment( "应用程序名称" );
-        builder.Property( t => t.IsApi )
-            .HasColumnName( "IsApi" )
-            .HasComment( "是否Api" );
         builder.Property( t => t.Enabled )
             .HasColumnName( "Enabled" )
             .HasComment( "启用" );

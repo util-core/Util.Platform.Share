@@ -12,8 +12,4 @@ export class ApplicationModel extends ViewModel {
      * 应用程序名称
      */
     name;
-    /**
-    * 是否Api
-    */
-    isApi;
 }

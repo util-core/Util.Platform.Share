@@ -11,14 +11,6 @@ public interface IApplicationServiceBase<TApplicationDto, in TApplicationQuery> 
     /// </summary>
     Task<List<TApplicationDto>> GetEnabledApplicationsAsync();
     /// <summary>
-    /// 获取已启用的Api应用程序列表
-    /// </summary>
-    Task<List<TApplicationDto>> GetEnabledApiApplicationsAsync();
-    /// <summary>
-    /// 获取已启用的非Api应用程序列表
-    /// </summary>
-    Task<List<TApplicationDto>> GetEnabledNonApiApplicationsAsync();
-    /// <summary>
     /// 通过应用程序编码查找
     /// </summary>
     /// <param name="code">应用程序编码</param>

@@ -43,11 +43,6 @@ public abstract class ApplicationBase<TApplication, TApplicationId, TAuditUserId
     [MaxLength( 200 )]
     public string Name { get; set; }
     /// <summary>
-    /// 是否Api
-    ///</summary>
-    [DisplayName( "是否Api" )]
-    public bool IsApi { get; set; }
-    /// <summary>
     /// 启用
     ///</summary>
     [DisplayName( "启用" )]
@@ -157,7 +152,6 @@ public abstract class ApplicationBase<TApplication, TApplicationId, TAuditUserId
     protected override void AddChanges( TApplication other ) {
         AddChange( t => t.Code, other.Code );
         AddChange( t => t.Name, other.Name );
-        AddChange( t => t.IsApi, other.IsApi );
         AddChange( t => t.Enabled, other.Enabled );
         AddChange( t => t.Remark, other.Remark );
         AddChange( t => t.CreationTime, other.CreationTime );
