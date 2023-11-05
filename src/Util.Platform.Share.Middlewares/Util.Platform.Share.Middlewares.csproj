@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Util.Application.WebApi" Version="7.1.62" />
+    <PackageReference Include="Util.Application.WebApi" Version="7.1.68" />
   </ItemGroup>
 
   <ItemGroup>

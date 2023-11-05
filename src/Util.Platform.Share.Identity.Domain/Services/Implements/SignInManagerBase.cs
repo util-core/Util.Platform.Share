@@ -82,14 +82,14 @@ public abstract class SignInManagerBase<TUser, TUserId, TRole, TAuditUserId> : I
     /// </summary>
     protected virtual SignInResult GetSignInResult( TUser user, Microsoft.AspNetCore.Identity.SignInResult signInResult ) {
         if ( signInResult.IsNotAllowed )
-            return new SignInResult( SignInState.Failed, null, Localizer["UserIsDisabled"] );
+            return new SignInResult( SignInState.Failed, user.Id.SafeString(), Localizer["UserIsDisabled"] );
         if ( signInResult.IsLockedOut )
-            return new SignInResult( SignInState.Failed, null, Localizer["UserLockedOut"] );
+            return new SignInResult( SignInState.Failed, user.Id.SafeString(), Localizer["UserLockedOut"] );
         if ( signInResult.Succeeded )
             return new SignInResult( SignInState.Succeeded, user.Id.SafeString() );
         if ( signInResult.RequiresTwoFactor )
             return new SignInResult( SignInState.TwoFactor, user.Id.SafeString() );
-        return new SignInResult( SignInState.Failed, null, Localizer["InvalidAccountOrPassword"] );
+        return new SignInResult( SignInState.Failed, user.Id.SafeString(), Localizer["InvalidAccountOrPassword"] );
     }
 
     /// <inheritdoc />

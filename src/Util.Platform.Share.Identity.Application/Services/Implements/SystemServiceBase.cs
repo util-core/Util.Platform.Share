@@ -79,7 +79,7 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
         var user = await GetUser( request );
         var result = await SignInManager.SignInAsync( user, request.Password, request.Remember.SafeValue() );
         await UnitOfWork.CommitAsync();
-        await EventBus.PublishAsync( new SignInEvent( result.State, result.UserId, result.Message ), cancellationToken );
+        await EventBus.PublishAsync( new SignInEvent( result.State, result.UserId, request.GetAccount(), result.Message ), cancellationToken );
         return result;
     }
 

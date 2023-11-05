@@ -50,4 +50,17 @@ public abstract class LoginRequestBase : RequestBase {
             throw new Warning( "账号不能为空." );
         return base.Validate();
     }
+
+    /// <summary>
+    /// 获取账号
+    /// </summary>
+    public string GetAccount() {
+        if ( Account.IsEmpty() == false )
+            return Account;
+        if( UserName.IsEmpty() == false )
+            return UserName;
+        if( PhoneNumber.IsEmpty() == false )
+            return PhoneNumber;
+        return Email;
+    }
 }

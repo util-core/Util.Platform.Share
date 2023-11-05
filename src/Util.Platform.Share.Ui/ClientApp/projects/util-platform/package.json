@@ -1,6 +1,6 @@
 {
   "name": "util-platform",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "何镇汐 <xiadao521@qq.com>",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "@angular/forms": "16.2.11",
     "ng-zorro-antd": "16.2.2",
     "@delon/theme": "16.4.2",
-    "util-angular": "16.0.9"
+    "util-angular": "16.0.10"
   },
   "dependencies": {
     "tslib": "^2.3.0"
