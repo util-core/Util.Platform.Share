@@ -48,6 +48,7 @@ public abstract class ClaimServiceBase<TUnitOfWork, TClaim, TClaimDto, TClaimQue
     protected override IQueryable<TClaim> Filter( IQueryable<TClaim> queryable, TClaimQuery query ) {
         return queryable.WhereIfNotEmpty( t => t.Name.Contains( query.Name ) )
             .WhereIfNotEmpty( t => t.Remark.Contains( query.Remark ) )
+            .WhereIfNotEmpty( t => t.Enabled == query.Enabled )
             .WhereIfNotEmpty( t => t.Name.Contains( query.Keyword ) );
     }
 
