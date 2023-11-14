@@ -8,13 +8,13 @@ namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 /// <summary>
 /// 应用程序服务
 /// </summary>
-public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentityResource, TApiResource, TApplicationDto, TApplicationQuery>
-    : CrudServiceBase<TApplication, TApplicationDto, TApplicationQuery,Guid>, IApplicationServiceBase<TApplicationDto, TApplicationQuery>
+public abstract class ApplicationServiceBase<TUnitOfWork, TApplication, TIdentityResource, TApiResource, TApplicationDto, TApplicationQuery>
+    : CrudServiceBase<TApplication, TApplicationDto, TApplicationQuery, Guid>, IApplicationServiceBase<TApplicationDto, TApplicationQuery>
     where TUnitOfWork : IUnitOfWork
-    where TApplication : ApplicationBase<TApplication>,new() 
+    where TApplication : ApplicationBase<TApplication>, new()
     where TIdentityResource : IdentityResourceBase<TIdentityResource>
     where TApiResource : ApiResourceBase<TApiResource>
-    where TApplicationDto : ApplicationDtoBase,new() 
+    where TApplicationDto : ApplicationDtoBase, new()
     where TApplicationQuery : ApplicationQueryBase {
 
     #region 构造方法
@@ -28,15 +28,13 @@ public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentity
     /// <param name="applicationRepository">应用程序仓储</param>
     /// <param name="identityResourceRepository">身份资源仓储</param>
     /// <param name="apiResourceRepository">Api资源仓储</param>
-    /// <param name="localizer">本地化查找器</param>
     protected ApplicationServiceBase( IServiceProvider serviceProvider, ICache cache, TUnitOfWork unitOfWork,
         IApplicationRepositoryBase<TApplication> applicationRepository, IIdentityResourceRepositoryBase<TIdentityResource> identityResourceRepository,
-        IApiResourceRepositoryBase<TApiResource> apiResourceRepository, IStringLocalizer localizer ) : base( serviceProvider, unitOfWork, applicationRepository ) {
+        IApiResourceRepositoryBase<TApiResource> apiResourceRepository ) : base( serviceProvider, unitOfWork, applicationRepository ) {
         CacheService = cache ?? throw new ArgumentNullException( nameof( cache ) );
         ApplicationRepository = applicationRepository ?? throw new ArgumentNullException( nameof( applicationRepository ) );
         IdentityResourceRepository = identityResourceRepository ?? throw new ArgumentNullException( nameof( identityResourceRepository ) );
         ApiResourceRepository = apiResourceRepository ?? throw new ArgumentNullException( nameof( apiResourceRepository ) );
-        Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
     #endregion
@@ -59,10 +57,6 @@ public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentity
     /// Api资源仓储
     /// </summary>
     public IApiResourceRepositoryBase<TApiResource> ApiResourceRepository { get; set; }
-    /// <summary>
-    /// 本地化查找器
-    /// </summary>
-    protected IStringLocalizer Localizer { get; }
 
     #endregion
 
@@ -114,10 +108,10 @@ public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentity
     public virtual async Task<List<Item>> GetScopesAsync() {
         var result = new List<Item>();
         var identityResources = await IdentityResourceRepository.GetEnabledResources();
-        if ( identityResources != null )
+        if( identityResources != null )
             result.AddRange( identityResources.Select( t => new Item( t.Name, t.Uri ) ) );
         var apiResources = await ApiResourceRepository.GetEnabledResources();
-        if ( apiResources != null )
+        if( apiResources != null )
             result.AddRange( apiResources.Select( t => new Item( t.Name, t.Uri ) ) );
         return result;
     }
@@ -128,7 +122,6 @@ public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentity
 
     /// <inheritdoc />
     protected override async Task CreateBeforeAsync( TApplication entity ) {
-        entity.CheckNull( nameof( entity ) );
         await Validate( entity );
     }
 
@@ -136,24 +129,10 @@ public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentity
     /// 验证
     /// </summary>
     protected virtual async Task Validate( TApplication entity ) {
-        if ( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Code == entity.Code ) )
-            ThrowCodeDuplicationException( entity );
-        if ( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Name == entity.Name ) )
-            ThrowNameDuplicationException( entity );
-    }
-
-    /// <summary>
-    /// 抛出应用程序编码重复异常
-    /// </summary>
-    protected virtual void ThrowCodeDuplicationException( TApplication entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateApplicationCode"], entity.Code ) );
-    }
-
-    /// <summary>
-    /// 抛出应用程序名称重复异常
-    /// </summary>
-    protected virtual void ThrowNameDuplicationException( TApplication entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateApplicationName"], entity.Name ) );
+        if( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Code == entity.Code ) )
+            throw new Warning( L["DuplicateApplicationCode", entity.Code] ) { IsLocalization = false };
+        if( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Name == entity.Name ) )
+            throw new Warning( L["DuplicateApplicationName", entity.Name] ) { IsLocalization = false };
     }
 
     /// <inheritdoc />
@@ -170,7 +149,6 @@ public abstract class ApplicationServiceBase<TUnitOfWork,TApplication, TIdentity
 
     /// <inheritdoc />
     protected override async Task UpdateBeforeAsync( TApplication entity ) {
-        entity.CheckNull( nameof( entity ) );
         await Validate( entity );
     }
 

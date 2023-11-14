@@ -20,21 +20,14 @@ public abstract class ClaimServiceBase<TUnitOfWork, TClaim, TClaimDto, TClaimQue
     /// <param name="serviceProvider">服务提供器</param>
     /// <param name="unitOfWork">工作单元</param>
     /// <param name="repository">声明仓储</param>
-    /// <param name="localizer">本地化查找器</param>
-    protected ClaimServiceBase( IServiceProvider serviceProvider, TUnitOfWork unitOfWork, IClaimRepositoryBase<TClaim> repository,
-        IStringLocalizer localizer ) : base( serviceProvider, unitOfWork, repository ) {
+    protected ClaimServiceBase( IServiceProvider serviceProvider, TUnitOfWork unitOfWork, IClaimRepositoryBase<TClaim> repository ) : base( serviceProvider, unitOfWork, repository ) {
         Repository = repository ?? throw new ArgumentNullException( nameof( repository ) );
-        Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
     /// <summary>
     /// 声明仓储
     /// </summary>
     protected IClaimRepositoryBase<TClaim> Repository { get; }
-    /// <summary>
-    /// 本地化查找器
-    /// </summary>
-    protected IStringLocalizer Localizer { get; }
 
     /// <summary>
     /// 获取已启用的声明列表
@@ -68,7 +61,7 @@ public abstract class ClaimServiceBase<TUnitOfWork, TClaim, TClaimDto, TClaimQue
     /// 抛出声明名称重复异常
     /// </summary>
     protected virtual void ThrowNameDuplicationException( string name ) {
-        throw new Warning( string.Format( Localizer["DuplicateClaimName"], name ) );
+        throw new Warning( L["DuplicateClaimName", name] ) { IsLocalization = false };
     }
 
     /// <inheritdoc />

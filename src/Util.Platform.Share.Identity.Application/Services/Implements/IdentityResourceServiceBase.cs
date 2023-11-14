@@ -13,8 +13,8 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
     where TUnitOfWork : IUnitOfWork
     where TResource : ResourceBase<TResource, TApplication>
     where TApplication : ApplicationBase<TApplication>
-    where TIdentityResource: IdentityResourceBase<TIdentityResource> 
-    where TIdentityResourceDto : IdentityResourceDtoBase,new()
+    where TIdentityResource : IdentityResourceBase<TIdentityResource>
+    where TIdentityResourceDto : IdentityResourceDtoBase, new()
     where TResourceQuery : ResourceQueryBase {
 
     #region 构造方法
@@ -26,13 +26,11 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
     /// <param name="unitOfWork">工作单元</param>
     /// <param name="resourceRepository">资源仓储</param>
     /// <param name="identityResourceRepository">身份资源仓储</param>
-    /// <param name="localizer">本地化查找器</param>
     protected IdentityResourceServiceBase( IServiceProvider serviceProvider, TUnitOfWork unitOfWork, IResourceRepositoryBase<TResource> resourceRepository,
-        IIdentityResourceRepositoryBase<TIdentityResource> identityResourceRepository, IStringLocalizer localizer ) : base( serviceProvider, resourceRepository ) {
+        IIdentityResourceRepositoryBase<TIdentityResource> identityResourceRepository ) : base( serviceProvider, resourceRepository ) {
         UnitOfWork = unitOfWork ?? throw new ArgumentNullException( nameof( unitOfWork ) );
         ResourceRepository = resourceRepository ?? throw new ArgumentNullException( nameof( resourceRepository ) );
         IdentityResourceRepository = identityResourceRepository ?? throw new ArgumentNullException( nameof( identityResourceRepository ) );
-        Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
     #endregion
@@ -51,10 +49,6 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
     /// 身份资源仓储
     /// </summary>
     protected IIdentityResourceRepositoryBase<TIdentityResource> IdentityResourceRepository { get; set; }
-    /// <summary>
-    /// 本地化查找器
-    /// </summary>
-    protected IStringLocalizer Localizer { get; }
 
     #endregion
 
@@ -76,10 +70,10 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task<List<TIdentityResourceDto>> GetResourcesAsync( List<string> uri ) {
-        if ( uri == null || uri.Count == 0 )
+        if( uri == null || uri.Count == 0 )
             return new List<TIdentityResourceDto>();
         var resources = await ResourceRepository.FindAllAsync( t => uri.Contains( t.Uri ) && t.Type == ResourceType.Identity && t.Enabled );
-        if ( resources == null )
+        if( resources == null )
             return new List<TIdentityResourceDto>();
         return resources.Select( t => t.MapTo<TIdentityResourceDto>() ).ToList();
     }
@@ -115,15 +109,8 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
     /// </summary>
     protected virtual async Task Validate( TIdentityResource entity ) {
         var result = await IdentityResourceRepository.ExistsAsync( entity );
-        if ( result )
-            ThrowDuplicationException( entity );
-    }
-
-    /// <summary>
-    /// 抛出身份资源重复异常
-    /// </summary>
-    protected virtual void ThrowDuplicationException( TIdentityResource entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateIdentityResource"], entity.Name ) );
+        if( result )
+            throw new Warning( L["DuplicateIdentityResource", entity.Name] ) { IsLocalization = false };
     }
 
     /// <summary>
@@ -141,7 +128,7 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task UpdateAsync( TIdentityResourceDto request ) {
-        if ( request.Id.IsEmpty() )
+        if( request.Id.IsEmpty() )
             throw new InvalidOperationException( R.IdIsEmpty );
         var oldEntity = await IdentityResourceRepository.FindByIdAsync( request.Id );
         oldEntity.CheckNull( nameof( oldEntity ) );
@@ -170,10 +157,10 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task DeleteAsync( string ids ) {
-        if ( ids.IsEmpty() )
+        if( ids.IsEmpty() )
             return;
         var entities = await ResourceRepository.FindByIdsAsync( ids );
-        if ( entities?.Count == 0 )
+        if( entities?.Count == 0 )
             return;
         await ResourceRepository.RemoveAsync( entities );
         await UnitOfWork.CommitAsync();

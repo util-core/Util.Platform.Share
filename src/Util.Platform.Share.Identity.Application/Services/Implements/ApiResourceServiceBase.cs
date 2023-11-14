@@ -8,14 +8,14 @@ namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 /// <summary>
 /// Api资源服务
 /// </summary>
-public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplication, TApiResource, TApiResourceDto, TCreateApiResourceRequest, TResourceQuery> 
+public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplication, TApiResource, TApiResourceDto, TCreateApiResourceRequest, TResourceQuery>
     : TreeServiceBase<TResource, TApiResourceDto, TCreateApiResourceRequest, TApiResourceDto, TResourceQuery>, IApiResourceServiceBase<TApiResourceDto, TCreateApiResourceRequest, TResourceQuery>
     where TUnitOfWork : IUnitOfWork
-    where TResource : ResourceBase<TResource, TApplication>,new()
-    where TApplication : ApplicationBase<TApplication> 
+    where TResource : ResourceBase<TResource, TApplication>, new()
+    where TApplication : ApplicationBase<TApplication>
     where TApiResource : ApiResourceBase<TApiResource>
-    where TApiResourceDto : ApiResourceDtoBase<TApiResourceDto>,new()
-    where TCreateApiResourceRequest : CreateApiResourceRequestBase,new()
+    where TApiResourceDto : ApiResourceDtoBase<TApiResourceDto>, new()
+    where TCreateApiResourceRequest : CreateApiResourceRequestBase, new()
     where TResourceQuery : ResourceQueryBase {
 
     #region 构造方法
@@ -27,12 +27,10 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
     /// <param name="unitOfWork">工作单元</param>
     /// <param name="resourceRepository">资源仓储</param>
     /// <param name="apiResourceRepository">Api资源仓储</param>
-    /// <param name="localizer">本地化查找器</param>
     protected ApiResourceServiceBase( IServiceProvider serviceProvider, TUnitOfWork unitOfWork, IResourceRepositoryBase<TResource> resourceRepository,
-        IApiResourceRepositoryBase<TApiResource> apiResourceRepository, IStringLocalizer localizer ) : base( serviceProvider, unitOfWork, resourceRepository ) {
+        IApiResourceRepositoryBase<TApiResource> apiResourceRepository ) : base( serviceProvider, unitOfWork, resourceRepository ) {
         ResourceRepository = resourceRepository ?? throw new ArgumentNullException( nameof( resourceRepository ) );
         ApiResourceRepository = apiResourceRepository ?? throw new ArgumentNullException( nameof( apiResourceRepository ) );
-        Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
     #endregion
@@ -47,10 +45,6 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
     /// Api资源仓储
     /// </summary>
     protected IApiResourceRepositoryBase<TApiResource> ApiResourceRepository { get; }
-    /// <summary>
-    /// 本地化查找器
-    /// </summary>
-    protected IStringLocalizer Localizer { get; }
 
     #endregion
 
@@ -89,10 +83,10 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
 
     /// <inheritdoc />
     public virtual async Task<List<TApiResourceDto>> GetResourcesAsync( List<string> uri ) {
-        if ( uri == null || uri.Count == 0 )
+        if( uri == null || uri.Count == 0 )
             return new List<TApiResourceDto>();
         var resources = await ResourceRepository.FindAllAsync( t => uri.Contains( t.Uri ) && t.Type == ResourceType.Api && t.Enabled );
-        if ( resources == null )
+        if( resources == null )
             return new List<TApiResourceDto>();
         return resources.Select( t => t.MapTo<TApiResourceDto>() ).ToList();
     }
@@ -133,24 +127,10 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
     /// Api资源验证
     /// </summary>
     protected virtual async Task Validate( TApiResource entity ) {
-        if ( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.Uri == entity.Uri && t.Uri != null ) )
-            ThrowUriDuplicationException( entity );
-        if ( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.ApplicationId == entity.ApplicationId && t.ParentId == entity.ParentId && t.Name == entity.Name ) )
-            ThrowNameDuplicationException( entity );
-    }
-
-    /// <summary>
-    /// 抛出Api资源标识重复异常
-    /// </summary>
-    protected virtual void ThrowUriDuplicationException( TApiResource entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateApiResourceUri"], entity.Uri ) );
-    }
-
-    /// <summary>
-    /// 抛出Api资源名称重复异常
-    /// </summary>
-    protected virtual void ThrowNameDuplicationException( TApiResource entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateApiResourceName"], entity.Name ) );
+        if( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.Uri == entity.Uri && t.Uri != null ) )
+            throw new Warning( L["DuplicateApiResourceUri", entity.Uri] ) { IsLocalization = false };
+        if( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.ApplicationId == entity.ApplicationId && t.ParentId == entity.ParentId && t.Name == entity.Name ) )
+            throw new Warning( L["DuplicateApiResourceName", entity.Name] ) { IsLocalization = false };
     }
 
     /// <summary>
@@ -171,7 +151,7 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
     /// </summary>
     /// <param name="request">Api资源参数</param>
     public override async Task UpdateAsync( TApiResourceDto request ) {
-        if ( request.Id.IsEmpty() )
+        if( request.Id.IsEmpty() )
             throw new InvalidOperationException( R.IdIsEmpty );
         var oldEntity = await ApiResourceRepository.FindByIdAsync( request.Id );
         oldEntity.CheckNull( nameof( oldEntity ) );

@@ -27,13 +27,11 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     /// <param name="unitOfWork">工作单元</param>
     /// <param name="resourceRepository">资源仓储</param>
     /// <param name="operationRepository">操作资源仓储</param>
-    /// <param name="localizer">本地化查找器</param>
     protected OperationServiceBase( IServiceProvider serviceProvider, TUnitOfWork unitOfWork, IResourceRepositoryBase<TResource> resourceRepository,
-        IOperationRepositoryBase<TOperation> operationRepository, IStringLocalizer localizer ) : base( serviceProvider, resourceRepository ) {
+        IOperationRepositoryBase<TOperation> operationRepository ) : base( serviceProvider, resourceRepository ) {
         UnitOfWork = unitOfWork ?? throw new ArgumentNullException( nameof( unitOfWork ) );
         ResourceRepository = resourceRepository ?? throw new ArgumentNullException( nameof( resourceRepository ) );
         OperationRepository = operationRepository ?? throw new ArgumentNullException( nameof( operationRepository ) );
-        Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
     #endregion
@@ -52,10 +50,6 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     /// 操作资源仓储
     /// </summary>
     protected IOperationRepositoryBase<TOperation> OperationRepository { get; }
-    /// <summary>
-    /// 本地化查找器
-    /// </summary>
-    protected IStringLocalizer Localizer { get; }
 
     #endregion
 
@@ -109,23 +103,9 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     /// </summary>
     protected virtual async Task Validate( TOperation entity ) {
         if ( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.ApplicationId == entity.ApplicationId && t.Uri == entity.Uri ) )
-            ThrowUriDuplicationException( entity );
+            throw new Warning( L["DuplicateOperationUri", entity.Uri] ) { IsLocalization = false };
         if ( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.ApplicationId == entity.ApplicationId && t.ParentId == entity.ModuleId && t.Name == entity.Name ) )
-            ThrowNameDuplicationException( entity );
-    }
-
-    /// <summary>
-    /// 抛出操作资源标识重复异常
-    /// </summary>
-    protected virtual void ThrowUriDuplicationException( TOperation entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateOperationUri"], entity.Uri ) );
-    }
-
-    /// <summary>
-    /// 抛出操作资源名称重复异常
-    /// </summary>
-    protected virtual void ThrowNameDuplicationException( TOperation entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateOperationName"], entity.Name ) );
+            throw new Warning( L["DuplicateOperationName", entity.Name] ) { IsLocalization = false };
     }
 
     /// <summary>

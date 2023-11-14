@@ -27,12 +27,10 @@ public abstract class ModuleServiceBase<TUnitOfWork, TResource, TApplication, TM
     /// <param name="unitOfWork">工作单元</param>
     /// <param name="resourceRepository">资源仓储</param>
     /// <param name="moduleRepository">模块仓储</param>
-    /// <param name="localizer">本地化查找器</param>
     protected ModuleServiceBase( IServiceProvider serviceProvider, TUnitOfWork unitOfWork, IResourceRepositoryBase<TResource> resourceRepository,
-        IModuleRepositoryBase<TModule> moduleRepository, IStringLocalizer localizer ) : base( serviceProvider, unitOfWork, resourceRepository ) {
+        IModuleRepositoryBase<TModule> moduleRepository ) : base( serviceProvider, unitOfWork, resourceRepository ) {
         ResourceRepository = resourceRepository ?? throw new ArgumentNullException( nameof( resourceRepository ) );
         ModuleRepository = moduleRepository ?? throw new ArgumentNullException( nameof( moduleRepository ) );
-        Localizer = localizer ?? throw new ArgumentNullException( nameof( localizer ) );
     }
 
     #endregion
@@ -47,10 +45,6 @@ public abstract class ModuleServiceBase<TUnitOfWork, TResource, TApplication, TM
     /// 模块仓储
     /// </summary>
     protected IModuleRepositoryBase<TModule> ModuleRepository { get; }
-    /// <summary>
-    /// 本地化查找器
-    /// </summary>
-    protected IStringLocalizer Localizer { get; }
 
     #endregion
 
@@ -118,7 +112,7 @@ public abstract class ModuleServiceBase<TUnitOfWork, TResource, TApplication, TM
     /// 抛出模块名称重复异常
     /// </summary>
     protected virtual void ThrowNameDuplicationException( TModule entity ) {
-        throw new Warning( string.Format( Localizer["DuplicateModuleName"], entity.Name ) );
+        throw new Warning( L["DuplicateModuleName", entity.Name] ) { IsLocalization = false };
     }
 
     /// <summary>
