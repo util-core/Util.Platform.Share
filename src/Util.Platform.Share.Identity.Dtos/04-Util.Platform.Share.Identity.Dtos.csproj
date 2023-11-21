@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Util.Application" Version="7.1.76" />
+	  <PackageReference Include="Util.Application" Version="7.1.81" />
 	</ItemGroup>
 
 	<ItemGroup>
