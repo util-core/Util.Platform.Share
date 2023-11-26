@@ -27,10 +27,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Util.Application.EntityFrameworkCore" Version="7.1.81" />
-		<PackageReference Include="Util.Caching.EasyCaching" Version="7.1.81" />
-		<PackageReference Include="Util.Localization" Version="7.1.81" />
-		<PackageReference Include="Util.Logging.Serilog" Version="7.1.81" />
+		<PackageReference Include="Util.Application.EntityFrameworkCore" Version="7.1.87" />
+		<PackageReference Include="Util.Caching.EasyCaching" Version="7.1.87" />
+		<PackageReference Include="Util.Localization" Version="7.1.87" />
+		<PackageReference Include="Util.Logging.Serilog" Version="7.1.87" />
 	</ItemGroup>
 
 	<ItemGroup>
