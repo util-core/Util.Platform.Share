@@ -1,6 +1,6 @@
 {
   "name": "util-platform",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "author": "何镇汐 <xiadao521@qq.com>",
   "repository": {
     "type": "git",
@@ -16,15 +16,15 @@
     "angular"
   ],
   "peerDependencies": {
-    "@angular/core": "16.2.12",
-    "@angular/common": "16.2.12",
-    "@angular/forms": "16.2.12",
-    "ng-zorro-antd": "16.2.2",
-    "@delon/theme": "16.4.3",
-    "util-angular": "16.0.12"
+    "@angular/core": "17.0.4",
+    "@angular/common": "17.0.4",
+    "@angular/forms": "17.0.4",
+    "ng-zorro-antd": "17.0.1",
+    "@delon/theme": "17.0.2",
+    "util-angular": "17.0.1"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "2.6.2"
   },
   "devDependencies": {
   }
