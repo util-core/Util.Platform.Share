@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Util.Ui.NgZorro" Version="7.1.100" />
+	  <PackageReference Include="Util.Ui.NgZorro" Version="7.1.107" />
 	</ItemGroup>
 
 </Project>
