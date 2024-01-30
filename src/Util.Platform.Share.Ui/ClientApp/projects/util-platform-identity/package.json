@@ -1,6 +1,6 @@
 {
   "name": "util-platform-identity",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "何镇汐 <xiadao521@qq.com>",
   "repository": {
     "type": "git",
@@ -16,11 +16,11 @@
     "angular"
   ],
   "peerDependencies": {
-    "@angular/core": "^17.0.4",
-    "@angular/common": "^17.0.4",
-    "@angular/forms": "^17.0.4",
+    "@angular/core": "^17.0.8",
+    "@angular/common": "^17.0.8",
+    "@angular/forms": "^17.0.8",
     "ng-zorro-antd": "^17.1.0",
-    "util-angular": "^17.0.16"
+    "util-angular": "^17.0.87"
   },
   "dependencies": {
     "tslib": "2.6.2"
