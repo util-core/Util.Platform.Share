@@ -138,27 +138,19 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     /// 获取前端访问控制资源
     /// </summary>
     protected virtual async Task<List<TResource>> GetAclResources( Guid applicationId, List<Guid> roleIds, CancellationToken cancellationToken ) {
-        var grantQuery =
-                from resource in ResourceRepository.Find()
-                join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
-                where ( resource.Type == ResourceType.Operation || resource.Type == ResourceType.Column ) &&
-                      resource.ApplicationId == applicationId &&
-                      resource.Enabled &&
-                      roleIds.Contains( permission.RoleId ) &&
-                      permission.IsDeny == false
-                select new { resource.Uri, resource.ParentId, resource.Type }
-            ;
-        var denyQuery =
-                from resource in ResourceRepository.Find()
-                join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
-                where ( resource.Type == ResourceType.Operation || resource.Type == ResourceType.Column ) &&
-                      resource.ApplicationId == applicationId &&
-                      resource.Enabled &&
-                      roleIds.Contains( permission.RoleId ) &&
-                      permission.IsDeny
-                select new { resource.Uri, resource.ParentId, resource.Type }
-            ;
-        var result = await grantQuery.Except( denyQuery ).AsNoTracking().ToListAsync( cancellationToken );
+        var query = from resource in ResourceRepository.Find()
+                    join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
+                    where ( resource.Type == ResourceType.Operation || resource.Type == ResourceType.Column ) &&
+                          resource.ApplicationId == applicationId &&
+                          resource.Enabled &&
+                          roleIds.Contains( permission.RoleId ) &&
+                          !PermissionRepository.Find().Any( denyPermission =>
+                              denyPermission.ResourceId == resource.Id &&
+                              denyPermission.IsDeny &&
+                              roleIds.Contains( denyPermission.RoleId )
+                          )
+                    select new { resource.Uri, resource.ParentId, resource.Type };
+        var result = await query.AsNoTracking().ToListAsync( cancellationToken );
         return result.Select( t => t.MapTo<TResource>() ).ToList();
     }
 
@@ -198,27 +190,19 @@ public abstract class PermissionServiceBase<TUnitOfWork, TPermission, TResource,
     /// 获取访问控制列表
     /// </summary>
     protected virtual async Task<List<string>> GetAcl( Guid applicationId, List<Guid> roleIds, CancellationToken cancellationToken ) {
-        var grantQuery =
-                from resource in ResourceRepository.Find()
-                join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
-                where resource.Enabled &&
-                      resource.ApplicationId == applicationId &&
-                      resource.Uri != null &&
-                      roleIds.Contains( permission.RoleId ) &&
-                      permission.IsDeny == false
-                select resource.Uri
-            ;
-        var denyQuery =
-                from resource in ResourceRepository.Find()
-                join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
-                where resource.Enabled &&
-                      resource.ApplicationId == applicationId &&
-                      resource.Uri != null &&
-                      roleIds.Contains( permission.RoleId ) &&
-                      permission.IsDeny
-                select resource.Uri
-            ;
-        return await grantQuery.Except( denyQuery ).AsNoTracking().ToListAsync( cancellationToken );
+        var query = from resource in ResourceRepository.Find()
+            join permission in PermissionRepository.Find() on resource.Id equals permission.ResourceId
+            where resource.Enabled &&
+                  resource.ApplicationId == applicationId &&
+                  resource.Uri != null &&
+                  roleIds.Contains( permission.RoleId ) &&
+                  !PermissionRepository.Find().Any( denyPermission =>
+                      denyPermission.ResourceId == resource.Id &&
+                      denyPermission.IsDeny &&
+                      roleIds.Contains( denyPermission.RoleId ) 
+                  )
+            select resource.Uri;
+        return await query.AsNoTracking().Distinct().ToListAsync( cancellationToken );
     }
 
     #endregion
