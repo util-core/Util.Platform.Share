@@ -59,6 +59,9 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
             .WhereIfNotEmpty( t => t.Name.Contains( param.Name ) )
             .WhereIfNotEmpty( t => t.Uri.Contains( param.Uri ) )
             .WhereIfNotEmpty( t => t.Enabled == param.Enabled )
+            .WhereIfNotEmpty( t => t.Remark.Contains( param.Remark ) )
+            .Between( t => t.CreationTime, param.BeginCreationTime, param.EndCreationTime, false )
+            .Between( t => t.LastModificationTime, param.BeginLastModificationTime, param.EndLastModificationTime, false )
             .Include( t => t.Application )
             .Include( t => t.Parent );
     }
@@ -128,9 +131,9 @@ public abstract class ApiResourceServiceBase<TUnitOfWork, TResource, TApplicatio
     /// </summary>
     protected virtual async Task Validate( TApiResource entity ) {
         if( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.Uri == entity.Uri && t.Uri != null ) )
-            throw new Warning( L["DuplicateApiResourceUri", entity.Uri] ) { IsLocalization = false };
+            throw new Warning( L["DuplicateApiResourceUri", entity.Uri] );
         if( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.ApplicationId == entity.ApplicationId && t.ParentId == entity.ParentId && t.Name == entity.Name ) )
-            throw new Warning( L["DuplicateApiResourceName", entity.Name] ) { IsLocalization = false };
+            throw new Warning( L["DuplicateApiResourceName", entity.Name] );
     }
 
     /// <summary>

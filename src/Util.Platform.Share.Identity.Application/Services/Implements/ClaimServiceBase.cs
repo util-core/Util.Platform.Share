@@ -42,7 +42,9 @@ public abstract class ClaimServiceBase<TUnitOfWork, TClaim, TClaimDto, TClaimQue
         return queryable.WhereIfNotEmpty( t => t.Name.Contains( query.Name ) )
             .WhereIfNotEmpty( t => t.Remark.Contains( query.Remark ) )
             .WhereIfNotEmpty( t => t.Enabled == query.Enabled )
-            .WhereIfNotEmpty( t => t.Name.Contains( query.Keyword ) );
+            .WhereIfNotEmpty( t => t.Name.Contains( query.Keyword ) )
+            .Between( t => t.CreationTime, query.BeginCreationTime, query.EndCreationTime, false )
+            .Between( t => t.LastModificationTime, query.BeginLastModificationTime, query.EndLastModificationTime, false );
     }
 
     /// <inheritdoc />
@@ -61,7 +63,7 @@ public abstract class ClaimServiceBase<TUnitOfWork, TClaim, TClaimDto, TClaimQue
     /// 抛出声明名称重复异常
     /// </summary>
     protected virtual void ThrowNameDuplicationException( string name ) {
-        throw new Warning( L["DuplicateClaimName", name] ) { IsLocalization = false };
+        throw new Warning( L["DuplicateClaimName", name] );
     }
 
     /// <inheritdoc />

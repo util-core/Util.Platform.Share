@@ -7,12 +7,7 @@ var builder = WebApplication.CreateBuilder( args );
 
 //配置Util服务
 builder.AsBuild()
-    .AddNgZorro( t => {
-        t.EnableI18n = true;
-        t.EnableDefaultOptionText = true;
-        t.GenerateHtmlBasePath = "/ClientApp";
-        t.GenerateHtmlSuffix = "html";
-    } )
+    .AddNgZorro( t => t.EnableGenerateAllHtml = true )
     .AddSerilog()
     .AddUtil();
 
@@ -20,7 +15,7 @@ builder.AsBuild()
 var app = builder.Build();
 
 //配置请求管道
-app.UseNgZorro( "http://localhost:18666" );
+app.UseNgZorro( 18666 );
 
 //运行应用
 app.Run();

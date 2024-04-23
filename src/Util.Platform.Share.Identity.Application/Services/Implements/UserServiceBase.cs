@@ -58,7 +58,18 @@ public abstract class UserServiceBase<TUnitOfWork, TUser, TRole, TUserDto, TCrea
             .WhereIfNotEmpty( t => t.Email.Contains( param.Email ) )
             .WhereIfNotEmpty( t => t.Enabled == param.Enabled )
             .WhereIfNotEmpty( t => t.Roles.Any( role => role.Id == param.RoleId ) )
-            .WhereIfNotEmpty( t => t.Roles.All( role => role.Id != param.ExceptRoleId ) );
+            .WhereIfNotEmpty( t => t.Roles.All( role => role.Id != param.ExceptRoleId ) )
+            .Between( t => t.DisabledTime, param.BeginDisabledTime, param.EndDisabledTime, false )
+            .WhereIfNotEmpty( t => t.LockoutEnabled == param.LockoutEnabled )
+            .Between( t => t.LockoutEnd, param.BeginLockoutEnd, param.EndLockoutEnd, false )
+            .WhereIfNotEmpty( t => t.RegisterIp.Contains( param.RegisterIp ) )
+            .Between( t => t.LastLoginTime, param.BeginLastLoginTime, param.EndLastLoginTime, false )
+            .WhereIfNotEmpty( t => t.LastLoginIp.Contains( param.LastLoginIp ) )
+            .Between( t => t.CurrentLoginTime, param.BeginCurrentLoginTime, param.EndCurrentLoginTime, false )
+            .WhereIfNotEmpty( t => t.CurrentLoginIp.Contains( param.CurrentLoginIp ) )
+            .WhereIfNotEmpty( t => t.Remark.Contains( param.Remark ) )
+            .Between( t => t.CreationTime, param.BeginCreationTime, param.EndCreationTime, false )
+            .Between( t => t.LastModificationTime, param.BeginLastModificationTime, param.EndLastModificationTime, false );
     }
 
     #endregion

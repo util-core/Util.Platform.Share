@@ -9,11 +9,27 @@ export class CommonOperationQueryBase extends QueryParameter {
     */
     name;
     /**
-    * 启用
-    */
+     * 启用
+     */
     enabled;
     /**
-    * 备注
-    */
+     * 备注
+     */
     remark;
+    /**
+     * 起始创建时间
+     */
+    beginCreationTime;
+    /**
+     * 结束创建时间
+     */
+    endCreationTime;
+    /**
+     * 起始最后修改时间
+     */
+    beginLastModificationTime;
+    /**
+     * 结束最后修改时间
+     */
+    endLastModificationTime;
 }

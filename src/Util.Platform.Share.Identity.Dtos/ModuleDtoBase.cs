@@ -41,6 +41,21 @@ public abstract class ModuleDtoBase<TModuleDto, TApplicationId, TAuditUserId> : 
     [Display( Name = "util.i18n" )]
     public string I18n { get; set; }
     /// <summary>
+    /// 是否展开
+    /// </summary>
+    [Display( Name = "util.expanded" )]
+    public bool? IsExpanded { get; set; }
+    /// <summary>
+    /// 是否显示分组
+    ///</summary>
+    [DisplayName( "menu.group" )]
+    public bool? Group { get; set; }
+    /// <summary>
+    /// 是否面包屑导航中隐藏
+    ///</summary>
+    [DisplayName( "menu.hideInBreadcrumb" )]
+    public bool? HideInBreadcrumb { get; set; }
+    /// <summary>
     /// 是否隐藏
     /// </summary>
     [Display( Name = "util.isHide" )]

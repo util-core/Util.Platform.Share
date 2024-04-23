@@ -24,4 +24,24 @@ public abstract class RoleQueryBase : TreeQueryParameter {
     ///</summary>
     [Display( Name = "identity.role.remark" )]
     public string Remark { get; set; }
+    /// <summary>
+    /// 起始创建时间
+    /// </summary>
+    [Display( Name = "util.beginCreationTime" )]
+    public DateTime? BeginCreationTime { get; set; }
+    /// <summary>
+    /// 结束创建时间
+    /// </summary>
+    [Display( Name = "util.endCreationTime" )]
+    public DateTime? EndCreationTime { get; set; }
+    /// <summary>
+    /// 起始最后修改时间
+    /// </summary>
+    [Display( Name = "util.beginLastModificationTime" )]
+    public DateTime? BeginLastModificationTime { get; set; }
+    /// <summary>
+    /// 结束最后修改时间
+    /// </summary>
+    [Display( Name = "util.endLastModificationTime" )]
+    public DateTime? EndLastModificationTime { get; set; }
 }

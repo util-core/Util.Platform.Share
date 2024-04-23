@@ -26,7 +26,7 @@ public class MenuInfo {
     /// </summary>
     public string I18n { get; set; }
     /// <summary>
-    /// 是否显示分组名
+    /// 是否显示分组
     /// </summary>
     public bool Group { get; set; }
     /// <summary>

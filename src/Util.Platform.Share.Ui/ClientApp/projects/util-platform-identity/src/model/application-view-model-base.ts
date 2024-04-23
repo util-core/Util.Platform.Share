@@ -73,7 +73,7 @@ export class ApplicationViewModelBase extends ViewModel {
      */
     creationTime;
     /**
-     * 创建人编号
+     * 创建人标识
      */
     creatorId;
     /**
@@ -81,7 +81,7 @@ export class ApplicationViewModelBase extends ViewModel {
      */
     lastModificationTime;
     /**
-     * 最后修改人编号
+     * 最后修改人标识
      */
     lastModifierId;
     /**

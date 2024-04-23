@@ -39,13 +39,16 @@ public abstract class MenuResultBase<TModuleDto, TApplicationId, TAuditUserId> :
             Key = dto.Id,
             Text = dto.GetText(),
             I18n = dto.I18n,
+            Group = dto.Group.SafeValue(),
+            HideInBreadcrumb = dto.HideInBreadcrumb.SafeValue(),
             Icon = new MenuIconInfo {
                 Type = MenuIconType.Icon,
                 Value = dto.Icon
             },
             Disabled = !dto.Enabled.SafeValue(),
             Children = dto.Children.Select( ToDestinationNode ).ToList(),
-            Reuse = true
+            Reuse = true,
+            Open = dto.IsExpanded.SafeValue()
         };
         SetLink( result, dto );
         return result;

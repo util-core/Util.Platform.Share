@@ -32,4 +32,20 @@ export class PermissionQueryBase extends QueryParameter {
     * 结束到期时间
     */
     endExpirationTime;
+    /**
+     * 起始创建时间
+     */
+    beginCreationTime;
+    /**
+     * 结束创建时间
+     */
+    endCreationTime;
+    /**
+     * 起始最后修改时间
+     */
+    beginLastModificationTime;
+    /**
+     * 结束最后修改时间
+     */
+    endLastModificationTime;
 }

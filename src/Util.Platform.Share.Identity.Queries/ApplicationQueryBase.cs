@@ -34,4 +34,14 @@ public abstract class ApplicationQueryBase : QueryParameter {
     /// </summary>
     [Display( Name = "util.endCreationTime" )]
     public DateTime? EndCreationTime { get; set; }
+    /// <summary>
+    /// 起始最后修改时间
+    /// </summary>
+    [Display( Name = "util.beginLastModificationTime" )]
+    public DateTime? BeginLastModificationTime { get; set; }
+    /// <summary>
+    /// 结束最后修改时间
+    /// </summary>
+    [Display( Name = "util.endLastModificationTime" )]
+    public DateTime? EndLastModificationTime { get; set; }
 }

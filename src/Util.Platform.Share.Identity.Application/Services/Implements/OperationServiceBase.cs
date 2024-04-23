@@ -103,9 +103,9 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     /// </summary>
     protected virtual async Task Validate( TOperation entity ) {
         if ( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.ApplicationId == entity.ApplicationId && t.Uri == entity.Uri ) )
-            throw new Warning( L["DuplicateOperationUri", entity.Uri] ) { IsLocalization = false };
+            throw new Warning( L["DuplicateOperationUri", entity.Uri] );
         if ( await ResourceRepository.ExistsAsync( t => t.Id != entity.Id && t.ApplicationId == entity.ApplicationId && t.ParentId == entity.ModuleId && t.Name == entity.Name ) )
-            throw new Warning( L["DuplicateOperationName", entity.Name] ) { IsLocalization = false };
+            throw new Warning( L["DuplicateOperationName", entity.Name] );
     }
 
     /// <summary>

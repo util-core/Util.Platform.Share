@@ -25,7 +25,9 @@
       "dom"
     ],
     "paths": {
-      "environment": [ "src/environments/environment" ],
+      "@env/*": [ "src/environments/*" ],
+      "@shared": [ "src/app/shared/index" ],
+      "@core": [ "src/app/core/index" ],
       "util-platform/application-select": [ "dist/util-platform/application-select" ],
       "util-platform/icon-select": [ "dist/util-platform/icon-select" ]
     }
@@ -34,7 +36,9 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": false,
+    "strictTemplates": true,
+    "strictOutputEventTypes": false,
+    "strictInputTypes": false,
     "skipLibCheck": true
   }
 }

@@ -61,7 +61,10 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
         return queryable.Where( t => t.Type == ResourceType.Identity )
             .WhereIfNotEmpty( t => t.Name.Contains( param.Name ) )
             .WhereIfNotEmpty( t => t.Uri.Contains( param.Uri ) )
-            .WhereIfNotEmpty( t => t.Enabled == param.Enabled );
+            .WhereIfNotEmpty( t => t.Remark.Contains( param.Remark ) )
+            .WhereIfNotEmpty( t => t.Enabled == param.Enabled )
+            .Between( t => t.CreationTime, param.BeginCreationTime, param.EndCreationTime, false )
+            .Between( t => t.LastModificationTime, param.BeginLastModificationTime, param.EndLastModificationTime, false );
     }
 
     #endregion
@@ -70,10 +73,10 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task<List<TIdentityResourceDto>> GetResourcesAsync( List<string> uri ) {
-        if( uri == null || uri.Count == 0 )
+        if ( uri == null || uri.Count == 0 )
             return new List<TIdentityResourceDto>();
         var resources = await ResourceRepository.FindAllAsync( t => uri.Contains( t.Uri ) && t.Type == ResourceType.Identity && t.Enabled );
-        if( resources == null )
+        if ( resources == null )
             return new List<TIdentityResourceDto>();
         return resources.Select( t => t.MapTo<TIdentityResourceDto>() ).ToList();
     }
@@ -109,8 +112,8 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
     /// </summary>
     protected virtual async Task Validate( TIdentityResource entity ) {
         var result = await IdentityResourceRepository.ExistsAsync( entity );
-        if( result )
-            throw new Warning( L["DuplicateIdentityResource", entity.Name] ) { IsLocalization = false };
+        if ( result )
+            throw new Warning( L["DuplicateIdentityResource", entity.Name] );
     }
 
     /// <summary>
@@ -128,7 +131,7 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task UpdateAsync( TIdentityResourceDto request ) {
-        if( request.Id.IsEmpty() )
+        if ( request.Id.IsEmpty() )
             throw new InvalidOperationException( R.IdIsEmpty );
         var oldEntity = await IdentityResourceRepository.FindByIdAsync( request.Id );
         oldEntity.CheckNull( nameof( oldEntity ) );
@@ -157,10 +160,10 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task DeleteAsync( string ids ) {
-        if( ids.IsEmpty() )
+        if ( ids.IsEmpty() )
             return;
         var entities = await ResourceRepository.FindByIdsAsync( ids );
-        if( entities?.Count == 0 )
+        if ( entities?.Count == 0 )
             return;
         await ResourceRepository.RemoveAsync( entities );
         await UnitOfWork.CommitAsync();

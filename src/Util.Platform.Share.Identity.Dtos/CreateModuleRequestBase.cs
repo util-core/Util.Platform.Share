@@ -52,12 +52,22 @@ public abstract class CreateModuleRequestBase<TApplicationId, TResourceParentId>
     /// 展开
     /// </summary>
     [Display( Name = "identity.module.expanded" )]
-    public bool? Expanded { get; set; }
+    public bool? IsExpanded { get; set; }
     /// <summary>
     /// 启用
     /// </summary>
     [Display( Name = "identity.module.enabled" )]
     public bool? Enabled { get; set; }
+    /// <summary>
+    /// 是否显示分组
+    ///</summary>
+    [DisplayName( "menu.group" )]
+    public bool? Group { get; set; }
+    /// <summary>
+    /// 是否面包屑导航中隐藏
+    ///</summary>
+    [DisplayName( "menu.hideInBreadcrumb" )]
+    public bool? HideInBreadcrumb { get; set; }
     /// <summary>
     /// 备注
     /// </summary>

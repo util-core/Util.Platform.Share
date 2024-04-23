@@ -67,8 +67,10 @@ public abstract class ApplicationServiceBase<TUnitOfWork, TApplication, TIdentit
         return queryable
             .WhereIfNotEmpty( t => t.Code.Contains( query.Code ) )
             .WhereIfNotEmpty( t => t.Name.Contains( query.Name ) )
+            .WhereIfNotEmpty( t => t.Enabled == query.Enabled )
             .WhereIfNotEmpty( t => t.Remark.Contains( query.Remark ) )
-            .Between( t => t.CreationTime, query.BeginCreationTime, query.EndCreationTime );
+            .Between( t => t.CreationTime, query.BeginCreationTime, query.EndCreationTime, false )
+            .Between( t => t.LastModificationTime, query.BeginLastModificationTime, query.EndLastModificationTime, false );
     }
 
     #endregion
@@ -108,10 +110,10 @@ public abstract class ApplicationServiceBase<TUnitOfWork, TApplication, TIdentit
     public virtual async Task<List<Item>> GetScopesAsync() {
         var result = new List<Item>();
         var identityResources = await IdentityResourceRepository.GetEnabledResources();
-        if( identityResources != null )
+        if ( identityResources != null )
             result.AddRange( identityResources.Select( t => new Item( t.Name, t.Uri ) ) );
         var apiResources = await ApiResourceRepository.GetEnabledResources();
-        if( apiResources != null )
+        if ( apiResources != null )
             result.AddRange( apiResources.Select( t => new Item( t.Name, t.Uri ) ) );
         return result;
     }
@@ -129,10 +131,10 @@ public abstract class ApplicationServiceBase<TUnitOfWork, TApplication, TIdentit
     /// 验证
     /// </summary>
     protected virtual async Task Validate( TApplication entity ) {
-        if( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Code == entity.Code ) )
-            throw new Warning( L["DuplicateApplicationCode", entity.Code] ) { IsLocalization = false };
-        if( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Name == entity.Name ) )
-            throw new Warning( L["DuplicateApplicationName", entity.Name] ) { IsLocalization = false };
+        if ( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Code == entity.Code ) )
+            throw new Warning( L["DuplicateApplicationCode", entity.Code] );
+        if ( await ApplicationRepository.ExistsAsync( t => t.Id != entity.Id && t.Name == entity.Name ) )
+            throw new Warning( L["DuplicateApplicationName", entity.Name] );
     }
 
     /// <inheritdoc />

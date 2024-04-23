@@ -1,0 +1,16 @@
+@page
+@model ApplicationDto
+
+@*表单*@
+<util-card borderless="true">
+    <util-form id="form" label-span="4" control-span="20" gutter="16">
+        <util-input for="Code" />
+        <util-input for="Name" />
+        <util-switch for="Enabled" />
+        <util-input for="Remark" />
+        <util-drawer-footer justify="FlexEnd">
+            <util-button on-click="close()" text-cancel="true"></util-button>
+            <util-button id="btnSubmit" is-submit="true" validate-form="true" type="Primary" on-click="submit(btnSubmit)" text-ok="true"></util-button>
+        </util-drawer-footer>
+    </util-form>
+</util-card>

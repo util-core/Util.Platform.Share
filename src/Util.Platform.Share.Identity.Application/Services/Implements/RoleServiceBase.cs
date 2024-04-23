@@ -12,12 +12,12 @@ namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 public abstract class RoleServiceBase<TUnitOfWork, TRole, TUser, TRoleDto, TCreateRoleRequest, TUpdateRoleRequest, TRoleQuery, TRoleUsersRequest>
     : CrudServiceBase<TRole, TRoleDto, TCreateRoleRequest, TUpdateRoleRequest, TRoleQuery>, IRoleServiceBase<TRoleDto, TCreateRoleRequest, TUpdateRoleRequest, TRoleQuery, TRoleUsersRequest>
     where TUnitOfWork : IUnitOfWork
-    where TRole : RoleBase<TRole, TUser>,new()
-    where TUser : UserBase<TUser, TRole> 
+    where TRole : RoleBase<TRole, TUser>, new()
+    where TUser : UserBase<TUser, TRole>
     where TRoleDto : RoleDtoBase<TRoleDto>, new()
     where TCreateRoleRequest : CreateRoleRequestBase, new()
     where TUpdateRoleRequest : UpdateRoleRequestBase, new()
-    where TRoleQuery : RoleQueryBase 
+    where TRoleQuery : RoleQueryBase
     where TRoleUsersRequest : RoleUsersRequestBase {
 
     #region 构造方法
@@ -59,7 +59,10 @@ public abstract class RoleServiceBase<TUnitOfWork, TRole, TUser, TRoleDto, TCrea
         return queryable.Where( t => t.Type.Contains( param.Type ) )
             .WhereIfNotEmpty( t => t.Code.Contains( param.Code ) )
             .WhereIfNotEmpty( t => t.Name.Contains( param.Name ) )
-            .WhereIfNotEmpty( t => t.Enabled == param.Enabled );
+            .WhereIfNotEmpty( t => t.Enabled == param.Enabled )
+            .WhereIfNotEmpty( t => t.Remark.Contains( param.Remark ) )
+            .Between( t => t.CreationTime, param.BeginCreationTime, param.EndCreationTime, false )
+            .Between( t => t.LastModificationTime, param.BeginLastModificationTime, param.EndLastModificationTime, false );
     }
 
     #endregion

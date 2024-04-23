@@ -21,6 +21,18 @@ export class ModuleViewModelBase extends TreeViewModel {
      */
     i18n;
     /**
+     * 是否展开
+     */
+    isExpanded: boolean;
+    /**
+     * 是否显示分组
+     */
+    group: boolean;
+    /**
+     * 是否在面包屑导航中隐藏
+     */
+    hideInBreadcrumb: boolean;
+    /**
      * 模块地址
      */
     uri;
@@ -40,6 +52,18 @@ export class ModuleViewModelBase extends TreeViewModel {
      * 创建时间
      */
     creationTime;
+    /**
+     * 创建人标识
+     */
+    creatorId;
+    /**
+     * 最后修改时间
+     */
+    lastModificationTime;
+    /**
+     * 最后修改人标识
+     */
+    lastModifierId;
     /**
      * 版本号
      */

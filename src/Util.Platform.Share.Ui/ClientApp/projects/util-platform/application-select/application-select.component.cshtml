@@ -1,0 +1,13 @@
+﻿@page
+<util-container ng-if="!hidden">
+    <util-container ng-if="!isPc">
+        <util-select id="selectApplication" name="selectApplication" data="items" show-default-option="false"
+                     style="width:300px;margin-bottom:16px" ng-model="selectValue" label-text="identity.application"
+                     on-model-change="clickItem($event)"></util-select>
+    </util-container>
+    <util-card ng-if="isPc" title="identity.application" class="ant-card__body-nopadding" style="min-height:300px;">
+        <util-menu mode="Inline">
+            <util-menu-item ng-for="let item of list" bind-selected="item==selected" on-click="clickItem(item)">{{item.name}}</util-menu-item>
+        </util-menu>
+    </util-card>
+</util-container>

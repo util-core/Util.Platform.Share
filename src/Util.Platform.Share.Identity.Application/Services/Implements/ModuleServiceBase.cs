@@ -59,6 +59,9 @@ public abstract class ModuleServiceBase<TUnitOfWork, TResource, TApplication, TM
             .WhereIfNotEmpty( t => t.Name.Contains( param.Name ) )
             .WhereIfNotEmpty( t => t.Uri.Contains( param.Uri ) )
             .WhereIfNotEmpty( t => t.Enabled == param.Enabled )
+            .WhereIfNotEmpty( t => t.Remark.Contains( param.Remark ) )
+            .Between( t => t.CreationTime, param.BeginCreationTime, param.EndCreationTime, false )
+            .Between( t => t.LastModificationTime, param.BeginLastModificationTime, param.EndLastModificationTime, false )
             .Include( t => t.Application )
             .Include( t => t.Parent );
     }
@@ -112,7 +115,7 @@ public abstract class ModuleServiceBase<TUnitOfWork, TResource, TApplication, TM
     /// 抛出模块名称重复异常
     /// </summary>
     protected virtual void ThrowNameDuplicationException( TModule entity ) {
-        throw new Warning( L["DuplicateModuleName", entity.Name] ) { IsLocalization = false };
+        throw new Warning( L["DuplicateModuleName", entity.Name] );
     }
 
     /// <summary>

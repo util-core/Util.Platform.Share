@@ -121,9 +121,9 @@ public abstract class ResourceBase<TResource, TResourceId, TResourceParentId, TA
     /// 是否展开
     /// </summary>
     [NotMapped]
-    public bool? Expanded {
-        get => ExtraProperties.GetProperty<bool?>( nameof( Expanded ) );
-        set => ExtraProperties.SetProperty( nameof( Expanded ), value );
+    public bool? IsExpanded {
+        get => ExtraProperties.GetProperty<bool?>( nameof( IsExpanded ) );
+        set => ExtraProperties.SetProperty( nameof( IsExpanded ), value );
     }
 
     private readonly ExtraProperty<List<string>> _claims = new( nameof( Claims ) );
@@ -170,6 +170,24 @@ public abstract class ResourceBase<TResource, TResourceId, TResourceParentId, TA
     public string I18n {
         get => ExtraProperties.GetProperty<string>( nameof( I18n ) );
         set => ExtraProperties.SetProperty( nameof( I18n ), value );
+    }
+
+    /// <summary>
+    /// 是否显示分组
+    ///</summary>
+    [NotMapped]
+    public bool? Group {
+        get => ExtraProperties.GetProperty<bool?>( nameof( Group ) );
+        set => ExtraProperties.SetProperty( nameof( Group ), value );
+    }
+
+    /// <summary>
+    /// 是否面包屑导航中隐藏
+    ///</summary>
+    [NotMapped]
+    public bool? HideInBreadcrumb {
+        get => ExtraProperties.GetProperty<bool?>( nameof( HideInBreadcrumb ) );
+        set => ExtraProperties.SetProperty( nameof( HideInBreadcrumb ), value );
     }
 
     /// <summary>

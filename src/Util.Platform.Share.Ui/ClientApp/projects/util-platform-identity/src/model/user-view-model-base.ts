@@ -84,24 +84,24 @@ export class UserViewModelBase extends ViewModel {
     * 备注
     */
     remark;
-   /**
-    * 创建时间
-    */
+    /**
+      * 创建时间
+      */
     creationTime;
-   /**
-    * 创建人标识
-    */
+    /**
+     * 创建人标识
+     */
     creatorId;
-   /**
-    * 最后修改时间
-    */
+    /**
+     * 最后修改时间
+     */
     lastModificationTime;
-   /**
-    * 最后修改人标识
-    */
+    /**
+     * 最后修改人标识
+     */
     lastModifierId;
-   /**
-    * 版本号
-    */
+    /**
+     * 版本号
+     */
     version;
 }

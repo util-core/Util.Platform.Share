@@ -29,7 +29,8 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+              "src/styles.less",
+              "node_modules/ng-zorro-antd/resizable/style/entry.less"
             ],
             "scripts": []
           },
@@ -56,13 +57,9 @@
               "outputHashing": "all"
             },
             "development": {
-              "aot": false,
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"

@@ -1,0 +1,48 @@
+@page
+@model ApplicationDto
+
+@*查询表格*@
+<util-card borderless="true" title="identity.application" extra="tool">
+    @*工具按钮*@
+    <util-template id="tool">
+        <util-button type="Primary" icon="Plus" on-click="openCreateDrawer()" text-create="true"></util-button>
+        <util-a show-table-settings="tb_application" class="ml-md"></util-a>
+    </util-template>
+
+    <util-row gutter="24">
+        @*应用程序列表*@
+        <util-column span="24" xl-span="6" xxl-span="4">
+            <biz-application-select></biz-application-select>
+        </util-column>
+        @*表格*@
+        <util-column span="24" xl-span="18" xxl-span="20">
+            @*表格*@
+            <util-table id="tb_application" show-checkbox="true" show-line-number="true" enable-table-settings="true"
+                        query-param="queryParam" url="application" sort="CreationTime desc">
+                <util-td for="Code" sort="true"></util-td>
+                <util-td for="Name" sort="true"></util-td>
+                <util-td for="Enabled" sort="true"></util-td>
+                <util-td for="Remark" sort="true"></util-td>
+                <util-td for="CreationTime" sort="true"></util-td>
+                <util-td for="LastModificationTime" sort="true"></util-td>
+                <util-td title-operation="true">
+                    <util-a on-click="openEditDrawer(row)" text-update="true"></util-a>
+                    <util-divider type="Vertical"></util-divider>
+                    <util-a on-click="openDetailDialog(row)" text-detail="true"></util-a>
+                    <util-divider type="Vertical"></util-divider>
+                    <util-a danger="true" on-click="delete(row.id)" text-delete="true"></util-a>
+                </util-td>
+            </util-table>
+        </util-column>
+    </util-row>
+</util-card>
+
+@*页脚工具栏*@
+<util-footer-toolbar ng-if="isChecked()" bind-extra="footer_info">
+    @*提示信息*@
+    <util-template id="footer_info">
+        <util-i18n key="app.rowsSelected" param="length:getCheckedLength()" />
+    </util-template>
+    @*删除按钮*@
+    <util-button type="Primary" danger="true" icon="Delete" on-click="delete()" text-delete="true"></util-button>
+</util-footer-toolbar>

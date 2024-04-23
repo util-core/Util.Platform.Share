@@ -1,67 +1,45 @@
-import { Component,Injector } from '@angular/core';
-import { environment } from 'environment';
-import { ComponentBase } from 'util-angular';
+import { Component, OnInit, inject,Injector } from '@angular/core';
+import { NavigationEnd, NavigationError, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
+import { TitleService, stepPreloader } from '@delon/theme';
+import { environment } from '@env/environment';
+import { Util,ComponentBase } from 'util-angular';
 
 /**
- * Ä£¿é²ÎÊı
+ * åº”ç”¨æ ¹ç»„ä»¶
  */
-export class ModuleViewModel {
-    /**
-     * Ó¦ÓÃ³ÌĞò±êÊ¶
-     */
-    applicationId;
-    /**
-     * Ó¦ÓÃ³ÌĞòÃû³Æ
-     */
-    applicationName;
-    /**
-     * Ä£¿éÃû³Æ
-     */
-    name;
-    /**
-     * ¶àÓïÑÔ¼üÃû
-     */
-    i18n;
-    /**
-     * Ä£¿éµØÖ·
-     */
-    uri;
-    /**
-     * Í¼±ê
-     */
-    icon;
-    /**
-     * ÊÇ·ñÒş²Ø
-     */
-    isHide;
-    /**
-     * ±¸×¢
-     */
-    remark;
-    /**
-     * ´´½¨Ê±¼ä
-     */
-    creationTime;
-}
-
 @Component({
     selector: 'app-root',
-    templateUrl: environment.production ? './index.html' : '/view/src/app/index',
-    styleUrls: ['./app.component.less']
+    template: `<router-outlet />`,
+    standalone: true,
+    imports: [RouterOutlet]
 })
-export class AppComponent extends ComponentBase{
-
-    model: ModuleViewModel;
+export class AppComponent extends ComponentBase implements OnInit {
+    private readonly router = inject(Router);
+    private readonly titleService = inject(TitleService);
+    private donePreloader = stepPreloader();
 
     /**
-     * Ñ¡ÔñÍ¼±ê
+     * åˆå§‹åŒ–åº”ç”¨æ ¹ç»„ä»¶
      */
-    selectedIcon(icon) {
-        this.model.icon = icon;
+    constructor() {
+        super();
+        Util.init();
     }
 
-    constructor(injector: Injector) {
-        super(injector);
-        this.model = new ModuleViewModel();
+    /**
+     * åˆå§‹åŒ–
+     */
+    ngOnInit() {
+        let configLoad = false;
+        this.router.events.subscribe(event => {
+            if (event instanceof RouteConfigLoadStart)
+                configLoad = true;
+            if (configLoad && event instanceof NavigationError)
+                this.util.message.error("å¯åŠ¨å¤±è´¥");
+            if (event instanceof NavigationEnd) {
+                this.donePreloader();
+                this.titleService.setTitle();
+            }
+        });
     }
 }

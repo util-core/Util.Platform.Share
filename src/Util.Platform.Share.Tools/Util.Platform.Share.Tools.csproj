@@ -27,8 +27,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Util.Application" Version="8.0.2" />
-		<PackageReference Include="Util.Images.Avatar" Version="8.0.2" />
+		<PackageReference Include="Util.Application" Version="8.0.14" />
+		<PackageReference Include="Util.Images.Avatar" Version="8.0.14" />
 	</ItemGroup>
 
 </Project>

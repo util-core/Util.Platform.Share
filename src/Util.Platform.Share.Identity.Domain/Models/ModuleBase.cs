@@ -58,6 +58,16 @@ public abstract class ModuleBase<TModule, TResourceId, TResourceParentId, TAppli
     [DisplayName( "多语言键" )]
     public string I18n { get; set; }
     /// <summary>
+    /// 是否显示分组
+    ///</summary>
+    [DisplayName( "是否显示分组" )]
+    public bool? Group { get; set; }
+    /// <summary>
+    /// 是否面包屑导航中隐藏
+    ///</summary>
+    [DisplayName( "是否面包屑导航中隐藏" )]
+    public bool? HideInBreadcrumb { get; set; }
+    /// <summary>
     /// 图标
     /// </summary>
     [DisplayName( "图标" )]
@@ -66,7 +76,7 @@ public abstract class ModuleBase<TModule, TResourceId, TResourceParentId, TAppli
     /// 是否展开
     /// </summary>
     [DisplayName( "是否展开" )]
-    public bool? Expanded { get; set; }
+    public bool? IsExpanded { get; set; }
     /// <summary>
     /// 是否隐藏
     /// </summary>
@@ -111,11 +121,14 @@ public abstract class ModuleBase<TModule, TResourceId, TResourceParentId, TAppli
     protected override void AddChanges( TModule other ) {
         AddChange( t => t.Uri, other.Uri );
         AddChange( t => t.Name, other.Name );
+        AddChange( t => t.I18n, other.I18n );
+        AddChange( t => t.Group, other.Group );
+        AddChange( t => t.HideInBreadcrumb, other.HideInBreadcrumb );
         AddChange( t => t.ParentId, other.ParentId );
         AddChange( t => t.Path, other.Path );
         AddChange( t => t.Level, other.Level );
         AddChange( t => t.Icon, other.Icon );
-        AddChange( t => t.Expanded, other.Expanded );
+        AddChange( t => t.IsExpanded, other.IsExpanded );
         AddChange( t => t.Remark, other.Remark );
         AddChange( t => t.PinYin, other.PinYin );
         AddChange( t => t.Enabled, other.Enabled );

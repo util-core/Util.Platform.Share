@@ -1,11 +1,21 @@
 //============== 图标选择组件 ==========================
-// 本组件由杨柳(https://github.com/willowlau)贡献,特此感谢
+// 本组件由杨柳(https://github.com/willowlau)从 ng-ant-admin(https://github.com/huajian123/ng-ant-admin) 整理,特此感谢
 //Licensed under the MIT license
 //======================================================
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter, AfterViewInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NzIconModule } from "ng-zorro-antd/icon";
+import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzPopoverModule } from "ng-zorro-antd/popover";
+import { NzInputModule } from "ng-zorro-antd/input";
+import { NzCardModule } from "ng-zorro-antd/card";
+import { NgFor, NgIf, NgStyle } from "@angular/common";
+import { NzEmptyModule } from "ng-zorro-antd/empty";
+import { NzPaginationModule } from "ng-zorro-antd/pagination";
+import { NzToolTipModule } from "ng-zorro-antd/tooltip";
+import { FormsModule } from "@angular/forms";
 import { zorroIcons } from "./zorro-icons";
 
 interface IconItem {
@@ -18,8 +28,11 @@ interface IconItem {
  */
 @Component({
     selector: 'platform-icon-select',
-    templateUrl: './html/index.html',
+    templateUrl: './html/icon-select.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NzIconModule, NzButtonModule, NzPopoverModule, NzInputModule, NzCardModule, NgIf, NgFor, NgStyle,
+        NzEmptyModule, NzPaginationModule, NzToolTipModule, FormsModule]
 })
 export class IconSelectComponent implements OnInit, AfterViewInit {    
     @Input() columns = 10;
@@ -67,8 +80,8 @@ export class IconSelectComponent implements OnInit, AfterViewInit {
         return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
     }   
 
-    searchIcon(e: Event): void {
-        this.searchText$.next((e.target as HTMLInputElement).value);
+    searchIcon(value) {
+        this.searchText$.next(value);
     }
 
     selectIcon(item: IconItem): void {
@@ -100,8 +113,17 @@ export class IconSelectComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.searchText$.pipe(debounceTime(200), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef)).subscribe(res => {
-            this.iconsStrAllArray = this.sourceIconsArray.filter(item => item.icon.includes(res));
+        this.searchText$.pipe(
+            debounceTime(200),
+            distinctUntilChanged(),
+            takeUntilDestroyed(this.destroyRef)
+        ).subscribe(res => {
+            if (!res) {
+                this.iconsStrAllArray = [...this.sourceIconsArray];
+            }
+            else {
+                this.iconsStrAllArray = this.sourceIconsArray.filter(item => item.icon.includes(res));
+            }            
             this.getData();
             this.cdr.markForCheck();
         });

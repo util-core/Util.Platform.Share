@@ -49,6 +49,18 @@ export class ApiResourceViewModelBase extends TreeViewModel {
      */
     creationTime;
     /**
+     * 创建人标识
+     */
+    creatorId;
+    /**
+     * 最后修改时间
+     */
+    lastModificationTime;
+    /**
+     * 最后修改人标识
+     */
+    lastModifierId;
+    /**
      * 版本号
      */
     version;
