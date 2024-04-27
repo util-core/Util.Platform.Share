@@ -25,12 +25,12 @@ public interface IOperationPermissionServiceBase<TOperationPermissionDto, in TPe
     /// 授予操作权限
     /// </summary>
     /// <param name="request">操作权限参数</param>
-    Task GrantOperationPermissionsAsync( [NotNull][Valid] TPermissionRequest request );
+    Task GrantOperationPermissionsAsync( TPermissionRequest request );
     /// <summary>
     /// 拒绝操作权限
     /// </summary>
     /// <param name="request">操作权限参数</param>
-    Task DenyOperationPermissionsAsync( [NotNull][Valid] TPermissionRequest request );
+    Task DenyOperationPermissionsAsync( TPermissionRequest request );
     /// <summary>
     /// 清除指定角色全部操作权限
     /// </summary>

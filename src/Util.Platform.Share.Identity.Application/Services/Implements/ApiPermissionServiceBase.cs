@@ -7,15 +7,15 @@ namespace Util.Platform.Share.Identity.Applications.Services.Implements;
 /// <summary>
 /// Api权限服务
 /// </summary>
-public abstract class ApiPermissionServiceBase<TUnitOfWork, TPermission, TResource,TApplication, TUser, TRole, TApiResourceDto, TPermissionRequest> 
-    : ServiceBase, IApiPermissionServiceBase<TApiResourceDto, TPermissionRequest> 
-    where TUnitOfWork : IUnitOfWork 
-    where TPermission : PermissionBase<TPermission, TResource>,new()
+public abstract class ApiPermissionServiceBase<TUnitOfWork, TPermission, TResource, TApplication, TUser, TRole, TApiResourceDto, TPermissionRequest>
+    : ServiceBase, IApiPermissionServiceBase<TApiResourceDto, TPermissionRequest>
+    where TUnitOfWork : IUnitOfWork
+    where TPermission : PermissionBase<TPermission, TResource>, new()
     where TResource : ResourceBase<TResource, TApplication>
-    where TApplication : ApplicationBase<TApplication> 
+    where TApplication : ApplicationBase<TApplication>
     where TUser : UserBase<TUser, TRole>
-    where TRole : RoleBase<TRole, TUser> 
-    where TApiResourceDto : ApiResourceDtoBase<TApiResourceDto>,new()
+    where TRole : RoleBase<TRole, TUser>
+    where TApiResourceDto : ApiResourceDtoBase<TApiResourceDto>, new()
     where TPermissionRequest : PermissionRequestBase {
 
     #region 构造方法
@@ -111,6 +111,8 @@ public abstract class ApiPermissionServiceBase<TUnitOfWork, TPermission, TResour
     /// 保存Api权限
     /// </summary>
     protected virtual async Task SaveApiPermissionsAsync( TPermissionRequest request, bool isDeny ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         var applicationId = request.ApplicationId.SafeValue();
         var roleId = request.RoleId.SafeValue();
         var resourceIds = request.ResourceIds.ToGuidList();

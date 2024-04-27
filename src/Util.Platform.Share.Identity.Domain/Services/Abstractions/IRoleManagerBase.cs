@@ -15,12 +15,12 @@ public interface IRoleManagerBase<in TRole, in TRoleId, in TUserId> : IDomainSer
     /// 创建角色
     /// </summary>
     /// <param name="entity">角色</param>
-    Task CreateAsync( [NotNull] TRole entity );
+    Task CreateAsync( TRole entity );
     /// <summary>
     /// 修改角色
     /// </summary>
     /// <param name="entity">角色</param>
-    Task UpdateAsync( [NotNull] TRole entity );
+    Task UpdateAsync( TRole entity );
     /// <summary>
     /// 添加用户集合到角色
     /// </summary>

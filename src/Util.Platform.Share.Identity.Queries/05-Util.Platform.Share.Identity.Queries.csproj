@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Util.Data.Core" Version="8.0.14" />
+		<PackageReference Include="Util.Data.Core" Version="$(UtilVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>

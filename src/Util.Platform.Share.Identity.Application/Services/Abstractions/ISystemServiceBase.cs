@@ -17,7 +17,7 @@ public interface ISystemServiceBase<in TLoginRequest, in TUserId, in TApplicatio
     /// </summary>
     /// <param name="request">登录参数</param>
     /// <param name="cancellationToken">取消令牌</param>
-    Task<SignInResult> SignInAsync( [NotNull][Valid] TLoginRequest request, CancellationToken cancellationToken = default );
+    Task<SignInResult> SignInAsync( TLoginRequest request, CancellationToken cancellationToken = default );
     /// <summary>
     /// 退出登录
     /// </summary>

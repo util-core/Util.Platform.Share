@@ -25,7 +25,7 @@ public interface IUserManagerBase<TUser, TUserId, TRole, TAuditUserId> : IDomain
     /// </summary>
     /// <param name="user">用户</param>
     /// <param name="password">密码</param>
-    Task CreateAsync( [NotNull] TUser user, string password );
+    Task CreateAsync( TUser user, string password );
     /// <summary>
     /// 生成令牌
     /// </summary>

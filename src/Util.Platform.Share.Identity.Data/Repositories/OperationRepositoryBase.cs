@@ -56,6 +56,8 @@ public abstract class OperationRepositoryBase<TOperation, TResource, TResourceId
 
     /// <inheritdoc />
     public virtual async Task AddAsync( TOperation entity ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Operation;
         resource.ParentId = Util.Helpers.Convert.To<TResourceParentId>( entity.ModuleId );
@@ -65,6 +67,8 @@ public abstract class OperationRepositoryBase<TOperation, TResource, TResourceId
 
     /// <inheritdoc />
     public virtual async Task UpdateAsync( TOperation entity ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Operation;
         resource.ParentId = Util.Helpers.Convert.To<TResourceParentId>( entity.ModuleId );

@@ -53,13 +53,13 @@ public interface IModuleRepositoryBase<TModule, in TModuleId, in TApplicationId,
     /// </summary>
     /// <param name="entity">模块</param>
     /// <param name="cancellationToken">取消令牌</param>
-    Task AddAsync( [Valid] TModule entity, CancellationToken cancellationToken = default );
+    Task AddAsync( TModule entity, CancellationToken cancellationToken = default );
     /// <summary>
     /// 修改模块
     /// </summary>
     /// <param name="entity">模块</param>
     /// <param name="cancellationToken">取消令牌</param>
-    Task UpdateAsync( [Valid] TModule entity, CancellationToken cancellationToken = default );
+    Task UpdateAsync( TModule entity, CancellationToken cancellationToken = default );
     /// <summary>
     /// 获取已启用的模块集合
     /// </summary>

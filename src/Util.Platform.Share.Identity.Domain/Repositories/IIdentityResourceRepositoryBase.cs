@@ -32,10 +32,10 @@ public interface IIdentityResourceRepositoryBase<TIdentityResource, TResourceId,
     /// 添加身份资源
     /// </summary>
     /// <param name="entity">身份资源</param>
-    Task AddAsync( [Valid] TIdentityResource entity );
+    Task AddAsync( TIdentityResource entity );
     /// <summary>
     /// 修改身份资源
     /// </summary>
     /// <param name="entity">身份资源</param>
-    Task UpdateAsync( [Valid] TIdentityResource entity );
+    Task UpdateAsync( TIdentityResource entity );
 }

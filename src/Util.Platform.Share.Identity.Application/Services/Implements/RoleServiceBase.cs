@@ -138,6 +138,8 @@ public abstract class RoleServiceBase<TUnitOfWork, TRole, TUser, TRoleDto, TCrea
 
     /// <inheritdoc />
     public virtual async Task AddUsersToRoleAsync( TRoleUsersRequest request ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         await RoleManager.AddUsersToRoleAsync( request.RoleId.SafeValue(), request.UserIds.ToGuidList() );
         await UnitOfWork.CommitAsync();
         Log.Append( "添加用户到角色成功," )
@@ -152,6 +154,8 @@ public abstract class RoleServiceBase<TUnitOfWork, TRole, TUser, TRoleDto, TCrea
 
     /// <inheritdoc />
     public virtual async Task RemoveUsersFromRoleAsync( TRoleUsersRequest request ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         await RoleManager.RemoveUsersFromRoleAsync( request.RoleId.SafeValue(), request.UserIds.ToGuidList() );
         await UnitOfWork.CommitAsync();
         Log.Append( "从角色移除用户成功," )

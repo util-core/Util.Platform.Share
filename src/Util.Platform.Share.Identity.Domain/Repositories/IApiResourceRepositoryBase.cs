@@ -35,10 +35,10 @@ public interface IApiResourceRepositoryBase<TApiResource, in TApplicationId, in 
     /// 添加Api资源
     /// </summary>
     /// <param name="entity">Api资源</param>
-    Task AddAsync( [Valid] TApiResource entity );
+    Task AddAsync( TApiResource entity );
     /// <summary>
     /// 修改Api资源
     /// </summary>
     /// <param name="entity">Api资源</param>
-    Task UpdateAsync( [Valid] TApiResource entity );
+    Task UpdateAsync( TApiResource entity );
 }

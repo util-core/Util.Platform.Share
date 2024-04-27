@@ -3,7 +3,7 @@ namespace Util.Platform.Share.Identity.Data.Repositories;
 /// <summary>
 /// Api资源仓储
 /// </summary>
-public abstract class ApiResourceRepositoryBase<TApiResource, TResource, TApplication> 
+public abstract class ApiResourceRepositoryBase<TApiResource, TResource, TApplication>
     : ApiResourceRepositoryBase<TApiResource, TResource, Guid, Guid?, TApplication, Guid?, Guid?>, IApiResourceRepositoryBase<TApiResource>
     where TApiResource : ApiResourceBase<TApiResource>
     where TResource : ResourceBase<TResource, TApplication>
@@ -56,6 +56,8 @@ public abstract class ApiResourceRepositoryBase<TApiResource, TResource, TResour
 
     /// <inheritdoc />
     public virtual async Task AddAsync( TApiResource entity ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Api;
         await _resourceRepository.AddAsync( resource );
@@ -63,6 +65,8 @@ public abstract class ApiResourceRepositoryBase<TApiResource, TResource, TResour
 
     /// <inheritdoc />
     public virtual async Task UpdateAsync( TApiResource entity ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Api;
         await _resourceRepository.UpdatePathAsync( resource );

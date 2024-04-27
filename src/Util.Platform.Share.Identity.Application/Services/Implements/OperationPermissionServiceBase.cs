@@ -14,8 +14,8 @@ public abstract class OperationPermissionServiceBase<TUnitOfWork, TPermission, T
     where TResource : ResourceBase<TResource, TApplication>
     where TApplication : ApplicationBase<TApplication>
     where TUser : UserBase<TUser, TRole>
-    where TRole : RoleBase<TRole, TUser> 
-    where TOperationPermissionDto : OperationPermissionDtoBase<TOperationPermissionDto>,new()
+    where TRole : RoleBase<TRole, TUser>
+    where TOperationPermissionDto : OperationPermissionDtoBase<TOperationPermissionDto>, new()
     where TPermissionRequest : PermissionRequestBase, new() {
 
     #region 构造方法
@@ -75,7 +75,7 @@ public abstract class OperationPermissionServiceBase<TUnitOfWork, TPermission, T
                && t.Enabled
                && ( t.Type == ResourceType.Module || t.Type == ResourceType.Operation )
             )
-            .Select( resource => new { resource.Id, resource.Name, resource.Level, resource.Type, resource.ParentId, resource.SortId,resource.IsBase,resource.IsHide } )
+            .Select( resource => new { resource.Id, resource.Name, resource.Level, resource.Type, resource.ParentId, resource.SortId, resource.IsBase, resource.IsHide } )
             .ToListAsync();
         return resources.Select( resource => {
             var dto = new TOperationPermissionDto();
@@ -117,6 +117,8 @@ public abstract class OperationPermissionServiceBase<TUnitOfWork, TPermission, T
     /// 保存操作权限
     /// </summary>
     protected virtual async Task SaveOperationPermissionsAsync( TPermissionRequest request, bool isDeny ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         var applicationId = request.ApplicationId.SafeValue();
         var roleId = request.RoleId.SafeValue();
         var resourceIds = request.ResourceIds.ToGuidList();

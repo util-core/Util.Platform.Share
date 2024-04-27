@@ -67,6 +67,8 @@ public abstract class ModuleRepositoryBase<TModule, TResource, TResourceId, TRes
 
     /// <inheritdoc />
     public async Task AddAsync( TModule entity, CancellationToken cancellationToken = default ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Module;
         await _resourceRepository.AddAsync( resource, cancellationToken );
@@ -74,6 +76,8 @@ public abstract class ModuleRepositoryBase<TModule, TResource, TResourceId, TRes
 
     /// <inheritdoc />
     public async Task UpdateAsync( TModule entity, CancellationToken cancellationToken = default ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Module;
         await _resourceRepository.UpdatePathAsync( resource );

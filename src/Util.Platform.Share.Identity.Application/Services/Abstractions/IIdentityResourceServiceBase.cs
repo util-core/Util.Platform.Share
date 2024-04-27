@@ -19,12 +19,12 @@ public interface IIdentityResourceServiceBase<TIdentityResourceDto, in TResource
     /// 创建身份资源
     /// </summary>
     /// <param name="request">身份资源参数</param>
-    Task<string> CreateAsync( [NotNull][Valid] TIdentityResourceDto request );
+    Task<string> CreateAsync( TIdentityResourceDto request );
     /// <summary>
     /// 更新身份资源
     /// </summary>
     /// <param name="request">身份资源参数</param>
-    Task UpdateAsync( [NotNull][Valid] TIdentityResourceDto request );
+    Task UpdateAsync( TIdentityResourceDto request );
     /// <summary>
     /// 删除身份资源
     /// </summary>

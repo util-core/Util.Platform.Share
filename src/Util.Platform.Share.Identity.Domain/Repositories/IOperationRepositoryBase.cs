@@ -35,10 +35,10 @@ public interface IOperationRepositoryBase<TOperation, in TApplicationId, in TRes
     /// 添加操作
     /// </summary>
     /// <param name="entity">操作</param>
-    Task AddAsync( [Valid] TOperation entity );
+    Task AddAsync( TOperation entity );
     /// <summary>
     /// 修改操作
     /// </summary>
     /// <param name="entity">操作</param>
-    Task UpdateAsync( [Valid] TOperation entity );
+    Task UpdateAsync( TOperation entity );
 }

@@ -55,6 +55,8 @@ public abstract class IdentityResourceRepositoryBase<TIdentityResource, TResourc
 
     /// <inheritdoc />
     public virtual async Task AddAsync( TIdentityResource entity ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Identity;
         await _resourceRepository.AddAsync( resource );
@@ -62,6 +64,8 @@ public abstract class IdentityResourceRepositoryBase<TIdentityResource, TResourc
 
     /// <inheritdoc />
     public virtual async Task UpdateAsync( [Valid] TIdentityResource entity ) {
+        entity.CheckNull( nameof( entity ) );
+        entity.Validate();
         var resource = entity.MapTo<TResource>();
         resource.Type = ResourceType.Identity;
         await _resourceRepository.UpdateAsync( resource );

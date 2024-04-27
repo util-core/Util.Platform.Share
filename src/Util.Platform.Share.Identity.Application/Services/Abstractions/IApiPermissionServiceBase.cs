@@ -31,10 +31,10 @@ public interface IApiPermissionServiceBase<TApiResourceDto, in TPermissionReques
     /// 授予Api权限
     /// </summary>
     /// <param name="request">权限参数</param>
-    Task GrantApiPermissionsAsync( [NotNull][Valid] TPermissionRequest request );
+    Task GrantApiPermissionsAsync( TPermissionRequest request );
     /// <summary>
     /// 拒绝Api权限
     /// </summary>
     /// <param name="request">权限参数</param>
-    Task DenyApiPermissionsAsync( [NotNull][Valid] TPermissionRequest request );
+    Task DenyApiPermissionsAsync( TPermissionRequest request );
 }

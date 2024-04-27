@@ -14,10 +14,10 @@ public interface IRoleServiceBase<TRoleDto, in TCreateRoleRequest, in TUpdateRol
     /// 添加用户到角色
     /// </summary>
     /// <param name="request">角色用户参数</param>
-    Task AddUsersToRoleAsync( [NotNull][Valid] TRoleUsersRequest request );
+    Task AddUsersToRoleAsync( TRoleUsersRequest request );
     /// <summary>
     /// 从角色移除用户
     /// </summary>
     /// <param name="request">角色用户参数</param>
-    Task RemoveUsersFromRoleAsync( [NotNull][Valid] TRoleUsersRequest request );
+    Task RemoveUsersFromRoleAsync( TRoleUsersRequest request );
 }

@@ -97,6 +97,8 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task<string> CreateAsync( TIdentityResourceDto request ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         var entity = request.MapTo<TIdentityResource>();
         entity.CheckNull( nameof( entity ) );
         entity.Init();
@@ -131,6 +133,8 @@ public abstract class IdentityResourceServiceBase<TUnitOfWork, TResource, TAppli
 
     /// <inheritdoc />
     public virtual async Task UpdateAsync( TIdentityResourceDto request ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         if ( request.Id.IsEmpty() )
             throw new InvalidOperationException( R.IdIsEmpty );
         var oldEntity = await IdentityResourceRepository.FindByIdAsync( request.Id );

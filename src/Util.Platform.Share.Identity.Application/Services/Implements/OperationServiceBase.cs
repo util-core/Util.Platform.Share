@@ -12,9 +12,9 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
     : QueryServiceBase<TResource, TOperationDto, TResourceQuery>, IOperationServiceBase<TOperationDto, TResourceQuery, TCreateOperationRequest>
     where TUnitOfWork : IUnitOfWork
     where TResource : ResourceBase<TResource, TApplication>
-    where TApplication : ApplicationBase<TApplication> 
+    where TApplication : ApplicationBase<TApplication>
     where TOperation : OperationBase<TOperation>
-    where TOperationDto : OperationDtoBase,new()
+    where TOperationDto : OperationDtoBase, new()
     where TResourceQuery : ResourceQueryBase
     where TCreateOperationRequest : CreateOperationRequestBase {
 
@@ -88,6 +88,8 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
 
     /// <inheritdoc />
     public virtual async Task<string> CreateAsync( TCreateOperationRequest request ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         var entity = request.MapTo<TOperation>();
         entity.CheckNull( nameof( entity ) );
         entity.Init();
@@ -123,6 +125,8 @@ public abstract class OperationServiceBase<TUnitOfWork, TResource, TApplication,
 
     /// <inheritdoc />
     public virtual async Task UpdateAsync( TOperationDto request ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         if ( request.Id.IsEmpty() )
             throw new InvalidOperationException( R.IdIsEmpty );
         var oldEntity = await OperationRepository.FindByIdAsync( request.Id );

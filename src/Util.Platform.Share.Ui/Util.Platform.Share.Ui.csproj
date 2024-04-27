@@ -7,9 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Util.Logging.Serilog" Version="8.0.14" />
-		<PackageReference Include="Util.Ui.NgAlain" Version="8.0.14" />
-		<PackageReference Include="Util.Ui.NgZorro" Version="8.0.14" />
+		<PackageReference Include="Util.Logging.Serilog" Version="$(UtilVersion)" />
+		<PackageReference Include="Util.Ui.NgAlain" Version="$(UtilVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>

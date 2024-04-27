@@ -12,12 +12,12 @@ public interface IOperationServiceBase<TOperationDto, in TResourceQuery, in TCre
     /// 创建操作资源
     /// </summary>
     /// <param name="request">创建操作资源参数</param>
-    Task<string> CreateAsync( [NotNull][Valid] TCreateOperationRequest request );
+    Task<string> CreateAsync( TCreateOperationRequest request );
     /// <summary>
     /// 更新操作资源
     /// </summary>
     /// <param name="request">操作资源参数</param>
-    Task UpdateAsync( [NotNull][Valid] TOperationDto request );
+    Task UpdateAsync( TOperationDto request );
     /// <summary>
     /// 删除操作资源
     /// </summary>

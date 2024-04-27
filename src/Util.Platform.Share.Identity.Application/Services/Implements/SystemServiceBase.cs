@@ -76,6 +76,8 @@ public abstract class SystemServiceBase<TUnitOfWork, TPermission, TResource, TAp
 
     /// <inheritdoc />
     public virtual async Task<SignInResult> SignInAsync( TLoginRequest request, CancellationToken cancellationToken = default ) {
+        request.CheckNull( nameof( request ) );
+        request.Validate();
         var user = await GetUser( request );
         var result = await SignInManager.SignInAsync( user, request.Password, request.Remember.SafeValue() );
         await UnitOfWork.CommitAsync();
