@@ -35,8 +35,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Util.AspNetCore" Version="$(UtilVersion)" />
-	  <PackageReference Include="Util.Caching" Version="$(UtilVersion)" />
+	  <PackageReference Include="Util.AspNetCore" Version="8.0.16" />
+	  <PackageReference Include="Util.Caching" Version="8.0.16" />
 	</ItemGroup>
 
 </Project>
